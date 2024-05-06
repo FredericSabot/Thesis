@@ -126,12 +126,12 @@ Eq.~(\ref{eq:final}) is plotted in Fig~\ref{fig:queuing}. This figure illustrate
   \addplot [name path=A, blue, no marks, domain=0:0.95] {1/(1-x)};
   \addplot [name path=B, black, no marks, dashed] {1};
   \addplot[blue, fill opacity=0.2] fill between[of=A and B];
-  
+
   \addplot [red, no marks, dashed] coordinates {(0, 3.33333333) (0.7, 3.33333333)};
   \addplot [red, no marks, dashed] coordinates {(0.7, 0) (0.7, 3.33333333)};
-  
+
   \node at (axis cs:0.73,1.1) [anchor=south west, text width=5em, align=right] {Excess overhead induced by queuing};
-  
+
   \node at (axis cs:0.01,3.2) [anchor=north west] {Zone of normal operation};
 
 \end{axis}

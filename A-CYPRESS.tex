@@ -21,7 +21,7 @@ To be expanded.
 % Time management
 
 % Also master-slave if know in advance the events in one simulator (e.g. elec only creates PMU messages).
- 
+
 % There is two main ways to manage time in a co-simulation: time-stepped and event based (see previous presentations). Dynawo can only be used in time-stepped mode for the following reasons:
 % \begin{itemize}
 %     \item Dynawo cannot say in advance when will be its next step/event. This is because the next event is determined by zero-crossings/time step variations which are known only after solving the DAEs. (It could be possible to do an event-based co-simulation with Dynawo but that would require modifications closer to the solver, and defining Dynawo as the master or implementing rollback capabilities)

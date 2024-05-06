@@ -18,3 +18,4 @@
 # BibTeX
 *.bbl
 *.blg
+tikz/*
