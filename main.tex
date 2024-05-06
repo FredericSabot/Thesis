@@ -1,0 +1,86 @@
+\documentclass[a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry} % For cover page
+\usepackage{eso-pic}
+\usepackage{fullpage}
+\PassOptionsToPackage{hyphens}{url}\usepackage[hidelinks]{hyperref}
+\usepackage{amsmath}
+% \usepackage{cite}
+\usepackage[style=ieee, maxnames=6, sorting=none, backend=biber]{biblatex}
+\usepackage{csquotes} % recommended by biblatex
+\addbibresource{bib.bib}
+\usepackage[bottom]{footmisc} % Avoid float below footnote
+
+\usepackage{bm} % Bold math
+\usepackage{xcolor}
+\usepackage[british]{babel} % English defaults to American (for dates in refs, etc.)
+\usepackage{lmodern} % Euro symbol
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{external} % Increases compilation speed
+% \tikzexternalize[prefix=tikz/] % Does not work in this project for some reason
+\usepgfplotslibrary{fillbetween}
+
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{tabularx}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+\usepackage{url}
+
+% bstctlcite
+\makeatletter
+\def\bstctlcite{\@ifnextchar[{\@bstctlcite}{\@bstctlcite[@auxout]}}
+\def\@bstctlcite[#1]#2{\@bsphack
+  \@for\@citeb:=#2\do{%
+    \edef\@citeb{\expandafter\@firstofone\@citeb}%
+    \if@filesw\immediate\write\csname #1\endcsname{\string\citation{\@citeb}}\fi}%
+  \@esphack}
+\makeatother
+
+% Packages/def to only use in draft mode
+% Add disable to todonotes options for final version
+\usepackage[colorinlistoftodos]{todonotes}
+\newcommand{\TODO}[1]{\todo[inline]{TODO: #1}}
+\newcommand{\refs}{[\textcolor{red}{refs}]}
+% \newcommand{\refs}{}
+
+\title{Thèse - Mi-parcours}
+\author{Frédéric Sabot}
+\date{\today}
+
+% \includeonly{1-Introduction, 2-Security, 3-Protections, 4-SPS, 5-Distribution, 6-DPSA, A-Cosim}
+
+\begin{document}
+\bstctlcite{IEEEexample:BSTcontrol}
+
+% \maketitle
+\include{Cover}
+
+% \include{0-Abstract}
+
+\tableofcontents
+
+\include{1-Introduction}
+\include{2-Security}
+\include{3-Protections}
+\include{4-SPS}
+\include{5-Distribution}
+\include{6-DPSA}
+\include{7-Conclusion}
+
+
+% \bibliographystyle{IEEEtranURLdate}
+% \bibliography{bib}
+\printbibliography[heading=bibintoc, title=References]
+
+
+\appendix
+
+\include{A-CYPRESS}
+% \include{B-Simulation}
+
+\end{document}

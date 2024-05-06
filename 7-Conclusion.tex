@@ -1,0 +1,124 @@
+\chapter{Perspectives}
+\label{ch:perspectives}
+
+While it is of course expected that a probabilistic dynamic security assessment is more computationally expensive than a deterministic assessment, the difference will strongly depend on the effectiveness of the probabilistic methodology. Uncertainties in the pre-disturbance state of the system are already considered in a traditional dynamic security assessment~\cite{EurostagHPC}. So, the added computational effort of a dynamic probabilistic assessment is mainly in the modelling of the post-disturbance evolution. A notable contribution comes from the handling of uncertainties related to protections.
+
+During a (fast) cascading outage, many protections trigger in a relatively short amount of time. Uncertainties in the timing of operations (modifying the order in which protections operate) and the possibility of protection failures can potentially lead to a very large number of scenarios to simulate for a given disturbance. However, it is not clear how many sample of protection timings will be required to correctly represent the possible system evolutions. Also, the risk associated with the many but low-probability possible protection failures is difficult to estimate a priori. The fact that protection failures might have a lower impact once the system has already passed a ``point of no return" should also be studied.
+
+The next step in my thesis is thus to provide some answers to the above questions. For this, the proposed methodology will be applied on the RTS (shown in Fig.~\ref{fig:rts}). This test system is sufficiently large to represent cascading phenomena that occur in real-scale systems. But it is a priori small enough that the proposed methodology can be applied with manageable computation times. The use of a high-performance computing (HPC) environment and a more efficient simulator than in my previous work~\cite{MCDETasTool} will however be required. The results obtained should answer part of the above questions thus allowing to increase the effectiveness of the methodology (i.e. to reduce the computation time required to achieve the same risk assessment accuracy).
+
+A dedicated sampling scheme might be developed in order to answer those questions. For example, the scheme could create more samples in scenarios where protection operations occur in quick succession.
+
+From a practical point of view, it is necessary to implement the following elements:
+
+\begin{itemize}
+    \item DET solving scheme: such a scheme has already been developed in my previous work~\cite{MCDETasTool}. It will be adapted to be more general and to work with Dynawo (the dynamic simulator used in this thesis) instead of PowerFactory. It will also be adapted for use in a HPC environment.
+    \item (SC)OPF algorithm: this will be done using PowerModels.jl. It will thus be necessary to implement a PowerModels.jl to Dynawo parser. A Dynawo to PowerModels.jl parser has already been developed by a CYPRESS colleague.
+    \item Add protection models to Dynawo.
+    \item Implement the RTS in Dynawo.
+\end{itemize}
+
+
+\section{Following steps}
+
+After completion of the above work, the following points will be studied.
+
+\begin{itemize}
+    \item Risk assessment effectiveness: the effectiveness of the proposed methodology will be improved with the answers to the above questions, smart sampling schemes and more advanced DET techniques. In the best case scenario, the objective is to develop a methodology that can be applied for the planning of real transmission systems (with computation times lower than a week).
+    \item Study the impact of load models and in particular, the impact of distribution-connected renewable energy sources and their low-voltage ride-through (LVRT) capabilities.
+    \item Security assessment of future power systems: during the academic year 2022-2023, I will supervise a master thesis on the simulation of inverter-based generation (IBG)-dominated grids. The dynamics of those grids are mainly driven by grid-following and grid-forming converters that have very different behaviour from traditional synchronous generators. This is especially true during large disturbances during which the output current of the converters will more likely be at their maximal capacity.
+    \item Security enhancements: risk assessment methodologies should ideally not be compared on the accuracy of risk estimation but on the recommendations they provide. So, during the last year of this thesis, methods to derive security enhancement recommendations from probabilistic risk assessment studies will be developed.
+    \item The results obtained with the proposed method might be compared with results from QSS cascading methods in the literature.
+\end{itemize}
+
+
+\section{Future work}
+
+The following points are out of scope of this thesis but are interesting future research tracks.
+
+\begin{itemize}
+    \item Study of slow cascading mechanisms: slow cascading mechanisms still play a major role in some cascading outages, especially during the initial stages. For (usually small) cascades where only slow mechanism play a role, QSS methods available in the literature can be used. For cascades driven by both slow and fast mechanisms, it is more complex. % Possibilities: extend my method (add long term models) so integrated approach but might need different sampling techniques during slow and fast phase (but no separation between slow and fast in the modelling), Henneaux, DCAT
+    \item Operator models: operators play an important role in the evolution of slow cascading outages. They are however either not consider or modelled with an OPF in QSS methods in the literature. Human errors (that have played important role in some past blackouts) should thus be considered.
+    % \item Coherence between risk management and risk assessment (DPSA): methods for risk assessment (especially this one) make intensive use of detailed simulations. On the other hand, risk management methods (e.g. SCOPF) are optimisation methods that require very simplified grid models to be solved in a reasonable amount of time. There are thus perspectives to 
+    \item Use in real-time and operation: as discussed in section~\ref{sec:SPSperspectives}, the results of dynamic probabilistic security assessment could be stored for later use in system operation. Also, a SPS could be designed based on the results of the proposed method.
+\end{itemize}
+
+
+\TODO{maintenances + maintanability of system (proba allow to push closer to operational limits, but check that still have some (long one-block) time to do maintenances}
+
+\TODO{Look at Perspectives from 3.6 of "Stabilité et sauvegarde des réseaux électriques" (marc stubbe, jacques deuze (Tractebel) sous la direction de Michel Crappe (UMons)}
+
+\TODO{to conclude, goal is not to compute a number (risk) as it is impossible to be perfectly accurate but to understand the system, cf nuclear PSA}
+
+(2006, Le projet PEGASE, https://orbi.uliege.be/bitstream/2268/9350/1/SRBE-Pegase.pdf)
+
+Le besoin en simulation dynamique avancée
+
+A l’heure actuelle, l’analyse de la sécu-
+rité repose généralement sur un modèle
+statique. Il apparait de plus en plus
+nécessaire, lorsque l’on se rapproche des
+limites de fonctionnement du système,
+de vérifier la qualité de la transition
+entre les états d’équilibre avant et
+après incident, mais aussi la stabilité
+du système, c’est-à-dire sa capacité à
+rejoindre l’état d’équilibre final.
+Le modèle dynamique est aussi indiqué
+pour une représentation précise des
+protections et automates qui répondent
+en fonction du comportement transitoire
+du réseau. Il est nécessaire pour
+déterminer les limites de stabilité du
+système telles que, par exemple, l’appa-
+rition d’oscillations interzonales résul-
+tant d’une augmentation du transit de
+puissance entre réseaux.
+Enfin, la simulation de tout scénario
+complexe pouvant mener au «black-
+out» exige l’usage d’un modèle dyna-
+mique très détaillé.
+Par ailleurs, la simulation temporelle
+«Haute Fidélité» reste la seule voie
+pour acquérir une compréhension pro-
+fonde du comportement des grands sys-
+tèmes électriques. Elle apparait comme
+indispensable à la formation avancée
+des opérateurs des centres de conduite.
+Si le modèle mathématique du système
+électrique et de ses composants est en
+principe bien connu, sa mise en œuvre
+peut poser des problèmes majeurs
+résultant:
+– de la taille du modèle (jusqu’à
+100.000 variables d’état, voire plus,
+pour le REI);
+– de la complexité du modèle (phéno-
+mènes appartenant à des échelles de
+temps très différentes, non-linéarités);
+– du temps de calcul ;
+– de la disponibilité des données.
+La taille du système est malheureuse-
+ment difficile à maîtriser car la modéli-
+sation doit être complète en (presque)
+toute circonstance, les différents phéno-
+mènes dynamiques étant généralement
+enchevêtrés.
+La gestion de la complexité implique
+des procédures rigoureuses de dévelop-
+pement des modèles de composants et
+leur validation.
+Le temps de calcul reste une barrière
+importante pour beaucoup d’applica-
+tions. Des développements algorith-
+miques et l’utilisation d’architectures
+informatiques spécialisées s’imposent.
+On notera enfin que la construction du
+modèle dynamique repose sur l’effort
+conjugué de toutes les parties pre-
+nantes: GRT, producteurs, constructeurs
+agissant de manière concertée pour une
+meilleure sécurité du système.
+
+
+\TODO{Parler d'EMT, besoin screening}
