@@ -19,3 +19,7 @@
 *.bbl
 *.blg
 tikz/*
+*.maf
+*.mtc*
+
+main.pdf

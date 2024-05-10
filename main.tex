@@ -1,4 +1,4 @@
-\documentclass[a4paper]{report}
+\documentclass[a4paper, dvipsnames]{report}
 \usepackage[utf8]{inputenc}
 \usepackage{geometry} % For cover page
 \usepackage{eso-pic}
@@ -18,6 +18,7 @@
 
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
+\usetikzlibrary{pgfplots.groupplots,shapes,arrows,chains,fit,backgrounds}
 \usepgfplotslibrary{external} % Increases compilation speed
 % \tikzexternalize[prefix=tikz/] % Does not work in this project for some reason
 \usepgfplotslibrary{fillbetween}
@@ -30,6 +31,13 @@
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
 
 \usepackage{url}
+
+\usepackage{minitoc}  % Should be loaded after hyperref
+\usepackage{silence}
+\WarningFilter{minitoc(hints)}{W0023}
+\WarningFilter{minitoc(hints)}{W0024}
+\WarningFilter{minitoc(hints)}{W0028}
+\WarningFilter{minitoc(hints)}{W0030}
 
 % bstctlcite
 \makeatletter
@@ -44,6 +52,9 @@
 % Packages/def to only use in draft mode
 % Add disable to todonotes options for final version
 \usepackage[colorinlistoftodos]{todonotes}
+\makeatletter
+\renewcommand{\todo}[2][]{\tikzexternaldisable\@todo[#1]{#2}\tikzexternalenable}
+\makeatother
 \newcommand{\TODO}[1]{\todo[inline]{TODO: #1}}
 \newcommand{\refs}{[\textcolor{red}{refs}]}
 % \newcommand{\refs}{}
@@ -56,11 +67,11 @@
 
 \begin{document}
 \bstctlcite{IEEEexample:BSTcontrol}
+\dominitoc
 
-% \maketitle
 \include{Cover}
 
-% \include{0-Abstract}
+\include{0-Abstract}
 
 \tableofcontents
 

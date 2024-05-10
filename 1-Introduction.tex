@@ -1,122 +1,163 @@
 \chapter{Introduction}
 
-For many decades now, electricity has been a fundamental ingredient of private and industrial activities which means that any interruption of service can have massive consequences both from an economic and societal perspective. On the other hand, maintaining a highly reliable power system comes at a cost. Thus, a balance between the costs of reliability and costs of unreliability has to be found.
+\section{Context}
 
-Risk assessment is the first step towards risk management and thus has a high impact on how the grid is operated. It consists in identifying (potential) events that can negatively impact the reliability of the power system and potential solutions. Risk assessment outcomes impact risk management decisions in a wide range of timescales: from expansion planning (years ahead) to operational planning (15 minutes to days ahead). In the first case, risk assessment affects which assets (lines, transformers, etc.) have to be built or upgraded. In the second case, it helps to define the operating limits of the system. With the introduction of complex and automatic remedial actions schemes, it also starts to have an impact on the real-time operation of the grid.
+Power systems are often described by power system engineers as the largest and most complex systems built by men. Despite this complexity, they must operate without discontinuity 24 hours a day and 365 days a year. Society has grown to expect electricity to be available at any time and any interruption of service can thus have massive consequences both from an economic perspective (production downtime, equipment damage) and from a social perspective (injuries due to the lack of electricity, civil disorders).
 
-% Risk assessment is the action of identifying (potential) events that can negatively impact the reliability of the power system. It is thus the first step towards risk management (balance between reliability and unreliability). And, it thus has a high impact on how the grid is operated. This is true for a wide range of timescales: from expansion planning (years ahead) to operational planning (15 minutes to days ahead). In the first case, it impacts which assets (lines, transformers, etc.) have to be built or upgraded. In the second case, it allows to define the operating limits of the system. With the introduction of complex and automatic remedial actions schemes, it also starts to have an impact on the real-time operation of the grid.
+The importance of power systems will grow even bigger with the energy transition. Indeed, to reduce their reliance on fossil fuels, countries around the globe are pushing for more electrification: petrol cars are replaced by electric cars, gas boilers are replaced by heat pumps, etc. In Belgium, electricity demand is thus expected to grow by a factor 2 to 3 by 2050~\cite{ref}.
 
-The reliability of a power system is often split into adequacy and security. Consequently, risk assessment is also split into adequacy and security assessments. % Security (or stability) can be defined as ``the ability of an electric power system, for a given initial operating condition, to regain a state of operating equilibrium after being subjected to a physical disturbance\footnote{In this thesis, the physical disturbances considered are the loss of one or a few elements of the grid. The loss of many elements caused by natural disasters (storms, floods, etc.) is consider to be part of resilience and not security. Those events are out of scope of this thesis.%It is worth noting that in North America, cascading outages are considered as extreme events and thus classified in resilience. I however use a more European definition and consider that cascading outages initiated by the loss of one or a few element are part of security.
-%}, with most system variables bounded so that practically the entire system remains intact"~\cite{StabilityDefinition}. Adequacy is a similar concept but it only considers the existence of a post-disturbance state of equilibrium, regardless of whether the system will actually follow a trajectory leading to this equilibrium.
-Adequacy is ``the ability of the system to satisfy the consumers’ demand and the system’s operational constraints at any time, in the presence of scheduled and unscheduled outages of generation, transmission and distribution components or facilities". Security is ``the ability of the system to withstand disturbances arising from faults and unscheduled removal of equipment without further loss of facilities or cascading outages"~\cite{AdequancySecurityDefinition}.
+For this electrification to make sense, the electricity itself has to be produced by low-carbon energy sources such as wind, solar, hydro and nuclear. Apart from nuclear (that has its own set of drawbacks), the disadvantage of these energy sources is that they are by nature weather-dependent and thus intermittent which changes the way power system are operated. Indeed, in the past, grids were designed to follow predictable and repetitive load patterns. Conventional generators (gas, nuclear, coal) would simply ramp up and down to follow the load. Nowadays, load is increasingly expected to follow generation, i.e. to consume power when it is available, so when the sun is shining or when the wind is blowing.
 
+These are thus challenging times for Transmission System Operators (TSOs) as they have to cope with (i) a rapid increase of the electricity demand, (ii) public opposition to the construction of new lines, and (iii) a change of paradigm from load-following to generator-following associated with a change of generation technology, all of this while still fulfilling their main mission of keeping the lights on at all times.
 
-% In an adequacy assessment, one tries to determine if an acceptable equilibrium point exists for given sets of planned and unplanned outages. In a security assessment, one tries to determine if the system will actually follow a trajectory that reaches this equilibrium point.
 
 \section{Motivation}
 
-To reduce their greenhouse gas emissions, countries around the globe are installing more and more renewable energy sources in their grids and their weather-dependent nature (especially for solar and wind) introduces additional complexity. Indeed, in the past, grids were designed to follow predictable and repetitive load patterns. Conventional generators (gas, nuclear, coal, etc.) would simply ramp up and down to follow the load. Similarly, power flows would usually be highest at peak load and minimum at low loads.
-% The grid could be considered to always be in an intermediate state between the state of peak load and the state of minimum load.
-Nowadays, power flow patterns are much more diverse as e.g., at a given moment, the sun might be shining in the whole country, in part of the country or not at all. This diversity is increased by cross border exchanges that further decorrelate the energy sources.
-% \footnote{With priority given to generators with the lowest operational costs, and considering limits (minimum and maximum power, ramping, etc.) of the generators.}
+Two main types of analyses are typically performed to guarantee a high level of reliability for power systems: adequacy and security studies. A power system is said to be adequate if it has enough generation and transmission capacity to satisfy the consumers' demand at all times, even in the presence of generator or branch outages. A power system is said to be secure if it is able to withstand unscheduled faults and equipment outages without affecting consumers~\cite{AdequancySecurityDefinition}. In other words, a power system is adequate if, even with \emph{credible} asset outage(s), there always exists a system equilibrium point that satisfies all loads (and asset ratings). And, it is secure if for any \emph{credible} initial system state, the system will follow a trajectory that reaches such equilibrium after any \emph{credible} contingency.
 
-In this context, the relevance of classical security assessment methodologies is decreasing. Indeed, security is often assessed based on one or a few ``representative states" (typically at peak and minimum load).
-% Indeed, security is often assessed at peak load with all and/or no renewable sources available~\refs.
-The assumption is that if the system is secure in those cases, then it is always secure. However, a higher diversity of power flow patterns means that a higher number of issues can threaten power system security. This means it will be increasingly difficult to derive a limited set of representative states that covers all possible threats. Also, in this approach, all threats are given the same ``weight" while some threats might only occur in unlikely system configurations (e.g. at peak load with no renewable energy sources available).
+The question that naturally arises from the above definitions is what is a \emph{credible} initial state and a \emph{credible} contingency. This equates to asking how reliable the system should be, because the more contingencies and initial states are considered, the more reliable the system will be. However, securing the system against more contingencies comes at a cost (construction of new lines, redispatches) that has to be thoroughly justified. And it is difficult to justify the construction of a new line if its only purpose is to secure the system against an unlikely contingency that might never occur in practice.
 
-% different issues than those encountered with all/no renewable generation can also occur. For example, due to high flows between a region with excess and a region with low generation. This means that there is no longer a single worst-case scenario (the peak load) that covers all issues. Also, the probability of observing simultaneously load close to the peak, and all/no renewable sources available is very low.
+For security assessment, these questions have often been answered by the famous ``N-1 criterion'' that states that at any point, the system should be able to withstand the loss of any single element without consequences for the users. And, in practice, security assessment was often performed on a small set of ``representative'' or ``umbrella states'' of the system (typically peak and minimum load), with the assumption that if the system is secure in those states, then it is always secure~\cite{CIGREreviewOfTools}.
 
-Another challenge faced by power grids is the increasing importance of dynamic stability issues. This increase is caused by many factors including reduced system inertia with the introduction of inverter-based generation, market liberalisation pushing the grid closer to its limits, increase of static limits through the use of dynamic line rating and better conductors, etc. Dynamic phenomena notably play an increasing role in cascading outages~\cite{cascadeAcceleration}. Cascading outages were previously mainly driven by thermal effects (line overloads, etc.) and would thus develop in a few hours, possibly ending in a fast collapse if the operators did not manage to stabilise the system. But cascades that are driven entirely by dynamic issues and that thus fully develop in seconds to minutes are becoming more common. This is especially true for large cascades that are already fast in the majority of cases\footnote{It is also worth noting that even though large blackouts are rare, historical data shows that they contribute more to the risk that medium size blackouts~\cite{CascadingMethodoAndChallenges, LargeContributeMoreThanMediumBlackouts}. This is because large blackouts tend to have higher restoration times and indirect costs (e.g. loss of critical infrastructure, civil disorders, etc.). Another reason is that blackout sizes have a heavy-tailed distribution~\cite{CascadingMethodoAndChallenges, LargeContributeMoreThanMediumBlackouts}. Large blackouts are thus less likely than smaller blackouts, but not much less likely.
-%For example, Ref.~\cite{CascadingMethodoAndChallenges} observed that in the North American blackouts that caused more than 300~MW of load shedding in the period 1984-2006, 64\% of them caused less than 1~GW of load shedding. However, the ones that caused more than 1~GW of load shedding contributed to 80\% of the blackout risk
-}.
+This approach was considered appropriate for old systems dominated by dispatchable generators that followed the load. Indeed, as load patterns are quite repetitive, such was the operation of past power systems. Their security could thus adequately be assessed based on a few edge cases (peak load, minimum load). Figure~\ref{fig:belgian_dispatch} compares this to modern power systems that need to operate in a wider variety of configurations: low/high winds, low/high solar irradiation, low/high load, and any combinations of these. It is thus increasingly difficult to define a set of umbrella states that covers all weaknesses of the system, and that are at the same time reasonably likely to occur. Indeed, the probability of a given contingency occurring while the system is operating with 100\% available wind and 100\% available solar is rather slim. Designing the power system based on such state might thus be judged too conservative. On the other hand, a majority of historical blackouts and large disturbances have been caused by some form of N-k (with \(k > 1\)) contingencies~\cite{majorBlackouts, CascadingMethodoAndChallenges} which suggests that N-k contingencies should be considered (to some extent) in security assessments.
 
-The necessity to transition from deterministic security assessment methodologies (based on worst-case scenarios) to probabilistic methodologies (where different scenarios are weighted according to their probability) has been acknowledged in the industry and literature. For example, the decision 07/2019 of the Agency for the Cooperation of Energy Regulators (ACER) of 19 June 2019 requires the European transmission system operators to develop a probabilistic approach for risk assessment of power systems by 2027. However, there is currently no convincing probabilistic methodology for the security assessment of transmission systems. Indeed, most of the literature focuses on slow cascading outages, and thus does not consider fast phenomena. Some research has been done on probabilistic \textit{dynamic} security assessment, but the developed methods require huge computational power and can thus only be applied on small-scale test systems.
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+    \pgfplotsset{
+    /pgfplots/area cycle list/.style={/pgfplots/cycle list={%
+    {RedViolet,fill=red!75!black,mark=none},%
+    {black,fill=black,mark=none},%
+    {SeaGreen!40!white,fill=SeaGreen!40!white,mark=none},%
+    {LimeGreen!80!black,fill=LimeGreen!80!black,mark=none},%
+    % {pink,fill=pink,mark=none},%
+    {Cerulean,fill=Cerulean,mark=none},%
+    {Dandelion,fill=Dandelion,mark=none},%
+    }
+    },
+    }
+    \begin{groupplot}[
+        group style={%
+            group size=1 by 2,
+            group name=plots,
+            xlabels at=edge bottom,
+            xticklabels at=edge bottom,
+            vertical sep =15pt,
+        },
+        % footnotesize,
+        xlabel = {Time [h]},
+        ylabel = {Power [GW]},
+        ybar stacked, %stack plots=y,%
+        /pgf/bar width=2pt,
+        area style,
+        xmin=0, xmax=167,
+        xtick={12,36,60,84,108,132,156},
+        xticklabels={Monday, Tuesday, Wednedsay, Thursday, Friday, Saturday, Sunday},
+        ymin=-1.5, ymax=12,
+        tickpos=left,
+        % ytick align=outside,
+        % xtick align=outside,
+        width=0.9\linewidth,
+        height=0.3\linewidth,
+    ]
+    \nextgroupplot
+    \addplot table [x=hour,y=nuclear] {Figs/dispatch_2016.txt};
+    \addplot table [x=hour,y=other] {Figs/dispatch_2016.txt};
+    \addplot table [x=hour,y=hydro] {Figs/dispatch_2016.txt};
+    \addplot table [x=hour,y=gas] {Figs/dispatch_2016.txt};
+    \addplot table [x=hour,y=wind] {Figs/dispatch_2016.txt};
+    \addplot table [x=hour,y=solar] {Figs/dispatch_2016.txt};
 
-% For these reasons, there is an increasing willingness to complement deterministic security analyses with probabilistic security analyses, especially from regulatory authorities. In Europe, the decision 07/2019 of the Agency for the Cooperation of Energy Regulators (ACER) of 19 June 2019 requires the European transmission system operators to develop a probabilistic approach for risk assessment of power systems by 2027. However, there is currently no convincing probabilistic methodology for the security assessment of transmission systems. The main limitation of existing methodologies is that they either do not consider all cascading mechanisms, particularly fast mechanism, or that they are inefficient and thus require huge computational power. And in both cases, the results given by these methods can be difficult to interpret and to exploit.
+    \nextgroupplot[legend to name={DispatchLegend},legend style={legend columns=6}]
+    \addplot table [x=hour,y=nuclear] {Figs/dispatch_2024.txt};
+    \addplot table [x=hour,y=other] {Figs/dispatch_2024.txt};
+    \addplot table [x=hour,y=hydro] {Figs/dispatch_2024.txt};
+    \addplot table [x=hour,y=gas] {Figs/dispatch_2024.txt};
+    \addplot table [x=hour,y=wind] {Figs/dispatch_2024.txt};
+    \addplot table [x=hour,y=solar] {Figs/dispatch_2024.txt};
+    % \addplot table [x=hour,y=load] {Figs/dispatch_2024.txt};
 
-\section{Objectives}
+    \legend{Nuclear, Coal and other solid fuels, Hydro, Gas, Wind, Solar}
 
-The objective of this thesis is thus to develop a dynamic probabilistic security assessment methodology that is efficient enough to be applied to a real-scale grid, and can give convincing recommendations on how to efficiently reduce the risk of cascading outages. This objective can be split in two sub-objectives. The first is to develop the general methodological framework to develop a methodology to select the scenarios that have to be simulated and to estimate their probability. The second is to select appropriate models to be used in the aforementioned simulations. Similarly to the methodology, those models should be complex enough to give accurate results, yet simple enough to avoid issues of limited computational power, data availability, etc.
+    \end{groupplot}
 
-\section{Approach}
+    \node[below] at (current bounding box.south)
+          {\pgfplotslegendfromname{DispatchLegend}};
 
-As power systems operate with a high level of reliability, there is limited historical data about their failures. This is especially true for large disturbances. Security assessment methodologies are thus naturally heavily-based on simulations. Of course, lessons learned from past blackouts are very useful to identify the main drivers of cascading outages. Those lessons learned should thus have a high impact on the developed methodology (through the choice of scenarios to simulate) and the models used.
+    \end{tikzpicture}
+    \caption{Belgian electricity mix on the week of the first of May in 2016 (above) and 2024 (below), based on data from the ENTSO-E transparency platform.}
+    \label{fig:belgian_dispatch}
+\end{figure}
 
-As power systems are evolving, some phenomena can grow in importance, and new phenomena can even appear. Lessons learned and expert knowledge thus have to be challenged and updated when necessary. The general approach used in this thesis to design both the security assessment methodology and the models is to start with complex methods/models to be used as a ground truth, then to simplify them as much as possible without significantly compromising on the accuracy of the results.%while keeping acceptable accuracy compared to this ground truth.
 
-\section{Expected contributions}
+Due to these limitations, there is an increasing willingness of TSOs and regulators to complement the \emph{deterministic} N-1 criterion with \emph{probabilistic} methods~\cite{ACER}. Probabilistic methods are based on the concept of risk. The risk associated with a given contingency is defined as the frequency of the contingency (how many times per year it is likely to occur) multiplied the potential consequences of the contingency (e.g. how many consumers will be affected if the contingency occurs). However, as the consequences of contingency depend on the initial state of the system when the contingency occurs, risk can more rigorously be defined as
 
-The expected contributions of this thesis are listed below.
+\begin{equation}
+    R_i = \int f_i(x) \; p(x) \; C_i(x) \; dx
+\end{equation}
 
-\subsubsection{Methodology}
+\noindent where \(R_i\) is the risk associated with contingency \(i\), \(f_i\) is its frequency of occurrence, \(p(x)\) is the probability (density function) of the system being in the state \(x\), and \(C_i(x)\) are the consequences of contingency \(i\) if it occurs when the system is in state \(x\).
+
+The advantage of probabilistic methods is that they can quantify the risk of blackouts and identify the main risk contributors. So, when an action is proposed to make the system more secure (construction of a new line, redispatch, etc.), it is relatively straightforward to perform a cost-benefit analysis by comparing how much the risk of blackout (and the associated costs for society) is reduced vs. how expensive is the proposed action. On the other hand, when using deterministic methods, it is necessary to answer the question of what are \emph{credible} contingencies and \emph{credible} system states which is often done in an arbitrary manner.
+
+The drawback of probabilistic methods is that they need to consider many combinations of system states and contingencies. Their results can thus be more difficult to interpret, and they also have a higher computational burden compared to deterministic methods. Also, they require to quantify the potential consequences of contingencies (e.g. how many consumers are affected) while deterministic methods only perform a dichotomous evaluation (the contingency leads to an acceptable system state or not).
+
+Quantifying the potential consequences of contingency is complex as it requires to simulate the behaviour of power systems in very degraded states and cascading outages. For example, let's assume that a given contingency leads the system to a state where one of its lines is overloaded. In a deterministic assessment, this state would simply be qualified as unacceptable and the simulation would stop there. In a probabilistic assessment, it is necessary to go further.
+
+The overloaded line could trip either following the operation of its protections or if it sags and short-circuits with the ground. Once it trips, the power flow in that line will be redirected to adjacent lines which can cause overloads in adjacent lines and/or stability issues initiating a cascading outage. One must then adequately simulate this cascading outage to see how far it spreads to estimate the final consequences of the initial contingency.
+
+Cascading outages are particularly challenging to simulate due to the many phenomena involved and the high sensitivity of the cascading path to modelling hypothesis~\cite{CascadingMethodoAndChallenges}. Cascading outages can develop in just a few seconds or in several hours depending on the phenomena involved in a particular cascade: loss of stability leads to fast cascades, while overloads lead to slower cascades due to thermal inertia (e.g. a moderately overloaded line). In recent years however, a majority of blackouts have been caused by fast cascading outages lasting a few seconds to a few minutes~\cite{cascadeAcceleration}.
+
+This is a side effect of the increasing importance of stability issues in power grids. This increase is caused by many factors including reduced system inertia with the introduction of inverter-based generation (wind, solar), high-distance power transfers from renewable-rich regions to load centres, market liberalisation pushing the grid closer to its limits, and increase of static limits through the use of dynamic line rating and better conductors.
+
+However, only a small share of the literature on cascading outages considers fast cascades. And, research works that consider fast cascading outages suffer from high computational requirements as they need to perform many detailed time-domain simulations for each given cascade to assess the impact of modelling uncertainties on the cascading path. They thus cannot be used to perform probabilistic security assessment of large power systems as probabilistic security assessment of systems with many possible system states and contingencies are already computationally expensive.
+
+
+\section{Objectives and outline of the thesis}
+
+The objective of this thesis is thus to develop a probabilistic security assessment methodology that adequately models stability issues and fast cascading outages, yet is computationally efficient enough to be applied to large power systems. Also, the method should give intuitive results and recommendations on how to cost-effectively reduce the risk of cascading outages.
+
+But first, it is necessary to have a good understanding of the current state-of-the-art in security assessment methodologies. Thus,
+
 \begin{itemize}
-    \item Identifying the threats that have an important contribution to the risk of cascading outages (and on the associated recommendations on how to reduce this risk), and the ones that can be neglected.
-    \item Showing that the proposed methodology can identify important threats that cannot be identified with static methodologies (methodologies that do not consider dynamic phenomena).
-    \item Increasing our understanding of power systems by highlighting interesting accident sequences and ``near-misses". Indeed, sensitivity studies around those scenarios allow to identify elements for which a detailed modelling is useful.
+    \item Chapter~\ref{ch:security} thus introduces in more details security assessment and deterministic methodologies, reviews the literature in probabilistic methodologies, and discusses the achievements and gaps in existing works.
 \end{itemize}
 
-\subsubsection{Models}
+This thesis then tackles the problem of simulating power systems in very degraded states and fast cascading outages because, as discussed above, this is a key prerequisite to build a probabilistic security assessment methodology, especially when considering stability issues. Therefore,
+
 \begin{itemize}
-    \item Develop simple models of the ICT layer of power systems.
-    \item Develop reduced load models from full distribution network models including the uncertainties from the full model.
+    \item Chapter~\ref{ch:protections} introduces the topic of power system protection as protections play a key role in the triggering and evolution of cascading outages. It then described their failure modes and how they affect security. Finally, it proposes a method to handle the high sensitivity of the cascading processes to the timing of protection system operations.
+    \item Chapter~\ref{ch:SPS} focuses on the special kind of protection systems that are System Integrity Protection Schemes (SIPSs). As opposed to traditional protections, SIPSs do not protect individual elements of the grid (e.g. against overloads), but automatically perform corrective actions with the aim of maintaining the stability of the whole grid. They can thus be a cost-effective approach to reduce the risk of blackouts.
+    \item Chapter~\ref{ch:distrib} discusses how to model the impact of distribution grids on transmission system stability. Indeed, distribution systems are still often represented using very simple load models despite playing a growing role in the dynamic behaviour of power systems due to the growing share of Distributed Energy Resources (DERs, such as rooftop solar generation). This is especially true during degraded system conditions, as DERs are prone to disconnect themselves during disturbances, adding stress on an already weakened system.
 \end{itemize}
 
-\section{Outline}
+With this, it becomes possible to build a probabilistic dynamic security assessment methodology, and
 
-This report can be split in three parts. The first (chapter~\ref{ch:security}) introduces power system security and reviews the state of the art. The second (chapters~\ref{ch:protections}, \ref{ch:SPS} and~\ref{ch:distrib}) discusses the additional modelling requirements when performing probabilistic dynamic security assessment over deterministic dynamic security assessment. The third (chapter~\ref{ch:DPSA}) develops a methodology for probabilistic dynamic security assessment.
+\begin{itemize}
+    \item Chapter~\ref{ch:DPSA} proposes such a methodology for probabilistic dynamic security assessment. It uses the models developed in the previous chapters, and efficient sampling and screening techniques to build a methodology that is accurate and can be applied to large power systems with high but reasonable computational resources. Also, it shows how the methodology can identify the main contributors to the risk and propose recommendations on how to best reduce the risk.
+\end{itemize}
 
-% Chapters~\ref{ch:security} and~\ref{ch:protections} are introductory, while chapters~\ref{ch:SPS}, \ref{ch:distrib} and~\ref{ch:DPSA} are the main contributions of the thesis. Chapter~\ref{ch:perspectives} present the next steps for the remaining of my thesis.
-
-Chapter~\ref{ch:security} gives first an overview of the traditional approach to assess the security of power systems, as well as the most important causes of system insecurity. It also reviews the literature on probabilistic security assessment methods.
-
-Chapter~\ref{ch:protections} gives an overview of the main protection systems used in power grids and their main failure modes. This is important as protections system play a very important role in cascading outages.
-
-Chapter~\ref{ch:SPS} focuses on special protection schemes as they are becoming more common in power systems.
-
-Chapter~\ref{ch:distrib} discusses load models used in power system simulations. Currently used load models are indeed challenged by the increasing installed capacity of renewable energy sources in the distribution side.
-
-Chapter~\ref{ch:DPSA} presents the proposed methodology and how it has been developed.
-
-Chapter~\ref{ch:perspectives} concludes with perspectives for the remaining of my thesis.
+Finally, chapter~\ref{ch:perspectives} concludes with a summary and some perspectives.
 
 \section{List of publications}
 
-The following papers were published in conference proceedings.
+The work presented in this thesis has led to the following publications.
 
 \begin{itemize}
+    \item Journal
+    \item CIGRE paper
+    \item \fullcite{Cosim}
     \item \fullcite{ISGT2023_ADN}
     \item \fullcite{ISGT2023_Protections}
     \item \fullcite{LambdaMu2022}
     \item \fullcite{MCDETasTool}
 \end{itemize}
 
+
 This thesis was performed in the framework of the CYPRESS\footnote{\url{https://cypress-project.be/}} project. I had a significant contribution to the following deliverables.
 
 \begin{itemize}
+    \item D2.1, D.2.2?
     \item \fullcite{cypressD11}
     \item \fullcite{cypressD13}
 \end{itemize}
-
-
-\TODO{Définition des ordres de contingences (N-1, N-k, N-1-1, etc.) = événement initiateur (arbitraire, ma définition) + proba et nombre à considérer
-
-- N-1 (fréquence : 1e-1/y / contingences, nombre : 1000) : difficulté : échantillonnage efficace des conditions initiales (souvent 0 conséquences, mais risque non négligeable)
-- N-k (1e-4, 5000) : difficulté : moindre car va avoir plus souvent des conséquences importantes peu importe les conditions initiales
-- N-1-1 (1e-6 – 1e-7, 1000000) : difficulté : nécessaire d’avoir un screening / sélection des contingences
-    - 2021 French-Iberic separation -> Focus sur les « interconnections » / common-mode (incendie)
-    - Contribution au risque ?
-    - Out of scope ? (Vu la séparation temporelle des contingences, on atteint potentiellement plus vite les limites statiques que dynamique)
-- Contingences continues / nuage noir / variabilité renouvelable (fréquence : ?, nombre : qq unes ?) : s’ajoute aux autres contingences
-- N-K (K >> 1): résilience
-}
-
-
-\TODO{Pour chaque chapitre, passer plus de temps sur l'intro et la structure}
-
-\TODO{When writing, think about the "topic sentence, example, analysis/development, point, link to next paragraph" structure. (Can be flexible)}
-
-Operating in the Fog: Security Management Under Uncertainty
-
-\TODO{Curse of dimensionality / peel, example with hypersphere}
-
-\TODO{Bien situer le contexte (vision planing mais opérationel envisable avec modifications), ce qui existe déjà, etc.}

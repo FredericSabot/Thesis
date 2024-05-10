@@ -1,7 +1,33 @@
 \chapter{Power system protections}
 \label{ch:protections}
+\minitoc
 
 \cite{ProtectionMisoperationsBian2012}
+
+\TODO{Protection indicator}
+\section{Handling uncertain protection behaviour in simulations of cascading outages}
+
+\section{Contingency selection}
+
+\TODO{contingency types~\cite{ContingencyTypes}, future work: FMEA protection, missing vs unwanted trips., n-1-1 requires screening~\cite{VittalN-1-1}}
+
+
+\TODO{Définition des ordres de contingences (N-1, N-k, N-1-1, etc.) = événement initiateur (arbitraire, ma définition) + proba et nombre à considérer
+
+- N-1 (fréquence : 1e-1/y / contingences, nombre : 1000) : difficulté : échantillonnage efficace des conditions initiales (souvent 0 conséquences, mais risque non négligeable)
+- N-k (1e-4, 5000) : difficulté : moindre car va avoir plus souvent des conséquences importantes peu importe les conditions initiales
+- N-1-1 (1e-6 – 1e-7, 1000000) : difficulté : nécessaire d’avoir un screening / sélection des contingences
+    - 2021 French-Iberic separation -> Focus sur les « interconnections » / common-mode (incendie)
+    - Contribution au risque ?
+    - Out of scope ? (Vu la séparation temporelle des contingences, on atteint potentiellement plus vite les limites statiques que dynamique)
+- Contingences continues / nuage noir / variabilité renouvelable (fréquence : ?, nombre : qq unes ?) : s’ajoute aux autres contingences
+- N-K (K >> 1): résilience
+}
+
+This chapter is partly based on the following publication:
+\begin{itemize}
+    \item \fullcite{ISGT2023_Protections}
+\end{itemize}
 
 As mentioned in the previous chapters, protections play a key role during cascading outages. Protections are usually designed to protect a given element against faults and abnormal conditions. The stability of the system as a whole plays a secondary (but still important) role in the design of protection systems. So, history has shown that even a protection operates ``as designed", it can sometimes contribute to the propagation of a cascade and sometimes prevent its propagation~\cite{PSRCreportProtectionMisop}. Another point to consider is that, as the system operates in a (potentially very) degraded state during cascading outages, protection misoperations (either unwanted or missing trips) can become likely and impact the propagation of the cascade.
 
