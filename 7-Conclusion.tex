@@ -5,7 +5,7 @@ While it is of course expected that a probabilistic dynamic security assessment 
 
 During a (fast) cascading outage, many protections trigger in a relatively short amount of time. Uncertainties in the timing of operations (modifying the order in which protections operate) and the possibility of protection failures can potentially lead to a very large number of scenarios to simulate for a given disturbance. However, it is not clear how many sample of protection timings will be required to correctly represent the possible system evolutions. Also, the risk associated with the many but low-probability possible protection failures is difficult to estimate a priori. The fact that protection failures might have a lower impact once the system has already passed a ``point of no return" should also be studied.
 
-The next step in my thesis is thus to provide some answers to the above questions. For this, the proposed methodology will be applied on the RTS (shown in Fig.~\ref{fig:rts}). This test system is sufficiently large to represent cascading phenomena that occur in real-scale systems. But it is a priori small enough that the proposed methodology can be applied with manageable computation times. The use of a high-performance computing (HPC) environment and a more efficient simulator than in my previous work~\cite{MCDETasTool} will however be required. The results obtained should answer part of the above questions thus allowing to increase the effectiveness of the methodology (i.e. to reduce the computation time required to achieve the same risk assessment accuracy).
+The next step in my thesis is thus to provide some answers to the above questions. For this, the proposed methodology will be applied on the RTS (shown in Figure~\ref{fig:rts}). This test system is sufficiently large to represent cascading phenomena that occur in real-scale systems. But it is a priori small enough that the proposed methodology can be applied with manageable computation times. The use of a high-performance computing (HPC) environment and a more efficient simulator than in my previous work~\cite{MCDETasTool} will however be required. The results obtained should answer part of the above questions thus allowing to increase the effectiveness of the methodology (i.e. to reduce the computation time required to achieve the same risk assessment accuracy).
 
 A dedicated sampling scheme might be developed in order to answer those questions. For example, the scheme could create more samples in scenarios where protection operations occur in quick succession.
 
@@ -122,3 +122,5 @@ meilleure sécurité du système.
 
 
 \TODO{Parler d'EMT, besoin screening}
+
+\TODO{Distrib, inverter-connected loads (esp. vehicles)}

@@ -93,7 +93,8 @@ This approach was considered appropriate for old systems dominated by dispatchab
 Due to these limitations, there is an increasing willingness of TSOs and regulators to complement the \emph{deterministic} N-1 criterion with \emph{probabilistic} methods~\cite{ACER}. Probabilistic methods are based on the concept of risk. The risk associated with a given contingency is defined as the frequency of the contingency (how many times per year it is likely to occur) multiplied the potential consequences of the contingency (e.g. how many consumers will be affected if the contingency occurs). However, as the consequences of contingency depend on the initial state of the system when the contingency occurs, risk can more rigorously be defined as
 
 \begin{equation}
-    R_i = \int f_i(x) \; p(x) \; C_i(x) \; dx
+    \label{eq:risk}
+    {R_i = \int f_i(x) \; p(x) \; C_i(x) \; dx}
 \end{equation}
 
 \noindent where \(R_i\) is the risk associated with contingency \(i\), \(f_i\) is its frequency of occurrence, \(p(x)\) is the probability (density function) of the system being in the state \(x\), and \(C_i(x)\) are the consequences of contingency \(i\) if it occurs when the system is in state \(x\).

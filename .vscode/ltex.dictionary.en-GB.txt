@@ -1,3 +1,8 @@
 TSOs
 dispatchable
 ENTSO-E
+setpoints
+undervoltage
+misoperations
+deenergised
+GARPUR

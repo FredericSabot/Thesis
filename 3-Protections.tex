@@ -2,7 +2,18 @@
 \label{ch:protections}
 \minitoc
 
+Cause N-k (k = 2-5) contingencies
+
 \cite{ProtectionMisoperationsBian2012}
+
+\TODO{Pour chaque chapitre, passer plus de temps sur l'intro et la structure}
+
+
+\TODO{When writing, think about the "topic sentence, example, analysis/development, point, link to next paragraph" structure. (Can be flexible)}
+
+Modern numerical relays can self test, reducing hidden failure probability, but can still be misconfigured, and the circuit breaker can fail to open on demand.
+
+Statistic frequency delayed clearing N-1?
 
 \TODO{Protection indicator}
 \section{Handling uncertain protection behaviour in simulations of cascading outages}
@@ -10,19 +21,6 @@
 \section{Contingency selection}
 
 \TODO{contingency types~\cite{ContingencyTypes}, future work: FMEA protection, missing vs unwanted trips., n-1-1 requires screening~\cite{VittalN-1-1}}
-
-
-\TODO{Définition des ordres de contingences (N-1, N-k, N-1-1, etc.) = événement initiateur (arbitraire, ma définition) + proba et nombre à considérer
-
-- N-1 (fréquence : 1e-1/y / contingences, nombre : 1000) : difficulté : échantillonnage efficace des conditions initiales (souvent 0 conséquences, mais risque non négligeable)
-- N-k (1e-4, 5000) : difficulté : moindre car va avoir plus souvent des conséquences importantes peu importe les conditions initiales
-- N-1-1 (1e-6 – 1e-7, 1000000) : difficulté : nécessaire d’avoir un screening / sélection des contingences
-    - 2021 French-Iberic separation -> Focus sur les « interconnections » / common-mode (incendie)
-    - Contribution au risque ?
-    - Out of scope ? (Vu la séparation temporelle des contingences, on atteint potentiellement plus vite les limites statiques que dynamique)
-- Contingences continues / nuage noir / variabilité renouvelable (fréquence : ?, nombre : qq unes ?) : s’ajoute aux autres contingences
-- N-K (K >> 1): résilience
-}
 
 This chapter is partly based on the following publication:
 \begin{itemize}
@@ -85,7 +83,7 @@ The most common line protection schemes are reviewed below. Other types of eleme
 
 \subsection{Redundancy}
 
-As for all critical systems, redundancy is used to increase the reliability of protection systems. This is especially true at higher voltage levels where higher levels of redundancy are used. The example in Fig.~\ref{fig:protectionBackup} demonstrates the different kinds of backups used. In this example, there is a fault on line AB. The primary protection is the relay R\textsubscript{1} that sends a tripping signal to breaker B\textsubscript{1}. R\textsubscript{2} is the duplicate primary protection. It can be identical to R\textsubscript{1} or use a different scheme. The transducers and battery power supply can also be duplicated. The breaker is usually not duplicated due to its higher cost. R\textsubscript{3} is the local backup or breaker failure protection. If R\textsubscript{1} or R\textsubscript{2} sends a tripping signal but B\textsubscript{1} does not open, it will send a trip signal to B\textsubscript{6}, B\textsubscript{7} and B\textsubscript{8}. Breaker failure protection operates with a larger time delay than the primary protection. R\textsubscript{4}, R\textsubscript{9} and R\textsubscript{10} act as remote backup protection. Remote backup protection is often performed by zone 3 relays.
+As for all critical systems, redundancy is used to increase the reliability of protection systems. This is especially true at higher voltage levels where higher levels of redundancy are used. The example in Figure~\ref{fig:protectionBackup} demonstrates the different kinds of backups used. In this example, there is a fault on line AB. The primary protection is the relay R\textsubscript{1} that sends a tripping signal to breaker B\textsubscript{1}. R\textsubscript{2} is the duplicate primary protection. It can be identical to R\textsubscript{1} or use a different scheme. The transducers and battery power supply can also be duplicated. The breaker is usually not duplicated due to its higher cost. R\textsubscript{3} is the local backup or breaker failure protection. If R\textsubscript{1} or R\textsubscript{2} sends a tripping signal but B\textsubscript{1} does not open, it will send a trip signal to B\textsubscript{6}, B\textsubscript{7} and B\textsubscript{8}. Breaker failure protection operates with a larger time delay than the primary protection. R\textsubscript{4}, R\textsubscript{9} and R\textsubscript{10} act as remote backup protection. Remote backup protection is often performed by zone 3 relays.
 
 \begin{figure}
     \centering
@@ -130,7 +128,7 @@ On top of those misoperations that are linked with the system degraded state, th
 Distance protection misoperations are the most common type of misoperations. Zone 3 is the one that causes the most issues. This is because zone 3 has to overreach in order to provide backup for adjacent lines. During large disturbances, this zone is thus susceptible to trip even in the absence of fault. The three main causes for unwanted operations of zone 3 relays are listed below.
 
 \begin{itemize}
-    \item High demand: higher line currents imply that the apparent impedance measured by relays decreases (if voltage is roughly constant). In some extreme cases, this can cause the apparent impedance to enter zone 3 or even zone 2. To avoid this issue, a load blinder must be used as shown in Fig.~\ref{fig:encroachment}. According to NERC's (North American Electric Reliability Council) requirements, the distance protection must not trip for currents 1.5 times the maximum current line rating (considering dynamic line rating) at 85\% of nominal voltage and for a power factor of 30 degrees~\cite{PSRCreportProtectionMisop}. Such a load blinder is thus used in our model.
+    \item High demand: higher line currents imply that the apparent impedance measured by relays decreases (if voltage is roughly constant). In some extreme cases, this can cause the apparent impedance to enter zone 3 or even zone 2. To avoid this issue, a load blinder must be used as shown in Figure~\ref{fig:encroachment}. According to NERC's (North American Electric Reliability Council) requirements, the distance protection must not trip for currents 1.5 times the maximum current line rating (considering dynamic line rating) at 85\% of nominal voltage and for a power factor of 30 degrees~\cite{PSRCreportProtectionMisop}. Such a load blinder is thus used in our model.
 \begin{figure}
     \centering
     \includegraphics[width=0.8\linewidth]{Figs/LoadEncroachment.jpg}

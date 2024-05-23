@@ -1,9 +1,15 @@
 \documentclass[a4paper, dvipsnames]{report}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{minitoc}  % Should be loaded before hyperref
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+\setcounter{minitocdepth}{4}
+\PassOptionsToPackage{hyphens}{url}\usepackage[hidelinks]{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage{geometry} % For cover page
 \usepackage{eso-pic}
 \usepackage{fullpage}
-\PassOptionsToPackage{hyphens}{url}\usepackage[hidelinks]{hyperref}
 \usepackage{amsmath}
 % \usepackage{cite}
 \usepackage[style=ieee, maxnames=6, sorting=none, backend=biber]{biblatex}
@@ -23,16 +29,17 @@
 % \tikzexternalize[prefix=tikz/] % Does not work in this project for some reason
 \usepgfplotslibrary{fillbetween}
 
-\usepackage{caption}
-\usepackage{subcaption}
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{tabularx}
+\newcolumntype{s}{>{\hsize=.25\hsize \raggedright\arraybackslash}X}
+\newcolumntype{B}{>{\hsize=.5\hsize}X}
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
 
 \usepackage{url}
+\usepackage{pdflscape}
+\usepackage{afterpage}
 
-\usepackage{minitoc}  % Should be loaded after hyperref
 \usepackage{silence}
 \WarningFilter{minitoc(hints)}{W0023}
 \WarningFilter{minitoc(hints)}{W0024}
@@ -66,13 +73,12 @@
 % \includeonly{1-Introduction, 2-Security, 3-Protections, 4-SPS, 5-Distribution, 6-DPSA, A-Cosim}
 
 \begin{document}
-\bstctlcite{IEEEexample:BSTcontrol}
 \dominitoc
+\bstctlcite{IEEEexample:BSTcontrol}
 
 \include{Cover}
 
 \include{0-Abstract}
-
 \tableofcontents
 
 \include{1-Introduction}
