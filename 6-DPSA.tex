@@ -2,10 +2,11 @@
 \label{ch:DPSA}
 \minitoc
 
-This chapter is partly based on the following publication:
-\begin{itemize}
-    \item \fullcite{MCDETasTool}
-\end{itemize}
+Need more data than deterministic. It should be noted that, even if using more complex models, the exact value of the risk (in MWh/y or €/y) is of low significance. What is important is to be able to compare the risk associated with different scenarios and to be able to identify actions that most effectively reduce the risk.
+
+PDSA will provide useful information even with garbage data, but better data gives better results \url{https://xkcd.com/2295/} ('Garbage In, Garbage Out' should not be taken to imply any sort of conservation law limiting the amount of garbage produced.)
+
+Limit analysis to short-term stability for sake of simplicity, but could be applied to long-term too (or both, Eurostag, Dynawo)
 
 \TODO{ML figure: coverage, importance, historical}
 
@@ -21,8 +22,11 @@ This chapter is partly based on the following publication:
 
 \TODO{Curse of dimensionality / peel, example with hypersphere}
 
-
 \TODO{Bien situer le contexte (vision planing mais opérationel envisable avec modifications), ce qui existe déjà, etc.}
+
+Limit analysis to short-term stability for sake of simplicity, but could be applied to long-term too (or both, Eurostag, Dynawo), same for ch 6
+
+\TODO{Protection indicator helps a bit with coverage, although don't know how much}
 
 The objective of a probabilistic security assessment are to list the possible accident scenarios that can lead to unwanted consequences, to estimate the probability of these scenarios, and to estimate their consequences. Such assessment can be decomposed into two parts: (i) listing (or sampling) the possible pre-contingency states, and (ii) determining the possible post-contingency evolutions. As highlighted in the literature review (section~\ref{sec:probabilisticSecurity}), the second part is actually the hardest.
 

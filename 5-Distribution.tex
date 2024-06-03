@@ -2,6 +2,20 @@
 \label{ch:distrib}
 \minitoc
 
+\begin{tcolorbox}[width=\linewidth, sharp corners=all,
+    colback=white!80!black,
+    colframe=white!80!black]
+This chapter is based on the following publication:
+\begin{itemize}
+    \item \fullcite{ISGT2023_ADN}
+    \item CIGRE?
+\end{itemize}
+\end{tcolorbox}
+
+\TODO{How much to include from CIGRE paper?}
+
+Give some blackout examples.
+
 It has long been acknowledged that load models play have a critical influence on the results of dynamic simulations, especially on voltage stability~\cite{kundur}. Most utilities however use relatively (e.g. compared to generators) simple load models due to the difficulty to gather data on the loads connected to the distribution grid and their variable nature\footnote{Both the total amount of load and shares of different types of loads (heaters, motors, lamps, etc.) vary with the time of day and the season.}. The most commonly used model is the ZIP load model (aggregation of a constant impedance, a constant current and a constant power load) and its derivatives~\cite{IndustryLoadModel}.
 
 The massive installation of distributed renewable energy sources (mostly wind and solar) in distribution grids challenges those load models. In particular interest in this thesis is the tendency of distributed generators to disconnect during wide-area disturbances. These disconnection had a high impact in historical blackouts. For example, the frequency collapse of Italy in 2003 was partly caused by the unexpected disconnection of 3400~MW of distributed generators while the frequency was still above 49~Hz~\cite[p115]{Italy2003}. On the other hand, there are perspectives regarding the provision of ancillary services by distributed generators. Better modelling of those so-called active distribution networks (ADNs) is thus needed.

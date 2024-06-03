@@ -96,7 +96,6 @@ Due to these limitations, there is an increasing willingness of TSOs and regulat
     \label{eq:risk}
     {R_i = \int f_i(x) \; p(x) \; C_i(x) \; dx}
 \end{equation}
-
 \noindent where \(R_i\) is the risk associated with contingency \(i\), \(f_i\) is its frequency of occurrence, \(p(x)\) is the probability (density function) of the system being in the state \(x\), and \(C_i(x)\) are the consequences of contingency \(i\) if it occurs when the system is in state \(x\).
 
 The advantage of probabilistic methods is that they can quantify the risk of blackouts and identify the main risk contributors. So, when an action is proposed to make the system more secure (construction of a new line, redispatch, etc.), it is relatively straightforward to perform a cost-benefit analysis by comparing how much the risk of blackout (and the associated costs for society) is reduced vs. how expensive is the proposed action. On the other hand, when using deterministic methods, it is necessary to answer the question of what are \emph{credible} contingencies and \emph{credible} system states which is often done in an arbitrary manner.
@@ -127,8 +126,8 @@ But first, it is necessary to have a good understanding of the current state-of-
 This thesis then tackles the problem of simulating power systems in very degraded states and fast cascading outages because, as discussed above, this is a key prerequisite to build a probabilistic security assessment methodology, especially when considering stability issues. Therefore,
 
 \begin{itemize}
-    \item Chapter~\ref{ch:protections} introduces the topic of power system protection as protections play a key role in the triggering and evolution of cascading outages. It then described their failure modes and how they affect security. Finally, it proposes a method to handle the high sensitivity of the cascading processes to the timing of protection system operations.
-    \item Chapter~\ref{ch:SPS} focuses on the special kind of protection systems that are System Integrity Protection Schemes (SIPSs). As opposed to traditional protections, SIPSs do not protect individual elements of the grid (e.g. against overloads), but automatically perform corrective actions with the aim of maintaining the stability of the whole grid. They can thus be a cost-effective approach to reduce the risk of blackouts.
+    \item Chapter~\ref{ch:protections} introduces the topic of power system protection as protections play a key role in the triggering and evolution of cascading outages. It then described their failure modes and how they affect security. Finally, it proposes a method to handle the high sensitivity of the cascading processes to the timing of protection system operations. Annex~\ref{ch:SPS} complements this chapter by giving some reliability considerations regarding system integrity protection schemes, a particular kind of protection systems aimed at improving power system security.
+    % \item Chapter~\ref{ch:SPS} focuses on the special kind of protection systems that are System Integrity Protection Schemes (SIPSs). As opposed to traditional protections, SIPSs do not protect individual elements of the grid (e.g. against overloads), but automatically perform corrective actions with the aim of maintaining the stability of the whole grid. They can thus be a cost-effective approach to reduce the risk of blackouts.
     \item Chapter~\ref{ch:distrib} discusses how to model the impact of distribution grids on transmission system stability. Indeed, distribution systems are still often represented using very simple load models despite playing a growing role in the dynamic behaviour of power systems due to the growing share of Distributed Energy Resources (DERs, such as rooftop solar generation). This is especially true during degraded system conditions, as DERs are prone to disconnect themselves during disturbances, adding stress on an already weakened system.
 \end{itemize}
 
@@ -154,8 +153,7 @@ The work presented in this thesis has led to the following publications.
     \item \fullcite{MCDETasTool}
 \end{itemize}
 
-
-This thesis was performed in the framework of the CYPRESS\footnote{\url{https://cypress-project.be/}} project. I had a significant contribution to the following deliverables.
+The data and code used in these publications is publicly available at~\url{https://fredericsabot.github.io/Publications.html}. This thesis was performed in the framework of the CYPRESS project (\url{https://cypress-project.be/}). I had a significant contribution to the following deliverables.
 
 \begin{itemize}
     \item D2.1, D.2.2?

@@ -5,7 +5,6 @@
 \setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{4}
 \setcounter{minitocdepth}{4}
-\PassOptionsToPackage{hyphens}{url}\usepackage[hidelinks]{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage{geometry} % For cover page
 \usepackage{eso-pic}
@@ -39,6 +38,12 @@
 \usepackage{url}
 \usepackage{pdflscape}
 \usepackage{afterpage}
+\usepackage[most]{tcolorbox}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{adjustbox}
+\usepackage{IEEEtrantools}  % for IEEEeqnarray
+\usepackage[skip=5pt plus1pt]{parskip}
 
 \usepackage{silence}
 \WarningFilter{minitoc(hints)}{W0023}
@@ -55,6 +60,9 @@
     \if@filesw\immediate\write\csname #1\endcsname{\string\citation{\@citeb}}\fi}%
   \@esphack}
 \makeatother
+
+\PassOptionsToPackage{hyphens}{url}\usepackage[hidelinks]{hyperref}
+\usepackage{hypcap} % fixes hyperref link with two captions in a single table
 
 % Packages/def to only use in draft mode
 % Add disable to todonotes options for final version
@@ -84,7 +92,6 @@
 \include{1-Introduction}
 \include{2-Security}
 \include{3-Protections}
-\include{4-SPS}
 \include{5-Distribution}
 \include{6-DPSA}
 \include{7-Conclusion}
@@ -99,5 +106,7 @@
 
 \include{A-CYPRESS}
 % \include{B-Simulation}
+
+\include{4-SPS}
 
 \end{document}
