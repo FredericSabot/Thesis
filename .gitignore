@@ -21,5 +21,6 @@
 tikz/*
 *.maf
 *.mtc*
+*.auxlock
 
 main.pdf

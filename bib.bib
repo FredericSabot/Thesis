@@ -46,6 +46,14 @@ url = {https://hal.archives-ouvertes.fr/hal-03876439}
       primaryClass={eess.SY}
 }
 
+@INPROCEEDINGS{CIGRE_paper,
+  author={Sabot, Frédéric and Henneaux, Pierre and Lamprianidou, Ifigeneia S. and Papadopoulos, Panagiotis N. and Bell, Keith},
+  booktitle={CIGRE Paris Session 2024},
+  title={Impact of active distribution networks on power system stability - a case study},
+  year={2024},
+  month = 8,
+}
+
 @ARTICLE{CascadingMethodoAndChallenges,  author={Vaiman and Bell and Chen and Chowdhury and Dobson and Hines and Papic and Miller and Zhang},  journal={IEEE Transactions on Power Systems},   title={Risk Assessment of Cascading Outages: Methodologies and Challenges},   year={2012},  volume={27},  number={2},  pages={631-641},  doi={10.1109/TPWRS.2011.2177868}}
 
 @techreport{majorBlackouts,
@@ -348,9 +356,6 @@ urldate = {2022-08-04},
 @ARTICLE{EurostagHPC,
 author={Konstantelos, Ioannis and Jamgotchian, Geoffroy and Tindemans, Simon H. and Duchesne, Philippe and Cole, Stijn and Merckx, Christian and Strbac, Goran and Panciatici, Patrick},  journal={IEEE Transactions on Smart Grid},   title={Implementation of a Massively Parallel Dynamic Security Assessment Platform for Large-Scale Grids},   year={2017},  volume={8},  number={3},  pages={1417-1426},  doi={10.1109/TSG.2016.2606888}}
 
-@ARTICLE{PierreIEEEtran,
-author={Henneaux, Pierre and Labeau, Pierre-Etienne and Maun, Jean-Claude and Haarla, Liisa},  journal={IEEE Transactions on Power Systems},   title={A Two-Level Probabilistic Risk Assessment of Cascading Outages},   year={2016},  volume={31},  number={3},  pages={2393-2403},  doi={10.1109/TPWRS.2015.2439214}}
-
 @article{MCDET,
 author = {Martina Kloos and Jörg Peschke},
 title = {MCDET: A Probabilistic Dynamics Method Combining Monte Carlo Simulation with the Discrete Dynamic Event Tree Approach},
@@ -482,6 +487,15 @@ urldate = {2022-08-10},
   publisher={McGraw-Hill Education}
 }
 
+@book{CutsemBook,
+  title={Voltage stability of electric power systems},
+  author={Van Cutsem, Thierry and Vournas, Costas},
+  isbn={9780792381396},
+  series={Power electronics and power systems},
+  year={1998},
+  publisher={McGraw-Hill Education}
+}
+
 @phdthesis{ChaspierreThesis,
   author       = {Chaspierre, Gilles},
   title        = {Reduced-order modelling of active distribution networks for large-disturbance simulations},
@@ -526,16 +540,6 @@ institution = {NERC},
 url = {https://www.nerc.com/comm/PC/LoadModelingTaskForceDL/Dynamic%20Load%20Modeling%20Tech%20Ref%202016-11-14%20-%20FINAL.PDF},
 urldate = {2022-08-12},
 }
-
-% @ARTICLE{LoadModelReview,
-%   author={Arif, Anmar and Wang, Zhaoyu and Wang, Jianhui and Mather, Barry and Bashualdo, Hugo and Zhao, Dongbo},
-%   journal={IEEE Transactions on Smart Grid},
-%   title={Load Modeling—A Review},
-%   year={2018},
-%   volume={9},
-%   number={6},
-%   pages={5986-5999},
-%   doi={10.1109/TSG.2017.2700436}}
 
 @INPROCEEDINGS{ADNreview2013,
 author={Resende, F. O. and Matevosyan, J. and Milanovic, J. V.},  booktitle={2013 IEEE Grenoble Conference},   title={Application of dynamic equivalence techniques to derive aggregated models of active distribution network cells and microgrids},   year={2013},  volume={},  number={},  pages={1-6},  doi={10.1109/PTC.2013.6652356}}
@@ -707,16 +711,6 @@ pages = {219-254},
 year = {2000},
 doi = {https://doi.org/10.1016/S0951-8320(00)00017-X},
 author = {P.E. Labeau and C. Smidts and S. Swaminathan},
-}
-
-@article{RTS-figure,
-author = {Henneaux, Pierre and Kirschen, D.S},
-year = {2015},
-month = {03},
-title = {Probabilistic Security Analysis of Optimal Transmission Switching},
-volume = {31},
-journal = {IEEE Transactions on Power Systems},
-doi = {10.1109/TPWRS.2015.2409152}
 }
 
 @inproceedings{hydroGov,
@@ -942,4 +936,232 @@ pages = {7-14},
 title = {Comparison of Series and Shunt FACTS to Improve the Performance of Power System with Wind Penetration},
 volume = {1},
 journal = {International Journal of Advances in Power Systems (IJAPS)}
+}
+
+@inproceedings{Vorwerk,
+title = {Using Quantile Forecasts for Dynamic Equivalents
+of Active Distribution Grids under Uncertainty},
+booktitle = {11th Bulk Power Systems Dynamics and Control ({IREP} 2022)},
+location={Banff, Canada},
+year = {2022},
+% doi = {10.48550/arXiv.2207.03915},
+author = {Johanna Vorwerk and Thierry Zufferey and Petros Aristidou and Gabriela Hug},
+}
+
+@techreport{der_a,
+	title = {The New Aggregated Distributed Energy Resources (der\_a) Model for Transmission Planning Studies: 2019 Update},
+	author = {EPRI},
+	month = mar,
+	year = {2019},
+}
+
+@techreport{der_a_parametrisation,
+author = {{NERC}},
+year = {2019},
+month = {09},
+title = {Reliability guideline - Parametrization of the {DER\_A} model},
+}
+
+@techreport{component_based,
+author = {{NERC}},
+year = {2017},
+month = {03},
+title = {Reliability guideline - Developing load model composition data},
+}
+
+@article{fulgencio,
+	title = {Aggregated dynamic model of active distribution networks for large voltage disturbances},
+	volume = {178},
+	journal = {Electric Power Systems Research},
+	author = {Fulgêncio, Nuno and Moreira, Carlos and Carvalho, Leonel and Lopes, João Peças},
+	year = {2020},
+}
+
+@techreport{CIGREMV,
+author = {{CIGRE Working Group C4.04}},
+year = {2014},
+month = {4},
+title = {Benchmark Systems for Network Integration of Renewable and Distributed Energy Resources},
+institution = {CIGRE},
+}
+
+@techreport{G99,
+	title = {Engineering Recommendation {G99} - Requirements for the connection of generation equipment in parallel with public distribution networks on or after 27 April 2019},
+	author = {ENA},
+	month = 10,
+	year = {2022},
+}
+
+@techreport{G59,
+	title = {Engineering Recommendation {G59} - Recommendations for the Connection of Generating Plant to the Distribution Systems of Licensed Distribution Network Operators},
+	author = {ENA},
+	month = 9,
+	year = {2019},
+}
+
+@techreport{G98,
+	title = {Engineering Recommendation {G98} - Requirements for the connection of Fully Type Tested Micro-generators (up to and including 16 A per phase) in parallel with public Low Voltage Distribution Networks on or after 27 April 2019},
+	author = {ENA},
+	month = 10,
+	year = {2022},
+}
+
+@techreport{G83,
+	title = {Engineering Recommendation {G83} - Recommendations for the Connection of Type Tested Small-scale Embedded Generators (Up to 16A per Phase) in Parallel with Low-Voltage Distribution Systems},
+	author = {ENA},
+	month = 6,
+	year = {2019},
+}
+
+@phdthesis{Sam_thesis,
+	title = {Dynamic Interactions Between Voltage and Frequency Events in Future Power Systems},
+	school = {University of Strathclyde},
+	author = {Gordon, Samuel},
+	year = {2024},
+}
+
+
+@techreport{ETYS,
+  author = {{National Grid ESO}},
+	title = {{ETYS} documents and appendices},
+	url = {https://www.nationalgrideso.com/research-and-publications/electricity-ten-year-statement-etys/etys-documents-and-appendices},
+  urldate = {2024-06-07},
+}
+
+@techreport{HND_2022,
+	author = {{National Grid ESO}},
+	title = {Pathway to 2030 - Holistic Network Design},
+  year = {2022},
+  month = 7,
+	url = {https://www.nationalgrideso.com/document/262681/download},
+  urldate = {2024-06-07},
+}
+
+@techreport{HND_2024,
+	author = {{National Grid ESO}},
+	title = {Beyond 2030},
+  year = {2024},
+  month = 3,
+	url = {https://www.nationalgrideso.com/document/304761/download},
+  urldate = {2024-06-07},
+}
+
+@misc{scotwind_2022,
+	author = {{Scottish Government}},
+	title = {ScotWind Offshore Wind Leasing Round: statement by the {N}et {Z}ero {S}ecretary},
+	month = 1,
+	year = {2022},
+	url = {https://www.gov.scot/publications/scotwind-offshore-wind-leasing-round-statement-net-zero-secretary-18-january-2022/},
+}
+
+@misc{sheffield_pv,
+	author = {{The University of Sheffield}},
+	title = {{PV} {L}ive},
+	url = {https://www.solar.sheffield.ac.uk/pvlive/},
+	urldate = {2024-01-24},
+}
+
+@misc{FES_regional,
+	author = {{National Grid ESO}},
+	title = {Future Energy Scenarios 2022 - Regional breakdown of {FES} data},
+	year = {2022},
+  url = {https://www.nationalgrideso.com/future-energy/future-energy-scenarios-fes/fes-documents},
+  addendum = {The 2022 version of the FES data is located in the ``2022 archive'' tab}
+}
+
+@techreport{aemo_short_duration,
+	author = {AEMO},
+	title = {Short Duration Undervoltage Disturbance Ride-Through Test Procedure - A Consultation},
+	url = {https://aemo.com.au/-/media/files/stakeholder_consultation/consultations/nem-consultations/2020/short-duration-undervoltage/short-duration-vdrt-consultation-test-procedure-meeting-pack.pdf?la=en},
+	urldate = {2024-01-25},
+}
+
+@techreport{aemo_behaviour_2021,
+	author = {{AEMO}},
+	title = {Behaviour of distributed resources during power system disturbances - Overview of key findings},
+	url = {https://aemo.com.au/-/media/files/initiatives/der/2021/capstone-report.pdfBF184AC51804652E268B3117EC12327A},
+	month = may,
+	year = {2021},
+}
+
+@misc{capacity_register_northern_powergrid,
+	author = {{Northern Powergrid}},
+	title = {Embedded Capacity Register 1MW and Over},
+	url = {https://northernpowergrid.opendatasoft.com/explore/dataset/embedded-capacity-register/information/},
+	urldate = {2024-01-02},
+}
+
+@misc{capacity_register_ssen,
+	author = {{Scottish \& Southern Electricity Networks}},
+	title = {Embedded Capacity Register},
+	url = {https://www.ssen.co.uk/our-services/tools-and-maps/embedded-capacity-register/},
+	urldate = {2024-01-02},
+}
+
+@misc{capacity_register_sp,
+	author = {{SP Energy Networks}},
+	title = {Embedded Capacity Register},
+	url = {https://www.spenergynetworks.co.uk/pages/embedded_capacity_register.aspx},
+	urldate = {2024-01-02},
+}
+
+@misc{adequacy_vs_security,
+  Author = {Henneaux, Pierre},
+  Title = {Lecture notes in Electrical Power Systems},
+  Institution = {Université libre de Bruxelles},
+  Year = {2024},
+}
+
+@misc{sedg_github_nodate,
+	title = {Github repository},
+	url = {https://github.com/sedg/ukgds},
+	author = {SEDG},
+}
+
+@misc{UKGDS,
+  author = {{Centre for Sustainable Electricity and Distributed Generation}},
+  title = {United Kingdom Generic Distribution System (UKGDS)},
+  year = {2015},
+  url = {https://github.com/sedg/ukgds},
+}
+
+@article{UK_motor_share,
+	title = {The shape of future electricity demand: Exploring load curves in 2050s Germany and Britain},
+	volume = {90},
+	doi = {10.1016/j.energy.2015.06.082},
+	journal = {Energy},
+	author = {Boßmann, T. and Staffell, I.},
+	year = {2015},
+	keywords = {Electric vehicle, Electricity, Electricity demand, Heat pump, Load forecasting, Load modelling},
+	pages = {1317--1333},
+}
+
+@inproceedings{WECC_CLM_association,
+	author = {Gaikwad, Anish and Markham, Penn and Pourbeik, Pouyan},
+	title = {Implementation of the WECC Composite Load Model for utilities using the component-based modeling approach},
+	booktitle = {2016 {IEEE}/{PES} Transmission and Distribution Conference and Exposition},
+	year = {2016},
+}
+
+@techreport{sygensys,
+	author = {SYGENSYS},
+	title = {Resilient Electrical Vehicle Charging ({REV}) - Work package 1 report},
+	month = 2,
+	year = {2022},
+}
+
+@techreport{aemo_psse_2022,
+	title = {{PSS}®{E} models for load and distributed {PV} in the {NEM}},
+	author = {AEMO},
+	month = 11,
+	year = {2022},
+}
+
+
+@article{pourbeik_developing_2021,
+	title = {Developing Dynamic Load Models for the Australian National Electricity Market with a Focus on Distributed Energy Resources},
+	journal = {CIGRE Science \& Engineering},
+	author = {Pourbeik, P. and Ryan, D. J. and Brnadic, F. and Riesz, J. and Badrzadeh, B. and Lu, J.},
+	month = 2,
+	year = {2021},
 }

@@ -13,3 +13,11 @@ CIGRE
 reclose
 pu
 DCAT
+DERs
+RoCoF
+WECC
+EPRI
+CCTs
+ScotWind
+DSOs
+UKGDS

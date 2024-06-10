@@ -265,7 +265,7 @@ Moreover, as discussed above, there are three additional complexities that can b
     \item Sensitivity of cascading outages to small changes in protection behaviour: small changes in the timing of protection systems operation can impact the order in which protection systems operate, and potentially vastly impact the cascade evolution.
 \end{itemize}
 
-Missing trips caused by relay or breaker failures can relatively easily be modelled as has been done in the DCAT tool~\cite{DCATphase1} and in approaches based on dynamic event trees~\cite{PierreIEEEtran}. In DCAT, when a protection system operates during a cascade, two possible branches of the simulation are created: one where the protection actually operates and one where it fails to. The frequency associated with each branch is weighted according to the probability of the protection system to operate (for the former branch) or to fail (for the latter)\footnote{As protection systems are often designed to protected individual elements and not the grid itself, it can be argued that, once a cascade is initiated, protection failures might not necessarily negatively impact system stability. And, since protection failures are unlikely, their contribution to the risk might be negligible. Indeed, chapter~\ref{ch:DPSA} demonstrates that for the considered test system, protection failures to operate during cascading outages do not significantly impact the risk estimate. However, this might be system dependent and the argument is of course not valid for SIPSs.}. This probability can be estimated based on standard reliability techniques (e.g. fault trees).
+Missing trips caused by relay or breaker failures can relatively easily be modelled as has been done in the DCAT tool~\cite{DCATphase1} and in approaches based on dynamic event trees~\cite{TwoLevelPSA}. In DCAT, when a protection system operates during a cascade, two possible branches of the simulation are created: one where the protection actually operates and one where it fails to. The frequency associated with each branch is weighted according to the probability of the protection system to operate (for the former branch) or to fail (for the latter)\footnote{As protection systems are often designed to protected individual elements and not the grid itself, it can be argued that, once a cascade is initiated, protection failures might not necessarily negatively impact system stability. And, since protection failures are unlikely, their contribution to the risk might be negligible. Indeed, chapter~\ref{ch:DPSA} demonstrates that for the considered test system, protection failures to operate during cascading outages do not significantly impact the risk estimate. However, this might be system dependent and the argument is of course not valid for SIPSs.}. This probability can be estimated based on standard reliability techniques (e.g. fault trees).
 
 During cascading outages, power system operate in very degraded states which can cause protection system misoperations leading to both missing and unwanted trips. Possible misoperations have been reported by the IEEE Power System Relaying and Control Committee (PSRC)~\cite{ProtectionFailuresDemetrios, PSRCreportProtectionMisop, PSRCreportSummaryProtectionMisop}.
 
@@ -341,7 +341,7 @@ The trips that led to the system separation are listed in Table~\ref{tab:split_t
 
 Similarly, although not the focus of this thesis, slow cascades are also affected by modelling uncertainties. The tripping of overloaded lines is caused by lines sagging into vegetation and thus depends on uncertain parameters as vegetation height, temperature and wind. % The order of trips can thus also be affected by uncertainties.
 
-A common approach to handle uncertainties is to use Monte Carlo (MC) simulations and their derivatives. Notably, in~\cite{PierreIEEEtran}, fast cascading outages are simulated with dynamic event trees where each possible realisation of a protection system behaviour leads to different possible branches. In~\cite{SequencesRelaySobol}, the order of protection system operation is encoded in a matrix that is then used with extended forms of variance-based sensitivity estimators to rank how sensitive cascading outages are to different power system variables.
+A common approach to handle uncertainties is to use Monte Carlo (MC) simulations and their derivatives. Notably, in~\cite{TwoLevelPSA}, fast cascading outages are simulated with dynamic event trees where each possible realisation of a protection system behaviour leads to different possible branches. In~\cite{SequencesRelaySobol}, the order of protection system operation is encoded in a matrix that is then used with extended forms of variance-based sensitivity estimators to rank how sensitive cascading outages are to different power system variables.
 
 The issue with MC techniques is that they are computationally expensive. This poses an important challenge for this thesis as systematic probabilistic dynamic security assessments require to simulate many cascading outage scenarios. To alleviate this challenge, a simple indicator has been developed to predict which cascading outage scenarios are sensitive to protection-related uncertainties and which are not. MC simulations then only have to be performed for the former limiting their impact of computation time. The simple indicator is presented in section~\ref{sec:protection_indicator}. It is applied on a standard test system with a set of protection systems described in section~\ref{sec:protection_test_case}, and its performance is discussed in section~\ref{sec:protection_results}.
 
@@ -443,7 +443,7 @@ The test case used in this example is the IEEE 39-bus test system~\cite{IEEE39} 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.6\textwidth]{Figs/IEEE39.png}
+    \includegraphics[width=0.7\textwidth]{Figs/IEEE39.png}
     \caption{IEEE 39 bus system~\cite{IEEE39figure}}
     \label{fig:IEEE39}
 \end{figure}
@@ -451,11 +451,13 @@ The test case used in this example is the IEEE 39-bus test system~\cite{IEEE39} 
 The load model has been changed to a restorative exponential load model, i.e.
 
 \begin{equation}
+\label{eq:restorative_load_model_1}
 P = P_0 \left(\frac{U}{U_f}\right)^2, \quad Q = Q_0 \left(\frac{U}{U_f}\right)^2
 \end{equation}
 \noindent where \(P\) (resp. \(P_0\)) and \(Q\) (\(Q_0\)) are the (initial) active and reactive power consumption of the load, \(U\) is the voltage at the load bus, and \(U_f\) satisfies
 
 \begin{equation}
+\label{eq:restorative_load_model_2}
 t_f \frac{dU_f}{dt} = U - U_f, \quad U_f \ge 0.5
 \end{equation}
 \noindent where \(t_f\) is the restoration time of the load. Three values of this parameter are used in this example: 1s, 5s, and infinite (i.e. non-restorative load) in order to study different kinds of cascading outages.
@@ -692,7 +694,7 @@ Because of the different system evolution, some events that occurred in the slow
 \end{tikzpicture}
 \label{subfig:fast_sequence}
 }
-\caption{Comparison of the slow and fast sequences for the N-2 contingency of lines 5-6 and 6-7. Event codes are given in Table~\ref{tab:IEEE39_split}.}
+\caption{Timeline of events in the slow and fast sequences for the N-2 contingency of lines 5-6 and 6-7. Event codes are given in Table~\ref{tab:IEEE39_split}.}
 \label{fig:IEEE39_sequences}
 \end{figure}
 
@@ -802,6 +804,6 @@ For this, it is important to first acknowledge the fact that protection systems 
 
 Lack of selectivity has more diverse causes, including design errors, incorrect settings, and as-left personnel errors~\cite{ProtectionMisoperationsBian2012} that are significantly harder to model. Most of the literature on the topic is rather old and is concerned with failure modes of legacy electromechanical relays that are no longer used. Unfortunately, due to lack of time, this issue was not investigated further in this thesis and is left for future work. But, statistics on the rate and causes of unselective protection behaviour at extra-high voltages (the ones most critical for security-related issues) would greatly help in evaluating the importance of unselective trips and to model them.
 
-Beyond clearing the initial faults, protection systems also play a key role in how cascading outages propagate. As for fault clearing, lack of dependability or of selectivity can impact cascading outage evolution\footnote{Although, as will be shown in chapter~\ref{ch:DPSA}, the impact lack of dependability is relatively limited, except for SIPSs.}. However, even with perfectly reliable protection systems, it is difficult to predict how protection systems will impact the evolution of cascading outages. Indeed, during cascading outages, many protection systems might operate or be close to operate in a short window of time. Therefore, the propagation of cascading outages (and thus their final consequences) can be very sensitive to modelling uncertainties. In the literature, this has been studied using advanced MC techniques~\cite{SequencesRelaySobol, PierreIEEEtran}, however MC simulations are computationally expensive which is problematic for the probabilistic security assessment of large systems that require to simulate many possible cascading outages. To alleviate this issue, this thesis proposes a simple indicator to predict which cascading outages are actually sensitive to protection-related uncertainties, so that MC simulations can be focused on these cases.
+Beyond clearing the initial faults, protection systems also play a key role in how cascading outages propagate. As for fault clearing, lack of dependability or of selectivity can impact cascading outage evolution\footnote{Although, as will be shown in chapter~\ref{ch:DPSA}, the impact lack of dependability is relatively limited, except for SIPSs.}. However, even with perfectly reliable protection systems, it is difficult to predict how protection systems will impact the evolution of cascading outages. Indeed, during cascading outages, many protection systems might operate or be close to operate in a short window of time. Therefore, the propagation of cascading outages (and thus their final consequences) can be very sensitive to modelling uncertainties. In the literature, this has been studied using advanced MC techniques~\cite{SequencesRelaySobol, TwoLevelPSA}, however MC simulations are computationally expensive which is problematic for the probabilistic security assessment of large systems that require to simulate many possible cascading outages. To alleviate this issue, this thesis proposes a simple indicator to predict which cascading outages are actually sensitive to protection-related uncertainties, so that MC simulations can be focused on these cases.
 
 In conclusion, this chapter has discussed how to model N-k contingencies caused by protection misoperations and how to model the impact of protection systems on the evolution of cascading outages. The next step is thus to integrate this information into a comprehensive probabilistic security assessment framework. This is the objective of chapter~\ref{ch:DPSA}.
