@@ -1,6 +1,26 @@
 \chapter{Perspectives}
 \label{ch:perspectives}
 
+
+
+\section{Discussion}
+
+Need more data than deterministic (list: operating condition database, protection, statistics, etc.). It should be noted that, even if using more complex models, the exact value of the risk (in MWh/y or €/y) is of low significance. What is important is to be able to compare the risk associated with different scenarios and to be able to identify actions that most effectively reduce the risk.
+
+PDSA will provide useful information even with garbage data, but better data gives better results \url{https://xkcd.com/2295/} ('Garbage In, Garbage Out' should not be taken to imply any sort of conservation law limiting the amount of garbage produced.)
+
+\TODO{(D)PSA is more of a process than a methodology, refine the models/data by iteration}
+
+\TODO{2-3 mots sur ce qu'Eurostag appèle le modèle electromec étendu (p117)}
+
+This requires to know what protections are installed in the system and what are their settings. Finally, to compute the frequency of scenarios, it is necessary to have an estimate of the probability of failure of protection systems. the system has to be simulated further away from normal operation (e.g. during cascading outages). For this, one should generally model the generators (including governors and voltage regulators), loads, transformers, etc. with the best (RMS) models available. If the accuracy of a model is deemed insufficient (e.g. difficulty to reproduce past disturbances, high sensitivity to input data, etc.), then better models have to be developed and/or better data have to be collected.
+
+ML analysis remains superficial in this thesis. Bugaje
+
+I do not believe in security indicator as the ones proposed by NERC because focus on the consequences (e.g. low voltage) that are easy to identify and not on the causes. Tripping sequence is more useful. Can be analysed partly manually.
+
+
+
 While it is of course expected that a probabilistic dynamic security assessment is more computationally expensive than a deterministic assessment, the difference will strongly depend on the effectiveness of the probabilistic methodology. Uncertainties in the pre-disturbance state of the system are already considered in a traditional dynamic security assessment~\cite{EurostagHPC}. So, the added computational effort of a dynamic probabilistic assessment is mainly in the modelling of the post-disturbance evolution. A notable contribution comes from the handling of uncertainties related to protections.
 
 During a (fast) cascading outage, many protections trigger in a relatively short amount of time. Uncertainties in the timing of operations (modifying the order in which protections operate) and the possibility of protection failures can potentially lead to a very large number of scenarios to simulate for a given disturbance. However, it is not clear how many sample of protection timings will be required to correctly represent the possible system evolutions. Also, the risk associated with the many but low-probability possible protection failures is difficult to estimate a priori. The fact that protection failures might have a lower impact once the system has already passed a ``point of no return" should also be studied.
@@ -35,6 +55,9 @@ After completion of the above work, the following points will be studied.
 \section{Future work}
 
 The following points are out of scope of this thesis but are interesting future research tracks.
+
+
+The contingencies considered in this work are line faults followed a failure to trip of some protection system. Unwanted trips are another important failure mode of protection systems that can transform an N-1 contingency into an N-k contingency. There is however very limited literature on the modelling of those unwanted trips (for modern numerical protection relays) which is something we will study in future work. Also, better stability indicators could be developed for systems with high shares of inverter-based generation and for severe contingencies to improve the screening process and reduce the computational burden of the PDSA.
 
 \begin{itemize}
     \item Study of slow cascading mechanisms: slow cascading mechanisms still play a major role in some cascading outages, especially during the initial stages. For (usually small) cascades where only slow mechanism play a role, QSS methods available in the literature can be used. For cascades driven by both slow and fast mechanisms, it is more complex. % Possibilities: extend my method (add long term models) so integrated approach but might need different sampling techniques during slow and fast phase (but no separation between slow and fast in the modelling), Henneaux, DCAT

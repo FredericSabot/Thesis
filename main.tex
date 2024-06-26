@@ -1,15 +1,17 @@
-\documentclass[a4paper, dvipsnames]{report}
+\documentclass[a4paper, dvipsnames, twoside]{report}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{minitoc}  % Should be loaded before hyperref
 \setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{4}
 \setcounter{minitocdepth}{4}
-\usepackage[utf8]{inputenc}
-\usepackage{geometry} % For cover page
+% \usepackage[utf8]{inputenc}  % Not needed with lualtex
+\usepackage[nomarginpar, headheight=10mm,
+  margin=2.5cm]{geometry} % For cover page and fancyhdr
 \usepackage{eso-pic}
-\usepackage{fullpage}
+% \usepackage{fullpage} % does not work well with fancyhdr
 \usepackage{amsmath}
+\usepackage{amssymb}
 % \usepackage{cite}
 \usepackage[style=ieee, maxnames=6, sorting=none, backend=biber, citestyle=numeric-comp]{biblatex}
 \usepackage{csquotes} % recommended by biblatex
@@ -27,6 +29,7 @@
 \usepgfplotslibrary{external} % Increases compilation speed
 \tikzexternalize[prefix=tikz/]
 \usepgfplotslibrary{fillbetween}
+\pgfplotsset{every axis plot/.append style={line width=1pt}}
 \usepackage{circuitikz}
 
 \usepackage{booktabs}
@@ -52,6 +55,9 @@
 \usepackage{microtype}
 \tolerance=5000
 
+\usepackage{fancyhdr}
+\usepackage{pdfpages}
+
 \usepackage{silence}
 \WarningFilter{minitoc(hints)}{W0023}
 \WarningFilter{minitoc(hints)}{W0024}
@@ -73,6 +79,7 @@
 
 % Packages/def to only use in draft mode
 % Add disable to todonotes options for final version
+\setlength{\marginparwidth }{2cm}
 \usepackage[colorinlistoftodos]{todonotes}
 \makeatletter
 \renewcommand{\todo}[2][]{\tikzexternaldisable\@todo[#1]{#2}\tikzexternalenable}
@@ -81,11 +88,8 @@
 \newcommand{\refs}{[\textcolor{red}{refs}]}
 % \newcommand{\refs}{}
 
-\title{Thèse - Mi-parcours}
-\author{Frédéric Sabot}
-\date{\today}
-
-\includeonly{1-Introduction, 2-Security, 3-Protections, 5-Distribution, 4-SPS}
+\includeonly{1-Introduction, 2-Security, 3-Protections, 5-Distribution, 4-SPS, 6-DPSA}
+% \includeonly{6-DPSA}
 
 \begin{document}
 \dominitoc
@@ -95,6 +99,17 @@
 
 \include{0-Abstract}
 \tableofcontents
+
+
+% % \setlength{\headheight}{30mm}
+% % \addtolength{\topmargin}{-30mm}
+\pagestyle{fancy}
+% %... then configure it.
+\fancyhead{} % clear all header fields
+\fancyhead[LO,RE]{\textsc{\nouppercase{\leftmark}}}
+\fancyhead[LE,RO]{\thepage}
+\fancyfoot{} % clear all footer fields
+
 
 \include{1-Introduction}
 \include{2-Security}
@@ -113,5 +128,6 @@
 
 \include{4-SPS}
 \include{A-CYPRESS}
+\let\clearpage\relax  % Don't end on a blank page
 
 \end{document}

@@ -1,0 +1,2 @@
+{"rule":"ENGLISH_WORD_REPEAT_RULE","sentence":"^\\QGrouping of 8617 initial states of the RTS-GMLC into clusters with a maximum intra-cluster euclidean distance Distance [MW] clusters points per cluster 5 8612 1.0006 10 8580 1.004 20 8340 1.03 50 5916 1.46 100 2752 3.13 200 989 8.71\\E$"}
+{"rule":"IN_A_ISLAND","sentence":"^\\QThe second is that the operation of an additional protection system does not necessarily impact the consequences, for example, if it occurs in an island of the system that will nevertheless collapse.\\E$"}

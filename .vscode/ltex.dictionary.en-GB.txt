@@ -23,3 +23,13 @@ DSOs
 UKGDS
 PMUs
 SPSs
+OPF
+iTesla
+RTS-GMLC
+islanding
+Dynawo
+Eurostag
+Modelica
+resp
+M€
+SVMs
