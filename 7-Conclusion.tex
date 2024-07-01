@@ -1,149 +1,73 @@
-\chapter{Perspectives}
+\chapter{Conclusions and future work}
 \label{ch:perspectives}
 
+Society has grown to expect electricity to be available at any time and any interruption of service can thus have massive consequences both from an economic perspective (production downtime, equipment damage) and from a social perspective (injuries due to the lack of electricity, civil disorders). To meet those reliability expectations, power systems have often been designed around the N-1 security criterion that states the system should always be able to withstand the loss of any single element. However, past disturbances have shown that, although rarer, N-2 and higher order contingencies can occur and lead to cascading outages and widespread blackouts. On the other hand, the increasing share of intermittent energy sources indicate and economic pressure are pushing for TSOs to relax the N-1 criterion for system conditions that are deemed as unlikely or infrequent. There is thus an increasing willingness of TSOs to complement the deterministic N-1 criterion with probabilistic methods that can more adequately estimate the risk of blackouts and balance it with the cost of avoiding those blackouts. In this context, the objective of this thesis was to develop a probabilistic methodology to identify the scenarios most likely to lead to blackouts and to estimate their frequency and consequences. More specifically, this thesis focused on cascading outages initiated by short-term stability issues.
 
+\section{Main Contributions}
+
+Probabilistic methodologies require more advanced models than deterministic ones. Most importantly, protection systems play a key role in the initiation and propagation of cascading outages and have thus been studied in chapter~\ref{ch:protections}. Indeed, failure of protection systems to isolate faults can transform mild N-1 contingencies into more severe N-k ones and initiating a cascading outage. To model these failures, standard reliability techniques such as failure mode and effect analysis and event trees can be used. The application of these techniques to power systems are extensively described in~\cite{GridPSA}, and this thesis reuse this work to define contingency list to be considered in a probabilistic dynamic security assessment and to estimate the frequency of occurrence of such contingencies.
+
+Conversely, the impact of protection systems during cascading outages in more difficult to model. Indeed, during cascading outages, and especially fast cascading outages, many protection systems might operate in a short period of time. This implies that the evolution of cascading outages can be very sensitive to the timing of protection system operations. In the literature, this sensitivity has been handled (when not disregarded) with multiple Monte Carlo methods. However, these methods are too computationally expensive to be used in systematic analysis that consider many possible contingencies in large systems. This thesis has thus proposed an indicator to predict which scenarios lead to cascading outages that are sensitive to the timing of protection systems operations and which are not, so that Monte Carlo simulations can be focused on the former.
+
+Another class of models that require more consideration in probabilistic security assessments than deterministic ones is the models of distribution grids that were studied in chapter~\ref{ch:distrib}. Indeed, distributed energy sources tend to disconnected themselves during severe disturbances further degrading the state of the system. Similarly, motors are more likely to stall in those conditions leading to cascading effects. However, due to the low observability of distribution grids and the sheer number of elements connected to them, there are many uncertainties in the models of distribution grids. To handle those uncertainties, this thesis has proposed to build two dynamic equivalents per distribution grid model to bound the likely behaviour of distribution grids. It was then shown that performing transmission-level studies with those two equivalents gave similar confidence intervals as if full probabilistic transmission and distribution simulations were performed but in a much more practical manner. These equivalents have be shown to be adequate to model cascading outages and real power systems.
+
+With those models built, chapter~\ref{ch:DPSA} has been able to develop a probabilistic dynamic security assessment methodology. This type of methodology generally consists in applying many contingencies into randomly sampled states of the grid, evaluating the consequences that would have such contingencies, and continuing until some statistical accuracy criterion is satisfied. In the literature, stopping criteria are often based on the standard error of the total risk, but in this thesis, it was argued that it is more useful to have an accurate estimate of the risk of individual contingencies. Indeed, most security-enhancing actions focus on solving local issues and thus affect the security of a limited number of contingencies. Then, a rigorous statistical accuracy indicator had to be developed to guarantee that no important unsecure regions are missed when sampling operating conditions. Based on this indicator, it was shown that when trying to have an accurate estimation of the risk of individual contingencies (as opposed to the total risk), the most effective sampling approach is generally a crude MC sampling, i.e. sampling of contingencies and operating conditions proportional to their probability of occurrence. To alleviate the computational burden of such crude MC approach, screening techniques and an implementation in a high-performance computing environment have been developed. The method has been applied to a 73-bus system and a scalability study has shown that the proposed method could be applied to large power grids with high but manageable computation burden.
+
+The application of the methodology to a test system has also shown that a limited number of critical contingencies generally contribute to a large share of the total risk. In the considered test system, the 10 most critical delayed-clearing N-1 contingencies and N-2 contingencies (out of 708 considered contingencies) contributed to 44\% of the total risk. This indicates that complementing the N-1 criterion by securing a limited number of more severe contingencies could significantly reduce the risk and be cost-effective.
+
+One drawback of probabilistic methods is that they require to perform many simulations which makes their results more difficult to interpret compared to deterministic methodologies. This drawback is partially alleviated by the fact that the analysts can focus on a small set of critical contingencies. In the considered test systems, 150,000 simulations were performed, but ``only'' a few hundreds were run for a given contingency. Moreover, it has been shown that by looking at which protection systems operate at the start of the simulated cascades, it is often possible to group those simulations in only a few different cascades sequences and to identify the root causes of insecurity. To help with the interpretation of the results, simple machine learning techniques have also been proposed to have an ``automatic'' identification of the root causes of the insecurity by identifying the boundary between secure and unsecure operating conditions for a given contingency. These identified security boundaries could also be used as operational rules to increase the security of the system at the cost of increased operating costs. One advantage of probabilistic methods is that these increased operating costs can be directly compared to the estimated reduction in unreliability costs (i.e. costs of occasionally having cascading outages and blackouts).
 
 \section{Discussion}
 
-Need more data than deterministic (list: operating condition database, protection, statistics, etc.). It should be noted that, even if using more complex models, the exact value of the risk (in MWh/y or €/y) is of low significance. What is important is to be able to compare the risk associated with different scenarios and to be able to identify actions that most effectively reduce the risk.
+The objective of this thesis was to develop a probabilistic dynamic security assessment methodology to cope with the limitations of deterministic methodologies. However, probabilistic methods do have drawbacks, some of which have not been properly acknowledged in the core of the thesis and are thus discussed here. Most importantly, probabilistic methodologies require significantly more data than deterministic ones, particularly reliability data: (weather-dependent) frequency of occurrence of faults, analysis of the failure modes of protection systems and estimation of their likelihood, etc. that require significant data collection campaigns over many years. However, without minimising the need for those campaigns, it should be noted that probabilistic security assessments can provide valuable insights even with incomplete data. Actually, in other fields (nuclear, aviation, oil and gas, etc.), it is common to perform probabilistic \emph{safety} assessments (PSA) with engineer best estimates for failure rates and other reliability data, at least in a first stage. Critical components can then be identified, and this, with sensitivity studies on the uncertain parameters, can help focussing data collection on the most important parameters.
 
-PDSA will provide useful information even with garbage data, but better data gives better results \url{https://xkcd.com/2295/} ('Garbage In, Garbage Out' should not be taken to imply any sort of conservation law limiting the amount of garbage produced.)
+Actually, in the nuclear sector, it sometimes said that the numerical value of the total risk estimated from a PSA is of little importance (despite being a regulatory target), and that what actually is the identification of critical components and the provision of recommendations on how to effectively reduce the risk. This statement might be more or less valid depending on whether one tries to minimise the risk following the as low as reasonably achievable (ALARA) approach (or as low as achievable with a fixed budget), or following a cost optimisation approach. In any case, it can be noticed that the ranking of critical contingencies or critical elements tends to be less sensitive to uncertainties than the estimation of risk itself. For example, if the average frequency of faults is not well estimated, it will affect the estimated risk of individual contingencies and estimated total risk, but not their ranking. Thus, without perfect data, probabilistic methodologies cannot fully live to their promise of allowing for the direct comparison of the cost of unreliability (blackouts\footnote{It can be noted that, even post-mortem, it is difficult to compute the societal costs of blackouts.}) and the cost of security-enhancing actions. But, they can provide strong indications on which security-enhancing actions are the most effective in reducing the risk, and they can give a rough indication on whether these actions are worth implementing.
 
-\TODO{(D)PSA is more of a process than a methodology, refine the models/data by iteration}
+The second main drawback of probabilistic methodologies, especially for dynamic security assessment, is the need for advanced modelling to be able to simulate the system during degraded conditions. However, this is also one of its main advantages. Simulating cascading outages allows one to get a better understanding of the behaviour of power systems and their entangled dynamics~\cite{PEGASE_simulation}, similarly to how many lessons can be learned from the post-mortem analysis of large disturbances. As for the first drawback, one should not expect to perform a perfect probabilistic security assessment in one go. However, as the first assessment already provides strong indications on which are the most critical contingencies, it also indicates which simulated scenarios should be analysed in more details. By analysing those scenarios, experts will be able to assess the adequacy of the models used that can then be improved for the next iterations of the probabilistic security assessment.
 
-\TODO{2-3 mots sur ce qu'Eurostag appèle le modèle electromec étendu (p117)}
-
-This requires to know what protections are installed in the system and what are their settings. Finally, to compute the frequency of scenarios, it is necessary to have an estimate of the probability of failure of protection systems. the system has to be simulated further away from normal operation (e.g. during cascading outages). For this, one should generally model the generators (including governors and voltage regulators), loads, transformers, etc. with the best (RMS) models available. If the accuracy of a model is deemed insufficient (e.g. difficulty to reproduce past disturbances, high sensitivity to input data, etc.), then better models have to be developed and/or better data have to be collected.
-
-ML analysis remains superficial in this thesis. Bugaje
-
-I do not believe in security indicator as the ones proposed by NERC because focus on the consequences (e.g. low voltage) that are easy to identify and not on the causes. Tripping sequence is more useful. Can be analysed partly manually.
-
-
-
-While it is of course expected that a probabilistic dynamic security assessment is more computationally expensive than a deterministic assessment, the difference will strongly depend on the effectiveness of the probabilistic methodology. Uncertainties in the pre-disturbance state of the system are already considered in a traditional dynamic security assessment~\cite{EurostagHPC}. So, the added computational effort of a dynamic probabilistic assessment is mainly in the modelling of the post-disturbance evolution. A notable contribution comes from the handling of uncertainties related to protections.
-
-During a (fast) cascading outage, many protections trigger in a relatively short amount of time. Uncertainties in the timing of operations (modifying the order in which protections operate) and the possibility of protection failures can potentially lead to a very large number of scenarios to simulate for a given disturbance. However, it is not clear how many sample of protection timings will be required to correctly represent the possible system evolutions. Also, the risk associated with the many but low-probability possible protection failures is difficult to estimate a priori. The fact that protection failures might have a lower impact once the system has already passed a ``point of no return" should also be studied.
-
-The next step in my thesis is thus to provide some answers to the above questions. For this, the proposed methodology will be applied on the RTS (shown in Figure~\ref{fig:rts}). This test system is sufficiently large to represent cascading phenomena that occur in real-scale systems. But it is a priori small enough that the proposed methodology can be applied with manageable computation times. The use of a high-performance computing (HPC) environment and a more efficient simulator than in my previous work~\cite{MCDETasTool} will however be required. The results obtained should answer part of the above questions thus allowing to increase the effectiveness of the methodology (i.e. to reduce the computation time required to achieve the same risk assessment accuracy).
-
-A dedicated sampling scheme might be developed in order to answer those questions. For example, the scheme could create more samples in scenarios where protection operations occur in quick succession.
-
-From a practical point of view, it is necessary to implement the following elements:
-
-\begin{itemize}
-    \item DET solving scheme: such a scheme has already been developed in my previous work~\cite{MCDETasTool}. It will be adapted to be more general and to work with Dynawo (the dynamic simulator used in this thesis) instead of PowerFactory. It will also be adapted for use in a HPC environment.
-    \item (SC)OPF algorithm: this will be done using PowerModels.jl. It will thus be necessary to implement a PowerModels.jl to Dynawo parser. A Dynawo to PowerModels.jl parser has already been developed by a CYPRESS colleague.
-    \item Add protection models to Dynawo.
-    \item Implement the RTS in Dynawo.
-\end{itemize}
-
-
-\section{Following steps}
-
-After completion of the above work, the following points will be studied.
-
-\begin{itemize}
-    \item Risk assessment effectiveness: the effectiveness of the proposed methodology will be improved with the answers to the above questions, smart sampling schemes and more advanced DET techniques. In the best case scenario, the objective is to develop a methodology that can be applied for the planning of real transmission systems (with computation times lower than a week).
-    \item Study the impact of load models and in particular, the impact of distribution-connected renewable energy sources and their low-voltage ride-through (LVRT) capabilities.
-    \item Security assessment of future power systems: during the academic year 2022-2023, I will supervise a master thesis on the simulation of inverter-based generation (IBG)-dominated grids. The dynamics of those grids are mainly driven by grid-following and grid-forming converters that have very different behaviour from traditional synchronous generators. This is especially true during large disturbances during which the output current of the converters will more likely be at their maximal capacity.
-    \item Security enhancements: risk assessment methodologies should ideally not be compared on the accuracy of risk estimation but on the recommendations they provide. So, during the last year of this thesis, methods to derive security enhancement recommendations from probabilistic risk assessment studies will be developed.
-    \item The results obtained with the proposed method might be compared with results from QSS cascading methods in the literature.
-\end{itemize}
+% 'Garbage In, Garbage Out' should not be taken to imply any sort of conservation law limiting the amount of garbage produced. \url{https://xkcd.com/2295/}, You never trully understand a system before you perform a PSA on it.
 
 
 \section{Future work}
 
-The following points are out of scope of this thesis but are interesting future research tracks.
+While this thesis has alleviated the main barriers limiting the use of probabilistic dynamic security assessment methodologies on real power systems, there is room for further work. Main directions for improvement are listed below.
 
+\subsection*{Interpretation and use of the results}
 
-The contingencies considered in this work are line faults followed a failure to trip of some protection system. Unwanted trips are another important failure mode of protection systems that can transform an N-1 contingency into an N-k contingency. There is however very limited literature on the modelling of those unwanted trips (for modern numerical protection relays) which is something we will study in future work. Also, better stability indicators could be developed for systems with high shares of inverter-based generation and for severe contingencies to improve the screening process and reduce the computational burden of the PDSA.
+Probabilistic security assessments perform hundreds of thousands of simulations, so it is difficult to extract all the useful information generated by those simulations. There is a plethora of security indicators (reviewed in~\cite{cypressD11}) that could help with this, however, they often focus on the consequences of cascading outages (overloading, undervoltage, load shedding), and not on their root causes which are more difficult to identify.
 
-\begin{itemize}
-    \item Study of slow cascading mechanisms: slow cascading mechanisms still play a major role in some cascading outages, especially during the initial stages. For (usually small) cascades where only slow mechanism play a role, QSS methods available in the literature can be used. For cascades driven by both slow and fast mechanisms, it is more complex. % Possibilities: extend my method (add long term models) so integrated approach but might need different sampling techniques during slow and fast phase (but no separation between slow and fast in the modelling), Henneaux, DCAT
-    \item Operator models: operators play an important role in the evolution of slow cascading outages. They are however either not consider or modelled with an OPF in QSS methods in the literature. Human errors (that have played important role in some past blackouts) should thus be considered.
-    % \item Coherence between risk management and risk assessment (DPSA): methods for risk assessment (especially this one) make intensive use of detailed simulations. On the other hand, risk management methods (e.g. SCOPF) are optimisation methods that require very simplified grid models to be solved in a reasonable amount of time. There are thus perspectives to
-    \item Use in real-time and operation: as discussed in section~\ref{sec:SPSperspectives}, the results of dynamic probabilistic security assessment could be stored for later use in system operation. Also, a SPS could be designed based on the results of the proposed method.
-\end{itemize}
+Conversely, this thesis has shown that tripping sequences allow for a first identification of the drivers of a cascading outage, and that they also allow grouping similar scenarios for a given contingency. The concept of ``critical event corridors'' proposed in DCAT~\cite{DCATphase1} goes a step further. A critical event corridor is a sequence of events that occurs in many system states and for many initial contingencies. The identification of such corridors would allow designing system integrity protection schemes that protect the grid against many unsecure scenarios. However, to the best of my knowledge, such corridors have never been identified and \cite{DCATphase1} does not provide with algorithm to identify them.
 
+In another direction, the use of data mining and machine learning techniques to identify security boundaries and the root causes of cascading outages has only been superficially studied in this thesis, so further work could provide useful, especially regarding the identification of root causes. Also, as discussed in the thesis, the definition of simple security boundaries can help to make the link between the security assessment (based on a complex grid model and many scenarios) and security management methodologies such as security/risk constrained optimal power flows that require relatively simple models to converge.
 
-\TODO{maintenances + maintanability of system (proba allow to push closer to operational limits, but check that still have some (long one-block) time to do maintenances}
+% \item Coherence between risk management and risk assessment (DPSA): methods for risk assessment (especially this one) make intensive use of detailed simulations. On the other hand, risk management methods (e.g. SCOPF) are optimisation methods that require very simplified grid models to be solved in a reasonable amount of time. There are thus perspectives to
 
-\TODO{Look at Perspectives from 3.6 of "Stabilité et sauvegarde des réseaux électriques" (marc stubbe, jacques deuze (Tractebel) sous la direction de Michel Crappe (UMons)}
+\subsection*{Application to operational planning}
 
-\TODO{to conclude, goal is not to compute a number (risk) as it is impossible to be perfectly accurate but to understand the system, cf nuclear PSA}
+The test cases considered in this thesis focused on long-term planning with simulations performed for system conditions representative of the whole year. It also briefly touched on real-time operation through the definition of machine-learning-based security boundaries. The proposed method could also be applied for operational planning for instance for the maintenance planning. It should however be noted that, since transmission assets typically have a high availability, few of the scenarios simulated in a long-term analysis might be reusable for the maintenance planning of a given asset (that is often available in the long-term scenarios, but forced unavailable for maintenance). The computational cost of performing a complete probabilistic security assessment from scratch each time an asset has to be put for maintenance might be prohibitive, so the number of considered contingencies for such assessment should be limited.
 
-(2006, Le projet PEGASE, https://orbi.uliege.be/bitstream/2268/9350/1/SRBE-Pegase.pdf)
+% \subsection*{Security enhancement and risk management}
+%
+% This thesis has proposed a method for probabilistic risk assessment which is a first step towards probabilistic security management.
+%
+% SPS
 
-Le besoin en simulation dynamique avancée
+\subsection*{Modelling of unwanted trips}
 
-A l’heure actuelle, l’analyse de la sécu-
-rité repose généralement sur un modèle
-statique. Il apparait de plus en plus
-nécessaire, lorsque l’on se rapproche des
-limites de fonctionnement du système,
-de vérifier la qualité de la transition
-entre les états d’équilibre avant et
-après incident, mais aussi la stabilité
-du système, c’est-à-dire sa capacité à
-rejoindre l’état d’équilibre final.
-Le modèle dynamique est aussi indiqué
-pour une représentation précise des
-protections et automates qui répondent
-en fonction du comportement transitoire
-du réseau. Il est nécessaire pour
-déterminer les limites de stabilité du
-système telles que, par exemple, l’appa-
-rition d’oscillations interzonales résul-
-tant d’une augmentation du transit de
-puissance entre réseaux.
-Enfin, la simulation de tout scénario
-complexe pouvant mener au «black-
-out» exige l’usage d’un modèle dyna-
-mique très détaillé.
-Par ailleurs, la simulation temporelle
-«Haute Fidélité» reste la seule voie
-pour acquérir une compréhension pro-
-fonde du comportement des grands sys-
-tèmes électriques. Elle apparait comme
-indispensable à la formation avancée
-des opérateurs des centres de conduite.
-Si le modèle mathématique du système
-électrique et de ses composants est en
-principe bien connu, sa mise en œuvre
-peut poser des problèmes majeurs
-résultant:
-– de la taille du modèle (jusqu’à
-100.000 variables d’état, voire plus,
-pour le REI);
-– de la complexité du modèle (phéno-
-mènes appartenant à des échelles de
-temps très différentes, non-linéarités);
-– du temps de calcul ;
-– de la disponibilité des données.
-La taille du système est malheureuse-
-ment difficile à maîtriser car la modéli-
-sation doit être complète en (presque)
-toute circonstance, les différents phéno-
-mènes dynamiques étant généralement
-enchevêtrés.
-La gestion de la complexité implique
-des procédures rigoureuses de dévelop-
-pement des modèles de composants et
-leur validation.
-Le temps de calcul reste une barrière
-importante pour beaucoup d’applica-
-tions. Des développements algorith-
-miques et l’utilisation d’architectures
-informatiques spécialisées s’imposent.
-On notera enfin que la construction du
-modèle dynamique repose sur l’effort
-conjugué de toutes les parties pre-
-nantes: GRT, producteurs, constructeurs
-agissant de manière concertée pour une
-meilleure sécurité du système.
+In this thesis, missing trips were the only considered failure mode of protection systems. Unwanted trips are significantly harder to model but can also impact system security, especially when occurring as a consequence of another fault. The main causes of unwanted trips are the inadvertent use of wrong settings in protection relays and design errors which are extremely difficult to model and predict. It is also more difficult to obtain statistics on unwanted trips, as one has to distinguish between spontaneous unwanted trips (that occur without a preceding fault) and dependent unwanted trips, distinguish between voltage levels (with different protection philosophies), and cause of trip (that is not always reported, and often more complex than the reason for a missed trip).
 
+% Unwanted: reporting: protection operates ``as designed'' (even if wrong settings), but should still be flagged as unwanted with reasons why it operated.
 
-\TODO{Parler d'EMT, besoin screening}
+\subsection*{Application to large grids}
 
-\TODO{Distrib, inverter-connected loads (esp. vehicles)}
+To facilitate the massive integration of renewable energy sources, power grids are becoming increasingly more connected which also means that cascading outages are more likely to propagate from one country to the other. The simulation of continental grids comes however with significant challenges, such as the data exchanges between TSOs, the scale of the simulated network and the heterogeneity between the grids of different TSOs~\cite{PEGASE_project}.
+
+% Although the scalability of the proposed methodology has been discussed, the method should actually be applied to a large system to evaluate its computational cost. More importantly, the scalability has to des
+
+\subsection*{Slow cascades}
+
+While there is a growing share of purely-fast cascades, i.e. cascades that fully develop in at most a few minutes, there are still many cascades that start as slow cascades and latter transition to fast cascades if they cannot be stopped in the slow phase. There are two ways such cascades could be considered in a probabilistic security assessment. The first approach would be to use the same methodology as in this thesis but augment the models used to include slower dynamics (load models, over-excitation limiters, etc.). To keep acceptable computation time, this requires the use of simulators that can simulate large ranges of timescales thanks to a variable integration time step such as Eurostag~\cite{STAG} or Dynawo~\cite{Dynawo}. Alternatively, the slow and fast phases could be simulated separately as proposed in~\cite{TwoLevelPSA}, using a quasi-steady-state (QSS) simulator during the slow phase and a time-domain simulator during the fast phase. However, this requires predicting when a given cascade transition from the slow to the fast phase. Moreover, there is no consensus on how to model slow cascades in QSS simulations, so different QSS simulators tend to give different results~\cite{Benchmarking2018}. One often overlooked challenge when simulating slow cascades is to properly account for the actions of operators and the possibility for them to perform wrong or unoptimal actions due to stress or lack of situation awareness~\cite{Shahab_HRA, Panteli_Awareness}.
+
+\subsection*{Load modelling}
+
+Although the load modelling method used in this thesis can be applied to any kind of distribution network and assets. It can be reminded that, while not considered in the test cases in this thesis, the growing share of inverter-connected loads and in particular electric vehicles should be considered. Also, the parameters of the equivalents could be reused or updated instead of being recomputed from scratch when operating conditions change as proposed in~\cite{ChaspierreThesis}.

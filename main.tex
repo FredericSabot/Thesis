@@ -27,7 +27,7 @@
 \pgfplotsset{compat=1.18}
 \usetikzlibrary{pgfplots.groupplots,shapes,arrows,chains,fit,backgrounds}
 \usepgfplotslibrary{external} % Increases compilation speed
-\tikzexternalize[prefix=tikz/]
+\tikzexternalize[prefix=tikz/, optimize command away=\includepdf]
 \usepgfplotslibrary{fillbetween}
 \pgfplotsset{every axis plot/.append style={line width=1pt}}
 \usepackage{circuitikz}
@@ -88,16 +88,17 @@
 \newcommand{\refs}{[\textcolor{red}{refs}]}
 % \newcommand{\refs}{}
 
-\includeonly{1-Introduction, 2-Security, 3-Protections, 5-Distribution, 4-SPS, 6-DPSA}
-% \includeonly{6-DPSA}
+\includeonly{Cover, 0-Abstract, 1-Introduction, 2-Security, 3-Protections, 5-Distribution,6-DPSA, 7-Conclusion, 4-SPS}
+% \includeonly{7-Conclusion}
 
 \begin{document}
 \dominitoc
 \bstctlcite{IEEEexample:BSTcontrol}
 
-% \include{Cover}  % issue with tikzexternalise
+\include{Cover}
 
 \include{0-Abstract}
+\include{0-Acknowledgements}
 \tableofcontents
 
 
@@ -118,16 +119,16 @@
 \include{6-DPSA}
 \include{7-Conclusion}
 
+\appendix
+
+\include{4-SPS}
+\include{B-Cosim}
 
 % \bibliographystyle{IEEEtranURLdate}
 % \bibliography{bib}
 \printbibliography[heading=bibintoc, title=References]
 
 
-\appendix
-
-\include{4-SPS}
-\include{A-CYPRESS}
-\let\clearpage\relax  % Don't end on a blank page
+% \let\clearpage\relax  % Don't end on a blank page
 
 \end{document}

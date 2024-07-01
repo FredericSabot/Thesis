@@ -15,7 +15,7 @@ Thanks to the previous chapters, we are now able to list the contingencies that 
 
 With all main building blocks available, it is then possible to develop a coherent PDSA methodology which is if the focus of section~\ref{sec:PDSA_methodology}. Section~\ref{sec:PDSA_results} then applies this methodology to a standard test system described in section~\ref{sec:PDSA_test_system}.
 
-Probabilistic methodologies require many simulations which renders the interpretation of results more complex than with deterministic assessments. Some methods to interpret the results of PDSAs are thus presented in section~\ref{sec:PDSA_interpretation}. The scalability of the methodology to large grids is discussed in section~\ref{sec:PDSA_scalability}, and section~\ref{sec:PDSA_conclusion} concludes with a summary and perspectives.
+Probabilistic methodologies require many simulations which renders the interpretation of results more complex than with deterministic assessments. Some methods to interpret the results of PDSAs are thus presented in section~\ref{sec:PDSA_interpretation}. Also, the high number of simulations to be performed implies high computation times. The scalability of the methodology to large grids is discussed in section~\ref{sec:PDSA_scalability}. Finally, section~\ref{sec:PDSA_conclusion} concludes with a summary and perspectives.
 
 
 
@@ -303,7 +303,7 @@ When using the standard MC approach, the SE can be computed as
   SE_i = f_i \sqrt{\frac{\sigma_i^2}{N_i}}
 \end{equation}
 
-\noindent where \(f_i\) is the frequency of contingency \(i\) and \(\sigma_i^2\) is the variance of its consequences. However, this variance is often unknown and therefore approximated by the sample variance \(\tilde{\sigma_i}\).
+\noindent where \(f_i\) is the frequency of contingency \(i\) and \(\sigma_i^2\) is the variance of its consequences. However, this variance is often unknown and therefore approximated by the sample variance \(\tilde{\sigma}_i^2\).
 
 This approximation is commonly used but can be inaccurate especially for low probability high impact scenarios and for small values of \(N_i\). For example, if \(N_i\) samples of operating conditions are drawn for a given contingency and all show no consequences, the sampled variance will be zero, therefore the stopping criteria will be satisfied, and no other samples will be drawn. In this case, the confidence interval \([\tilde{\mu_i} - x SE_i, \tilde{\mu_i} + x SE_i]\) (where \(\tilde{\mu_i}\) are the sampled average consequences of contingency \(i\)) is infinitely narrow regardless of the value of \(x\) indicating perfect statistical accuracy. However, the \(N_i+1\)th sample might still lead to a blackout showing that the above approach might underestimate the risk.
 
