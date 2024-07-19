@@ -18,12 +18,23 @@
 \addbibresource{bib.bib}
 \usepackage[bottom]{footmisc} % Avoid float below footnote
 
+% bstctlcite
+\makeatletter
+\def\bstctlcite{\@ifnextchar{\@bstctlcite}{\@bstctlcite[@auxout]}}
+\def\@bstctlcite[#1]#2{\@bsphack
+  \@for\@citeb:=#2\do{%
+    \edef\@citeb{\expandafter\@firstofone\@citeb}%
+    \if@filesw\immediate\write\csname #1\endcsname{\string\citation{\@citeb}}\fi}%
+  \@esphack}
+\makeatother
+
 \usepackage{bm} % Bold math
 \usepackage{xcolor}
 \usepackage[british]{babel} % English defaults to American (for dates in refs, etc.)
 \usepackage{lmodern} % Euro symbol
 
 \usepackage{pgfplots}
+\usepackage{pdfpages}
 \pgfplotsset{compat=1.18}
 \usetikzlibrary{pgfplots.groupplots,shapes,arrows,chains,fit,backgrounds}
 \usepgfplotslibrary{external} % Increases compilation speed
@@ -56,7 +67,6 @@
 \tolerance=5000
 
 \usepackage{fancyhdr}
-\usepackage{pdfpages}
 
 \usepackage{silence}
 \WarningFilter{minitoc(hints)}{W0023}
@@ -64,15 +74,6 @@
 \WarningFilter{minitoc(hints)}{W0028}
 \WarningFilter{minitoc(hints)}{W0030}
 
-% bstctlcite
-\makeatletter
-\def\bstctlcite{\@ifnextchar[{\@bstctlcite}{\@bstctlcite[@auxout]}}
-\def\@bstctlcite[#1]#2{\@bsphack
-  \@for\@citeb:=#2\do{%
-    \edef\@citeb{\expandafter\@firstofone\@citeb}%
-    \if@filesw\immediate\write\csname #1\endcsname{\string\citation{\@citeb}}\fi}%
-  \@esphack}
-\makeatother
 
 \PassOptionsToPackage{hyphens}{url}\usepackage[hidelinks]{hyperref}
 \usepackage{hypcap} % fixes hyperref link with two captions in a single table
@@ -89,7 +90,7 @@
 % \newcommand{\refs}{}
 
 % \includeonly{Cover, 0-Abstract, 1-Introduction, 2-Security, 3-Protections, 5-Distribution, 6-DPSA, 7-Conclusion, 4-SPS, B-Cosim}
-% \includeonly{0-Abstract, B-Cosim, 2-Security, 1-Introduction, 3-Protections}
+% \includeonly{0-Abstract, B-Cosim, 2-Security, 1-Introduction, 7-Conclusion}
 
 \begin{document}
 \dominitoc

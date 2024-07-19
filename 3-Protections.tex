@@ -1,12 +1,8 @@
+\part{Models for probabilistic dynamic security assessment}
+\label{part:models}
 \chapter{Power system protection}
 \label{ch:protections}
 \minitoc
-
-\TODO{TODO}
-\begin{itemize}
-    \item Add figure of electrical variable evolutions for Fig.~\ref{fig:IEEE_split} and section~\ref{sec:causesOfInaccuracy}
-\end{itemize}
-\TODO{END TODO}
 
 As mentioned in the previous chapters, protection systems play a key role in the triggering and the evolution of cascading outages. Indeed, failure of a protection system to clear a fault can transform a mild N-1 contingency into a more severe N-k contingency. Also, protection systems are an important driver in the development of cascading outages: trip of lines due to overloads or voltage swings, disconnection of generators, etc. Adequately modelling protection systems is thus a strong requirement to the simulation of cascading outages and therefore necessary to perform probabilistic security assessments.
 
@@ -580,13 +576,89 @@ Non-restorative & 10\% (1/10)  & 20\% (3/15)  & 0\% (1/213) \\ \bottomrule
 
 The use of very different load models allows covering different types of cascading phenomena. Indeed, the case study with the non-restorative load model leads to very short cascading outages (at most one or two trips occur in most simulations). In this case, most of the sensitivity is caused by ``near-misses'' (when a protection system is close to operate but it just below its threshold). Sensitive contingencies are thus mostly detected via the presence of additional event(s) in the faster sequence (as defined in Fig.~\ref{subfig:new_event}). Actually, the indicator identifies 22 sensitive contingencies (out of 48 that have non-zero average consequences), and in all 22, there are additional event(s) in the fast sequence. In only 9 of them, the order of operations can be impacted by uncertainty.
 
-On the other hand, the case study with the 1s-restorative load model can be subject to longer cascades (with up to dozens of tripping events) that often lead to complete blackouts. In this case, sensitivity is caused by both ``near-misses'' and potential changes in the order of protection operations (the latter being detected as explained in Fig.~\ref{subfig:order}). 72 sensitive contingencies are identified (out of 147 that have non-zero average consequences): 64 with near-misses and 18 with variable protection order.
+On the other hand, the case study with the 1s-restorative load model can be subject to longer cascades (with up to dozens of tripping events) that often lead to complete blackouts. In this case, sensitivity is caused by both ``near-misses'' and potential changes in the order of protection operations (the latter being detected as explained in Figure~\ref{subfig:order}). 72 sensitive contingencies are identified (out of 147 that have non-zero average consequences): 64 with near-misses and 18 with variable protection order.
 
-Figure~\ref{fig:IEEE39_sequences} illustrates this for the N-2 contingency of lines 5-6 and 6-7 (for the 1s-restorative load case). When this contingency is simulated with slow protection systems (slow sequence, Figure~\ref{subfig:slow_sequence}), four distance protections operate (events 3 to 6), leading to the system splitting in three islands as shown in Figure~\ref{subfig:split_slow}. One of the islands has two loads (at buses 7 and 8) but no generators and is thus lost. The other two islands remain stable.
+Figure~\ref{fig:IEEE39_sequences} illustrates this for the N-2 contingency of lines 5-6 and 6-7 (for the 1s-restorative load case, and initial fault near bus 5). When this contingency is simulated with slow protection systems (slow sequence, Figure~\ref{subfig:slow_sequence}), four distance protections operate (events 3 to 6), leading to the system splitting in three islands as shown in Figure~\ref{subfig:split_slow}. One of the islands has two loads (at buses 7 and 8) but no generators and is thus lost. The other two islands remain stable.
 
-From the same simulation, a fast sequence can be estimated if models of fast protections are included (but not connected to breakers to not affect the system evolution). This estimated sequence is shown in Figure~\ref{subfig:estimated_fast_sequence}. This sequence has two additional distance trips (events 7 and 8) compared to the slow sequence indicating a sensitivity of the contingency to protection-related uncertainties.
+From the same simulation, a fast sequence can be estimated if models of fast protections are included (but not connected to breakers to not affect the system evolution). This estimated sequence is shown in Figure~\ref{subfig:estimated_fast_sequence}. This sequence has two additional distance trips (events 7 and 8) compared to the slow sequence indicating a sensitivity of the contingency to protection-related uncertainties. The occurrence of event 7 in the fast sequence is explained by Figure~\ref{fig:IEEE_split_RX_plot}. This is because in the fast sequence, the distance protection of line 13-14 is assumed to have a slightly larger reach. The apparent impedance seen by the relay thus stays a bit longer in the protected zone which causes the protection to trip.
 
-Figure~\ref{subfig:fast_sequence} shows the fast sequence that would actually be obtained by rerunning the simulation with fast protection systems. In this case, the additional distance protection operation of event 7 leads to a different system evolution with the system splitting in four islands instead of three (as shown in Figure~\ref{subfig:split_fast}). This causes high imbalances and the collapse of three of the four islands. Only the island with generator 1 (bus 39) survives because it represents an interconnection and thus have a very high inertia. The fast sequence thus leads to an almost complete blackout while the slow one only leads to the loss of two loads.
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\pgfplotsset{width=0.8\linewidth}
+\begin{axis}[
+    group style={
+        group name=my plots,
+        group size=2 by 1,
+        ylabels at=edge left,
+        yticklabels at=edge left,
+        vertical sep=20pt,
+    },
+    xlabel={\(R\) [pu]},
+    ylabel={\(X\) [pu]},
+    xmin=-0.1, xmax=0.39,
+    ymin=-0.061, ymax=0.061,
+    xticklabel style={/pgf/number format/fixed},
+    yticklabel style={/pgf/number format/fixed},
+    scaled x ticks=false,
+    scaled y ticks=false,
+    tickpos=left,
+    ytick align=outside,
+    xtick align=outside,
+    table/col sep=comma,
+]
+% \nextgroupplot
+\addplot+ [mark=none, dashed, dash pattern=on 6pt off 6pt] table [x=R,y=X] {Figs/IEEE_split_slow.csv};
+
+\coordinate (A1) at (0.03154945935727788, -0.03154945935727788);
+\coordinate (B1) at (0.03154945935727788, 0.03154945935727788);
+\coordinate (C1) at (-0.03154945935727788, 0.03154945935727788);
+% \node [anchor=east] (slow) at (C1) {Slow protection};
+
+\draw[-] (A1) -- (B1);
+\draw[-] (B1) -- (C1);
+\draw[-] (C1) -- (A1);
+
+
+%\nextgroupplot
+% Superposition of dashed lines from https://tex.stackexchange.com/a/131817
+\addplot+ [mark=none, dashed,dash pattern=on 6pt off 6pt,dash phase=6pt] table [x=R,y=X] {Figs/IEEE_split_fast.csv};
+
+\coordinate (A3) at (0.03856045032556186, -0.03856045032556186);
+\coordinate (B3) at (0.03856045032556186, 0.03856045032556186);
+\coordinate (C3) at (-0.03856045032556186, 0.03856045032556186);
+
+\draw[-] (A3) -- (B3);
+\draw[-] (B3) -- (C3);
+\draw[-] (C3) -- (A3);
+\node at (axis cs:0.0424109277580345,0.0312666883066816) [anchor=west, align=left] {Trip};
+\node at (axis cs:0.0424109277580345,0.0312666883066816) [circle, fill, inner sep=1.5pt] {};
+
+\node at (axis cs:0.0382912822075786,0.0219691705198084) [anchor=west, align=left] {Trip\\signal};
+\node at (axis cs:0.0382912822075786,0.0219691705198084) [circle, fill, inner sep=1.5pt] {};
+
+\node at (axis cs:0.356189296220075,-0.00668263904273035) [anchor=south, align=left] {Initial\\point};
+\node at (axis cs:0.356189296220075,-0.00668263904273035) [circle, fill, inner sep=1.5pt] {};
+
+\node at (axis cs:0.0160208226576352,-0.0518139264706419) [anchor=east, align=left] {Fault\\incidence};
+\node at (axis cs:0.0160208226576352,-0.0518139264706419) [circle, fill, inner sep=1.5pt] {};
+
+\node at (axis cs:0.0557547773071578,-0.000774513562478557) [anchor=north west, align=left] {Fault clearing};
+\node at (axis cs:0.0557547773071578,-0.000774513562478557) [circle, fill, inner sep=1.5pt] {};
+
+% \node at (axis cs:0.0110064179359231,-0.0310501831892437) [anchor=east, align=left] {Partial\\clearing};
+% \node at (axis cs:0.0110064179359231,-0.0310501831892437) [circle, fill, inner sep=1.5pt] {};
+
+\addlegendentry{Slow sequence}
+\addlegendentry{Fast sequence}
+
+\end{axis}
+\end{tikzpicture}
+\caption{Apparent impedance seen by the distance protection relay on side 2 of line 13-14 (protection causing event 7) following the N-2 contingency of lines 5-6 and 6-7 (1-s restorative load case). Triangular shapes represent the zone 3 of the protection with either ``slow'' settings (smaller zone) or ``fast'' settings (larger zone). The protection only trips in the fast sequence.}
+\label{fig:IEEE_split_RX_plot}
+\end{figure}
+
+Figure~\ref{subfig:fast_sequence} shows the fast sequence that would actually be obtained by rerunning the simulation with fast protection systems. In this case, the additional distance protection operation of event 7 leads to a different system evolution with the system splitting in four islands instead of three (as shown in Figure~\ref{subfig:split_fast}). This causes high imbalances and the collapse of three of the four islands. Only the island with generator 1 (bus 39) survives because it represents an interconnection and thus has very high inertia. The fast sequence thus leads to an almost complete blackout while the slow one only leads to the loss of two loads.
 
 Because of the different system evolution, some events that occurred in the slow sequence (event 4) and in the estimated fast sequence (events 4 and 8) do not happen in the fast sequence. The fast sequence estimated from the simulation of the slow one (Figure~\ref{subfig:estimated_fast_sequence}) is thus inaccurate. However, it allows identifying that the contingency is sensitive to protection-related uncertainties which is the objective of the indicator. In any case, MC simulations are needed to accurately estimate the risk associated with sensitive contingencies, but they can be avoided when the indicator predicts they are not sensitive.
 
@@ -695,7 +767,7 @@ Because of the different system evolution, some events that occurred in the slow
 \end{tikzpicture}
 \label{subfig:fast_sequence}
 }
-\caption{Timeline of events in the slow and fast sequences for the N-2 contingency of lines 5-6 and 6-7. Event codes are given in Table~\ref{tab:IEEE39_split}.}
+\caption{Timeline of events in the slow and fast sequences for the N-2 contingency of lines 5-6 and 6-7 (1-s restorative load case). Event codes are given in Table~\ref{tab:IEEE39_split}.}
 \label{fig:IEEE39_sequences}
 \end{figure}
 
@@ -717,7 +789,7 @@ No &
 4 & 1.23 & 1.13 & /    & Line 1-39  & Distance zone 2            \\
 5 & 1.26 & 1.13 & 1.13 & Line 5-8   & Distance zone 3            \\
 6 & 1.35 & 1.18 & 1.18 & Line 8-9   & Distance zone 2            \\
-7 & /    & 1.03 & /    & Line 13-14 & Distance zone 3            \\
+7 & /    & 1.03 & 1.03 & Line 13-14 & Distance zone 3            \\
 8 & /    & 1.15 & /    & Line 4-14  & Distance zone 3            \\
 \midrule
 9+ & /    &  /   & 3.28-4-85 &
@@ -736,7 +808,7 @@ No &
         \includegraphics[width=0.475\linewidth]{Figs/IEEE39_fast_split.pdf}
         \label{subfig:split_fast}
     }
-    \caption{Comparison of the consequences of the N-2 contingency of lines 5-6 and 6-7 in the slow and fast sequences}
+    \caption{Comparison of the consequences of the N-2 contingency of lines 5-6 and 6-7 in the slow and fast sequences (1-s restorative load case)}
     \label{fig:IEEE_split}
 \end{figure}
 }

@@ -1,5 +1,4 @@
 \chapter{Introduction}
-
 \section{Context}
 
 Power systems are often described by power system engineers as the largest and most complex systems built by men. Despite this complexity, they must operate without discontinuity 24 hours a day and 365.2425 days a year. Society has grown to expect electricity to be available at any time and any interruption of service can thus have massive consequences both from an economic perspective (production downtime, equipment damage) and from a social perspective (injuries due to the lack of electricity, civil disorders).
@@ -110,15 +109,15 @@ However, only a small share of the literature on cascading outages considers fas
 
 \section{Objectives and outline of the thesis}
 
-The objective of this thesis is thus to develop a probabilistic security assessment methodology that adequately models stability issues and fast cascading outages, yet is computationally efficient enough to be applied to large power systems. Also, the method should give intuitive results and recommendations on how to cost-effectively reduce the risk of cascading outages.
+The objective of this thesis is thus to develop a probabilistic security assessment methodology that adequately models stability issues and fast cascading outages, yet is computationally efficient enough to be applied to large power systems. Also, the method should give intuitive results and recommendations on how to cost-effectively reduce the risk of cascading outages. Due to the high computational cost of probabilistic security assessments, this thesis focuses on planning timescales (at least one year ahead) where speed is less critical, although the use of probabilistic security assessment methodologies in operational planning (days to months ahead) can also be contemplated.
 
-But first, it is necessary to have a good understanding of the current state-of-the-art in security assessment methodologies. Thus,
+But before building such methodology, it is necessary to have a good understanding of the current state-of-the-art in security assessment methodologies. Thus,
 
 \begin{itemize}
     \item Chapter~\ref{ch:security} introduces in more details security assessment and deterministic methodologies, reviews the literature in probabilistic methodologies, and discusses the achievements and gaps in existing works.
 \end{itemize}
 
-This thesis then tackles the problem of simulating power systems in very degraded states and fast cascading outages because, as discussed above, this is a key prerequisite to build a probabilistic security assessment methodology, especially when considering stability issues. Therefore,
+This thesis then splits into two parts. Part~\ref{part:models} tackles the problem of simulating power systems in very degraded states and fast cascading outages because, as discussed above, this is a key prerequisite to build a probabilistic security assessment methodology, especially when considering stability issues. More specifically,
 
 \begin{itemize}
     \item Chapter~\ref{ch:protections} introduces the topic of power system protection as protections play a key role in the triggering and evolution of cascading outages. It then describes their failure modes and how they affect security. Finally, it proposes a method to handle the high sensitivity of the cascading processes to the timing of protection system operations. Annex~\ref{ch:SPS} complements this chapter by giving some reliability considerations regarding system integrity protection schemes, a particular kind of protection systems aimed at improving power system security.
@@ -126,10 +125,10 @@ This thesis then tackles the problem of simulating power systems in very degrade
     \item Chapter~\ref{ch:distrib} discusses how to model the impact of distribution grids on transmission system stability. Indeed, distribution systems are still often represented using very simple load models despite playing a growing role in the dynamic behaviour of power systems due to the growing share of distributed energy resources (DERs, such as rooftop solar generation). This is especially true during degraded system conditions, as DERs are prone to disconnect themselves during disturbances, adding stress on an already weakened system.
 \end{itemize}
 
-With this, it becomes possible to build a probabilistic dynamic security assessment methodology, and
+With this, part~\ref{part:PDSA} can then build a probabilistic dynamic security assessment methodology, and
 
 \begin{itemize}
-    \item Chapter~\ref{ch:DPSA} proposes such a methodology for probabilistic dynamic security assessment. It uses the models developed in the previous chapters, and efficient sampling and screening techniques to build a methodology that is accurate and can be applied to large power systems with high but reasonable computational resources. Also, it shows how the methodology can identify the main contributors to the risk and propose recommendations on how to best reduce the risk.
+    \item Chapter~\ref{ch:DPSA} proposes such a methodology for probabilistic dynamic security assessment. It uses the models developed in the previous chapters, and efficient sampling and screening techniques to build a methodology that is accurate and can be applied to large power systems with high but manageable computational resources. Also, it shows how the methodology can identify the main contributors to the risk and propose recommendations on how to best reduce the risk.
 \end{itemize}
 
 Finally, chapter~\ref{ch:perspectives} concludes with a summary and some perspectives.
