@@ -16,4 +16,6 @@ for i in range(50):
         writer = csv.writer(csvfile, delimiter=',')  # Change delimiter
         writer.writerow(['t', 'omega'])
         for j in range(len(t)):
-            writer.writerow([t[j], omega[j]])
+            if j % 10 == 0:
+                writer.writerow([t[j], omega[j]])
+
