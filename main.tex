@@ -1,6 +1,7 @@
 \documentclass[a4paper, dvipsnames, twoside]{report}
 \usepackage{caption}
 \usepackage{subcaption}
+\captionsetup[sub]{font=normal}
 \usepackage{minitoc}  % Should be loaded before hyperref
 \setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{4}
@@ -21,6 +22,10 @@
 
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}%
 \DeclarePairedDelimiter\norm{\lVert}{\rVert}%
+
+\let\oldfootnote\footnote
+\renewcommand\footnote[1]{%
+\oldfootnote{\hspace{1mm}#1}}
 
 % bstctlcite
 \makeatletter
@@ -84,6 +89,8 @@
 \usepackage{bookmark}
 
 \newcommand{\Dynawo}{Dyna\(\omega\)o}
+\newcommand{\ie}{i.e.\ }
+\newcommand{\eg}{e.g.\ }
 
 % Packages/def to only use in draft mode
 % Add disable to todonotes options for final version
