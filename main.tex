@@ -84,7 +84,7 @@
 \WarningFilter{minitoc(hints)}{W0030}
 
 
-\PassOptionsToPackage{hyphens}{url}\usepackage[hidelinks]{hyperref}
+\PassOptionsToPackage{hyphens}{url}\usepackage[hidelinks, bookmarksnumbered]{hyperref}
 \usepackage{hypcap} % fixes hyperref link with two captions in a single table
 \usepackage{bookmark}
 
@@ -100,8 +100,6 @@
 \renewcommand{\todo}[2][]{\tikzexternaldisable\@todo[#1]{#2}\tikzexternalenable}
 \makeatother
 \newcommand{\TODO}[1]{\todo[inline]{TODO: #1}}
-\newcommand{\refs}{[\textcolor{red}{refs}]}
-% \newcommand{\refs}{}
 
 \includeonly{Cover, 0-Abstract, 1-Introduction, 2-Security, 3-Protections, 5-Distribution, 6-DPSA, 7-Conclusion, 4-SPS, B-Cosim}
 

@@ -17,23 +17,21 @@ Thanks to the previous chapters, we are now able to list the contingencies that 
 
 With all main building blocks available, it is then possible to develop a coherent PDSA methodology which is if the focus of section~\ref{sec:PDSA_methodology}. Section~\ref{sec:PDSA_results} then applies this methodology to a standard test system described in section~\ref{sec:PDSA_test_system}.
 
-Probabilistic methodologies require numerous simulations which renders the interpretation of results more complex than with deterministic assessments. Some methods to interpret the results of PDSAs are thus presented in section~\ref{sec:PDSA_interpretation}. Also, the high number of simulations to be performed implies high computation times. The scalability of the methodology to large grids is discussed in section~\ref{sec:PDSA_scalability}. Finally, section~\ref{sec:PDSA_conclusion} concludes with a summary and perspectives.
-
-
+Probabilistic methodologies require numerous simulations which renders the interpretation of results more complex than with deterministic assessments. Some methods to interpret the results of PDSAs are thus presented in section~\ref{sec:PDSA_interpretation}. Probabilistic methodologies are intrinsically more complex than deterministic ones. To justify the need for this higher complexity, the added value of using probabilistic methods is discussed in section~\ref{sec:cascade_value}. Also, probabilistic methods require to perform many simulations which implies high computation times. The scalability of the methodology to large grids is thus discussed in section~\ref{sec:PDSA_scalability}. Finally, section~\ref{sec:PDSA_conclusion} concludes with a summary and perspectives.
 
 \section{Operating conditions}
 \label{sec:operating_conditions}
 
 Two main methodologies have been developed in the literature to approximate the true pdf of the operating conditions of power systems.
 
-The first methodology has initially been developed during the GARPUR (Generally Accepted Reliability Principle with Uncertainty modelling and through probabilistic Risk assessment) project~\cite{StrathElia, StrathGARPUR} and is now used by some European TSOs and by ENTSO-E to perform adequacy studies~\cite{ACER_MC_year, EliaAdequacy, ENTSOE_MC_year}. This methodology uses weather data (historical data and climate predictions) to build so-called ``Monte Carlo (MC) years''. These MC years are time-series realisation of temperature-dependent load, wind and solar availability, hydro inflows (rain, ice melting) and random availability (due to forced outages) of generating units and transmission elements. The use of weather data allows for adequate modelling of the spatio-temporal correlations between all random variables (renewable availability, load, asset availability)~\cite{StrathGARPUR, ENTSOE_MC_year}. Then, for each MC year, a market model is used to determine the commitment of thermal and hydro generators. Finally, each year is divided into (e.g. hourly) snapshots and an optimal power flow (OPF) is performed to account for potential preventive actions that could be performed by operators to make the system secure. Typically, this OPF will include constraints to guarantee that static limits are not exceeded in all possible N-1 conditions. All snapshots are then saved in a database to be used in the rest of the analysis (e.g. adequacy or security assessment).
+The first methodology has initially been developed during the GARPUR (Generally Accepted Reliability Principle with Uncertainty modelling and through probabilistic Risk assessment) project~\cite{StrathElia, StrathGARPUR} and is now used by some European TSOs and by ENTSO-E to perform adequacy studies~\cite{ACER_MC_year, EliaAdequacy, ENTSOE_MC_year}. This methodology uses weather data (historical data and climate predictions) to build so-called ``Monte Carlo (MC) years''. These MC years are time-series realisation of temperature-dependent load, wind and solar availability, hydro inflows (rain, ice melting) and random availability (due to forced outages) of generating units and transmission elements. The use of weather data allows for adequate modelling of the spatio-temporal correlations between all random variables (renewable availability, load, asset availability)~\cite{StrathGARPUR, ENTSOE_MC_year}. Then, for each MC year, a market model is used to determine the commitment of thermal and hydro generators. Finally, each year is divided into (\eg hourly) snapshots and an optimal power flow (OPF) is performed to account for potential preventive actions that could be performed by operators to make the system secure. Typically, this OPF will include constraints to guarantee that static limits are not exceeded in all possible N-1 conditions. All snapshots are then saved in a database to be used in the rest of the analysis (\eg adequacy or security assessment).
 
 
-The second methodology has been developed during the iTesla project~\cite{KonstantelosCopulas, EurostagHPC, iTesla_uncertainties}. It consists in directly fitting a multivariate pdf to the true pdf of system states using historical data. Copulas are used to model the correlations between variables. The advantage of this method compared to the GARPUR approach is that it can potentially be more accurate since it is directly based on real historical system states. In particular, the iTesla approach is especially effective at predicting the system topology (i.e. substation configurations) for a given realisation of renewable availability and load. This is more difficult in the GARPUR approach as topology optimisations introduce many binary variables into OPFs which makes them difficult to solve.
+The second methodology has been developed during the iTesla project~\cite{KonstantelosCopulas, EurostagHPC, iTesla_uncertainties}. It consists in directly fitting a multivariate pdf to the true pdf of system states using historical data. Copulas are used to model the correlations between variables. The advantage of this method compared to the GARPUR approach is that it can potentially be more accurate since it is directly based on real historical system states. In particular, the iTesla approach is especially effective at predicting the system topology (\ie substation configurations) for a given realisation of renewable availability and load. This is more difficult in the GARPUR approach as topology optimisations introduce many binary variables into OPFs which makes them difficult to solve.
 
-However, the reliance on historical data makes the iTesla approach less flexible. In particular, it does not allow for the modelling of the impact of climate change on weather and severe weather events. This has however been done using the GARPUR approach in~\cite{ENTSOE_MC_year}. Also, if operating rules are modified (e.g. to enhance security as we will discuss in section~\ref{sec:PDSA_interpretation}) or if new elements are added to the system (e.g. new lines), historical data on operator actions might no longer be relevant. Finally, the iTesla approach is relatively poorly documented, so only the GARPUR approach will be considered in the test cases studied in this thesis.
+However, the reliance on historical data makes the iTesla approach less flexible. In particular, it does not allow for the modelling of the impact of climate change on weather and severe weather events. This has however been done using the GARPUR approach in~\cite{ENTSOE_MC_year}. Also, if operating rules are modified (\eg to enhance security as we will discuss in section~\ref{sec:PDSA_interpretation}) or if new elements are added to the system (\eg new lines), historical data on operator actions might no longer be relevant. Finally, the iTesla approach is relatively poorly documented, so only the GARPUR approach will be considered in the test cases studied in this thesis.
 
-When building a database of operating conditions, the database should be large enough to include a wide variety of possible system states. However, because adequacy and security studies have different objectives, databases used for security do not need to be as large as for adequacy studies (around 200 MC years for adequacy~\cite{EliaAdequacy}). Indeed, adequacy studies check that the load can be fully satisfied in most system states. A typical adequacy criteria is that the expected number of hours during which the load cannot be satisfied is lower than 3h per year (i.e. 3 operating points out of 8760 if hourly snapshots are considered). The database of operating states should thus include many MC years such that the statistical accuracy of the analysis is better than 3h per year.
+When building a database of operating conditions, the database should be large enough to include a wide variety of possible system states. However, because adequacy and security studies have different objectives, databases used for security do not need to be as large as for adequacy studies (around 200 MC years for adequacy~\cite{EliaAdequacy}). Indeed, adequacy studies check that the load can be fully satisfied in most system states. A typical adequacy criteria is that the expected number of hours during which the load cannot be satisfied is lower than 3h per year (\ie 3 operating points out of 8760 if hourly snapshots are considered). The database of operating states should thus include many MC years such that the statistical accuracy of the analysis is better than 3h per year.
 
 On the other hand, in a security study, contingencies are applied onto operating states. It can thus be said that adequacy focuses on N-0 states (where N already accounts for unavailable assets) while security focuses on N-1 and N-k contingencies. Because contingencies have a relatively low frequency of occurrence (around 1 per year for N-1 contingencies and lower for higher order contingencies, compared to the N-0 state that continuously occur), a contingency that only has consequences for states that occur 3h per year (0.3\% of the time) will have a very low contribution to the risk\footnote{Table~\ref{tab:critical_contingencies} shows that contingencies with a high contribution to the risk typically have non-zero consequences for 5 to 50\% of operating conditions. However, this table only accounts for N-2 contingencies and delayed-clearing N-1 contingencies, so this figure could be lower for N-1 contingencies with normal clearing time.}. In any case, building a large database is computationally inexpensive (compared to performing thousands of dynamic simulations), so an arbitrarily large database of operating conditions can theoretically be generated.
 
@@ -236,7 +234,7 @@ However, as discussed previously, cascading outages are difficult to simulate as
 
 The main question when doing MC simulations is how to efficiently sample and when to stop sampling. This is discussed in section~\ref{sec:sampling}. To limit computation time, scenarios which are expected to be secure can be screened out of the analysis. The stability indicators used for this purpose are described in section~\ref{sec:screening}. However, even with the above points, performing a PDSA requires a significant amount of computation time. Fortunately, it is straightforward to parallelise as different scenarios can be simulated independently on different computer cores. The implementation of the proposed methodology in a high-performance computing (HPC) environment is thus discussed in section~\ref{sec:HPC} and applied in section~\ref{sec:PDSA_results} on the test system presented in section~\ref{sec:PDSA_test_system}.
 
-Finally, the third step consists in interpreting the results of the security assessment and in using them to enhance the security of the system (i.e. to reduce the risk of unwanted load shedding) as a first step towards probabilistic security \emph{management}. This is discussed in section~\ref{sec:PDSA_interpretation}.
+Finally, the third step consists in interpreting the results of the security assessment and in using them to enhance the security of the system (\ie to reduce the risk of unwanted load shedding) as a first step towards probabilistic security \emph{management}. This is discussed in section~\ref{sec:PDSA_interpretation}.
 
 
 \subsection{Sampling operating conditions and stopping criteria}
@@ -281,9 +279,9 @@ The standard MC approach is to sample system states proportionally to their like
   SE_i \leq \epsilon \; R
 \end{equation}
 
-\noindent where \(SE_i\) is the standard error (SE) of the risk of contingency \(i\), \(R\) is the total estimated risk, and \(\epsilon\) is a user-defined threshold. System states are thus sampled independently for each contingency until the SE of each contingency is smaller than a fraction of the total risk (\(\epsilon \, R\)). To be clear, all contingencies (up to a given order) are enumerated (not sampled), and system states are sampled. Equation (\ref{eq:stop}) guarantees that the most critical contingencies are correctly identified (if their contribution to the total risk is higher than \(\epsilon \, R\))\footnote{Another stopping criterion could be that all \(SE_i\) are smaller than the risk of the (e.g.) tenth most critical contingency to guarantee (with some confidence) that the 10 most critical contingencies are correctly identified.}.
+\noindent where \(SE_i\) is the standard error (SE) of the risk of contingency \(i\), \(R\) is the total estimated risk, and \(\epsilon\) is a user-defined threshold. System states are thus sampled independently for each contingency until the SE of each contingency is smaller than a fraction of the total risk (\(\epsilon \, R\)). To be clear, all contingencies (up to a given order) are enumerated (not sampled), and system states are sampled. Equation (\ref{eq:stop}) guarantees that the most critical contingencies are correctly identified (if their contribution to the total risk is higher than \(\epsilon \, R\))\footnote{Another stopping criterion could be that all \(SE_i\) are smaller than the risk of the (\eg) tenth most critical contingency to guarantee (with some confidence) that the 10 most critical contingencies are correctly identified.}.
 
-The above criterion requires an estimate of the total risk. Thus, to warm up the algorithm, simulations are performed for all contingencies and for a few (e.g. 5) operating conditions samples. This gives a first (rough) estimate of the total risk. Contingencies for which the stopping criterion (\ref{eq:stop}) is far from being satisfied are then sampled with higher priority. The estimate of the total risk is iteratively improved when more samples are simulated until (\ref{eq:stop}) is satisfied for all contingencies.
+The above criterion requires an estimate of the total risk. Thus, to warm up the algorithm, simulations are performed for all contingencies and for a few (\eg 5) operating conditions samples. This gives a first (rough) estimate of the total risk. Contingencies for which the stopping criterion (\ref{eq:stop}) is far from being satisfied are then sampled with higher priority. The estimate of the total risk is iteratively improved when more samples are simulated until (\ref{eq:stop}) is satisfied for all contingencies.
 
 When using the standard MC approach, the SE can be computed as
 
@@ -302,7 +300,7 @@ To estimate the bias introduced in the above approach, it is useful to notice th
   p_i < 1 - \sqrt[N_i]{1-\alpha} \ \text{with}\ \alpha \ \text{confidence}
 \end{equation}
 
-In this case, an upper bound on the bias is \(f_i p_i M_C\) where \(M_C\) are the maximum consequences of a contingency (e.g. a complete blackout). When \(N_i\) is large, equation (\ref{eq:proba}) can be approximated using a first-order Taylor expansion as
+In this case, an upper bound on the bias is \(f_i p_i M_C\) where \(M_C\) are the maximum consequences of a contingency (\eg a complete blackout). When \(N_i\) is large, equation (\ref{eq:proba}) can be approximated using a first-order Taylor expansion as
 
 \begin{equation} \label{eq:proba_approx}
   p_i < \frac{|\ln(1-\alpha)|}{N_i}
@@ -341,10 +339,10 @@ Considering that, for large \(N_i\), \((1-p_i) \approx 1\) and injecting (\ref{e
 %   SE_i \leq f_i \sqrt{(1-p_i) \frac{\tilde{\sigma^2}}{N} + p_i \frac{\beta_i}{N}} \approx f_i \sqrt{\frac{\tilde{\sigma^2}}{N} + \frac{3 \beta_i}{N^2}}
 % \end{equation}
 
-This bound can then be used in the stopping criteria (\ref{eq:stop}). The first term in this bound is the classical variance term, and the second term represents how good is the ``coverage'' of the MC sampling, i.e. how (un)likely it is to have missed important scenarios in the sampling process.
+This bound can then be used in the stopping criteria (\ref{eq:stop}). The first term in this bound is the classical variance term, and the second term represents how good is the ``coverage'' of the MC sampling, \ie how (un)likely it is to have missed important scenarios in the sampling process.
 
 
-The demonstration above has been made for the case of a crude MC estimator (i.e. sampling of system states based on their likelihood). Crude MC estimators can be slow to converge, especially in the presence of low frequency high impact scenarios, and more sophisticated methods have thus been developed. In the field of power systems, a commonly used method is importance sampling. It usually consists in biasing the sampling process towards unsecure cases in order to have more samples with consequences. In the context of resilience, this can be done for example by sampling more frequently the more severe earthquakes, because small earthquakes, while more frequent, will have a lower contribution to the risk as they often have low consequences.
+The demonstration above has been made for the case of a crude MC estimator (\ie sampling of system states based on their likelihood). Crude MC estimators can be slow to converge, especially in the presence of low frequency high impact scenarios, and more sophisticated methods have thus been developed. In the field of power systems, a commonly used method is importance sampling. It usually consists in biasing the sampling process towards unsecure cases in order to have more samples with consequences. In the context of resilience, this can be done for example by sampling more frequently the more severe earthquakes, because small earthquakes, while more frequent, will have a lower contribution to the risk as they often have low consequences.
 
 In the context of security assessment, importance sampling is more difficult to use because it is difficult to know a priori if a given contingency will be less secure in the cases with high wind, the cases with high solar, and/or the cases with high/low load, etc. Adaptive importance sampling methods such as cross-entropy importance sampling circumvent this issue by drawing a first batch of samples in a crude MC way, identifying unsecure zones, then iteratively drawing additional batches of samples biased towards the unsecure zones. This approach can be dangerous because if an unsecure region is missed in the first batch, it will be increasingly more unlikely to be discovered it in the following batches.
 
@@ -368,11 +366,11 @@ The section above just stated that crude MC sampling is the most efficient appro
 
 This indicates that a significant speed-up can be obtained if secure scenarios are screened out of the analysis (up to a factor 10 in this case). As this thesis focuses on dynamic stability, the security of any scenario is predicted using three stability indicators, one for each of the main instability types: angle, voltage, and frequency. If long-term stability is of interest, additional indicators should be used. The stability indicators used in this thesis are as follows.
 
-For angle stability, the critical clearing time (CCT) is estimated via the extended equal area (EEA) method~\cite{EqualAreaCriterionEnergies} (using the critical cluster evaluation method from~\cite{EqualAreaCriterionPSCC}). A scenario is deemed unsecure is the actual clearing time is larger than the CCT plus a 50ms margin. The 50ms margin is used because it is preferable to have false positives (i.e. secure scenarios that are predicted to be unsecure) rather than false negatives (i.e. unsecure scenarios predicted secure). Indeed, for false positives, unnecessary simulations will be performed which increases computation time but not the risk estimate (because simulations of false positives will simply show that they are secure), while false negatives cause to underestimate the risk (because unsecure scenarios are disregarded).
+For angle stability, the critical clearing time (CCT) is estimated via the extended equal area (EEA) method~\cite{EqualAreaCriterionEnergies} (using the critical cluster evaluation method from~\cite{EqualAreaCriterionPSCC}). A scenario is deemed unsecure is the actual clearing time is larger than the CCT plus a 50ms margin. The 50ms margin is used because it is preferable to have false positives (\ie secure scenarios that are predicted to be unsecure) rather than false negatives (\ie unsecure scenarios predicted secure). Indeed, for false positives, unnecessary simulations will be performed which increases computation time but not the risk estimate (because simulations of false positives will simply show that they are secure), while false negatives cause to underestimate the risk (because unsecure scenarios are disregarded).
 
-The EEA method concerns the stability of synchronous generators. Some papers (e.g.~\cite{ScreeningPLL}) argue that inverter-based generators can be modelled as synchronous machines with an inertia \(\frac{1}{K_i}\) where \(K_i\) is the gain of the integral component of the PLL. However, due to the large (\(>10\)s\textsuperscript{-1}) gains typically used, this leads to very low CCTs. However, this does not account for fault-ride through modes of inverters. In this thesis, inverter-based generators are thus modelled as negative loads for the purpose of EEA.
+The EEA method concerns the stability of synchronous generators. Some papers (\eg~\cite{ScreeningPLL}) argue that inverter-based generators can be modelled as synchronous machines with an inertia \(\frac{1}{K_i}\) where \(K_i\) is the gain of the integral component of the PLL. However, due to the large (\(>10\)s\textsuperscript{-1}) gains typically used, this leads to very low CCTs. However, this does not account for fault-ride through modes of inverters. In this thesis, inverter-based generators are thus modelled as negative loads for the purpose of EEA.
 
-For voltage stability, the indicator from~\cite{VoltageScreeningMachowski} is used, i.e. a scenario is considered voltage secure if the short-circuit power at all buses (after the occurrence of the contingency) is larger than 4 times the apparent power of the load of the bus. Regarding frequency stability, based on preliminary simulations on the RTS-GMLC, a scenario is deemed secure if it leads to a rate of change of frequency lower than 0.4~Hz/s and of loss of power generation less than 70\% of the primary reserve. Generators near a fault are allowed to disconnect if the fault lasts longer than 150ms. The RoCoF is estimated via
+For voltage stability, the indicator from~\cite{VoltageScreeningMachowski} is used, \ie a scenario is considered voltage secure if the short-circuit power at all buses (after the occurrence of the contingency) is larger than 4 times the apparent power of the load of the bus. Regarding frequency stability, based on preliminary simulations on the RTS-GMLC, a scenario is deemed secure if it leads to a rate of change of frequency lower than 0.4~Hz/s and of loss of power generation less than 70\% of the primary reserve. Generators near a fault are allowed to disconnect if the fault lasts longer than 150ms. The RoCoF is estimated via
 
 \begin{equation}
 \text{RoCoF} = \frac{\Delta P}{2 H}
@@ -386,9 +384,9 @@ For voltage stability, the indicator from~\cite{VoltageScreeningMachowski} is us
 
 The method described above can be implemented in an HPC environment using a master-slave architecture similar to the one used in~\cite{EurostagHPC}. The master node is responsible for scheduling the simulations to be performed, and the slaves nodes are responsible for performing those simulations and sending the results back to the master node.
 
-A typical run goes as follows. First, the master schedules all contingencies to be simulated for a small number (e.g. 5) of static samples. This warm-up step allows the master to evaluate the stopping criterion~(\ref{eq:stop}) and to compute a first estimate of the total risk. The master then periodically schedules new batches of simulations until the stopping criterion is satisfied for all contingencies.
+A typical run goes as follows. First, the master schedules all contingencies to be simulated for a small number (\eg 5) of static samples. This warm-up step allows the master to evaluate the stopping criterion~(\ref{eq:stop}) and to compute a first estimate of the total risk. The master then periodically schedules new batches of simulations until the stopping criterion is satisfied for all contingencies.
 
-Note that the estimator of the total risk used in the statistical accuracy criteria will vary during the run, and so will the strictness of those criteria (as the criteria are stricter if the total risk is small). Unnecessary simulations might thus be performed if, at a given point in the run, the current estimate of the total risk is lower than its value at the end of the run (which is very likely). To alleviate this issue, the master will schedule in priority contingencies for which statistical accuracy is far from being reached (i.e. contingencies for which \(SE_i \gg \epsilon \, R\)). This limits the risk of performing unnecessary simulations and increases the convergence speed of the total risk estimator.
+Note that the estimator of the total risk used in the statistical accuracy criteria will vary during the run, and so will the strictness of those criteria (as the criteria are stricter if the total risk is small). Unnecessary simulations might thus be performed if, at a given point in the run, the current estimate of the total risk is lower than its value at the end of the run (which is very likely). To alleviate this issue, the master will schedule in priority contingencies for which statistical accuracy is far from being reached (\ie contingencies for which \(SE_i \gg \epsilon \, R\)). This limits the risk of performing unnecessary simulations and increases the convergence speed of the total risk estimator.
 
 To limit communication requirements, the master only sends the ID's of the contingency and operating state to slaves. Similarly, the slaves only send back the consequences of a given simulation (and, optionally, sequences of tripping events) to the master. This, with the fact the computation burden of the master is very limited, allows a single master to handle a possibly very large number of slaves. Tests were performed with up to 319 slaves (on a 320-core machine) and showed a linear speed-up with the number of slaves.
 
@@ -489,9 +487,9 @@ For this work, two interconnections have been added to limit curtailment of the 
 
 As there was no dynamic data in the original RTS-GMLC, they have been added in this thesis. Synchronous generators are represented with standard eighth order model and equipped with an IEEET1 exciter and a BPA GG (also known as WSCC type G) governor model as in~\cite{IEEE39Dynamic}. A different model is however used for hydro units as they have a fundamentally different behaviour than other types of units. The model used is an GOVHYDRO1 model. The machine, exciter and governor parameters are taken from annex D of~\cite{vittalBook}. This annex contains typical data for different types of machines (hydro, nuclear, coal, gas) and a wide range of rated powers (5~MW to 1.3~GW). So, for each generator of the test systems, parameters were taken from a machine in~\cite{vittalBook} that has the same type and that has the closest rated power. For hydro units, those parameters are completed with the ones in~\cite{hydroGov}. For inverter-based generation, the models from~\cite{ChaspierreThesis} are used. The protection system models (and associated uncertainty) are the same as in section~\ref{sec:protection_test_case} except load blinders have been added to distance protections. The blinders are set to avoid tripping for apparent impedances that correspond to a load of 150\% of the rated line current at 0.85~pu voltage and with a power factor angle of less than 30° following NERC recommendations~\cite{NERC_load_blinders}.
 
-The contingencies considered in this example are three-phase faults occurring at one of the two extremities of lines. These faults are normally cleared by opening the faulted line in 100ms (N-1 contingency). However, it is also considered that there is a 0.1 probability that the primary protection fails at that the fault is thus cleared in 200ms (N-1 contingency with delayed clearing). Also, I consider a 0.01 probability that one breaker fails to open when clearing the fault. Breaker failure protection~\cite{HorowitzBook} is assumed to be installed in all substations and that they are able to clear the fault by opening a single adjacent line in 200ms (leading to an N-2 contingency). It has been checked that the system is always secure for N-1 contingencies with normal clearing time, these have thus not been considered in the PDSA. The contingencies listed above are line faults which are not cleared by the primary protection system due to protection failure or ``missed trips''. Another important class of protection failures are ``unwanted trips'', i.e. trips that are not necessary to clear the fault and that thus unnecessarily disconnect elements. However, those are significantly more difficult to model as discussed in chapter~\ref{ch:protections} and are thus left for future work.
+The contingencies considered in this example are three-phase faults occurring at one of the two extremities of lines. These faults are normally cleared by opening the faulted line in 100ms (N-1 contingency). However, it is also considered that there is a 0.1 probability that the primary protection fails at that the fault is thus cleared in 200ms (N-1 contingency with delayed clearing). Also, I consider a 0.01 probability that one breaker fails to open when clearing the fault. Breaker failure protection~\cite{HorowitzBook} is assumed to be installed in all substations and that they are able to clear the fault by opening a single adjacent line in 200ms (leading to an N-2 contingency). It has been checked that the system is always secure for N-1 contingencies with normal clearing time, these have thus not been considered in the PDSA. The contingencies listed above are line faults which are not cleared by the primary protection system due to protection failure or ``missed trips''. Another important class of protection failures are ``unwanted trips'', \ie trips that are not necessary to clear the fault and that thus unnecessarily disconnect elements. However, those are significantly more difficult to model as discussed in chapter~\ref{ch:protections} and are thus left for future work.
 
-Only faults at the highest voltage level are considered which leads to a contingency list of 114 N-1 contingencies with delayed clearing and 594 N-2 contingencies. The frequency of line faults is taken as 2.5 faults per 100~km of line per year~\cite{FaultStatisticsFrance}\footnote{Due to lack of data, line fault probability is assumed independent of weather conditions. Fault and protection failure statistics significantly vary from country to country due to different weather and reliability and reporting practices (e.g. \cite{GridPSA} reports a 0.27 fault per year and per 100~km of 400~kV overhead lines for the Finnish grid, while \cite{FaultStatisticsFrance} reports 2.5 in France). Data collection plans (as initiated by ENTSO-E~\cite{ENTSOE-PSA}) and failure mode and effect analysis (as demonstrated in~\cite{GridPSA}) should thus be performed to be able to fully trust the results of a PDSA.}.
+Only faults at the highest voltage level are considered which leads to a contingency list of 114 N-1 contingencies with delayed clearing and 594 N-2 contingencies. The frequency of line faults is taken as 2.5 faults per 100~km of line per year~\cite{FaultStatisticsFrance}\footnote{Due to lack of data, line fault probability is assumed independent of weather conditions. Fault and protection failure statistics significantly vary from country to country due to different weather and reliability and reporting practices (\eg \cite{GridPSA} reports a 0.27 fault per year and per 100~km of 400~kV overhead lines for the Finnish grid, while \cite{FaultStatisticsFrance} reports 2.5 in France). Data collection plans (as initiated by ENTSO-E~\cite{ENTSOE-PSA}) and failure mode and effect analysis (as demonstrated in~\cite{GridPSA}) should thus be performed to be able to fully trust the results of a PDSA.}.
 
 The simulation of a given scenario provides with an estimate of the consequences of a contingency in terms of MW of load shed. This value can be translated into societal costs using the simple method described in section~\ref{sec:blackout_cost}. For the RTS and at average load (4350~MW), the cost of a complete blackout is thus estimated at 500M€. This is the value used for \(M_C\). Dynamic simulations are performed using \Dynawo{}~\cite{Dynawo} on 10 32-cores AMD EPYC Rome 7542 CPU's at 2.9 GHz.
 
@@ -555,7 +553,7 @@ Figure~\ref{fig:indic_N1} (resp. Figure~\ref{fig:indic_N2}) shows the number of 
     },
     width=0.8\linewidth,
     height=5cm,
-    xlabel=Contingency id,
+    xlabel=Contingency ID,
     xmin=1, xmax=114,
     ymin=0,
     yticklabel style={/pgf/number format/fixed},
@@ -564,14 +562,14 @@ Figure~\ref{fig:indic_N1} (resp. Figure~\ref{fig:indic_N2}) shows the number of 
     xtick align=outside,
 ]
 \nextgroupplot[ylabel=\(N_i\), height=4cm]
-\addplot+ [mark=none, line width=1pt] table [x=id,y=N_static] {Figs/N_N1.txt};
+\addplot+ [mark=none] table [x=id,y=N_static] {Figs/N_N1.txt};
 
 \nextgroupplot[
     ylabel style={align=center}, ylabel=Statistical accuracy\\{[M€/y]},
     legend style={legend columns=2}, ymax=0.21]
 
-\addplot+ [ybar interval, fill, mark=none, line width=1pt] table [x=id,y=indic_1] {Figs/N_N1.txt};
-\addplot+ [mark=none, line width=1pt] table [x=id,y=indic_2] {Figs/N_N1.txt};
+\addplot+ [ybar interval, fill, mark=none] table [x=id,y=indic_1] {Figs/N_N1.txt};
+\addplot+ [mark=none] table [x=id,y=indic_2] {Figs/N_N1.txt};
 \addlegendentry{Variance}
 \addlegendentry{Coverage}
 \end{groupplot}
@@ -594,7 +592,7 @@ Figure~\ref{fig:indic_N1} (resp. Figure~\ref{fig:indic_N2}) shows the number of 
     },
     width=0.8\linewidth,
     height=5cm,
-    xlabel=Contingency id,
+    xlabel=Contingency ID,
     xmin=1, xmax=594,
     ymin=0,
     yticklabel style={/pgf/number format/fixed},
@@ -603,14 +601,14 @@ Figure~\ref{fig:indic_N1} (resp. Figure~\ref{fig:indic_N2}) shows the number of 
     xtick align=outside,
 ]
 \nextgroupplot[ylabel=\(N_i\), height=4cm]
-\addplot+ [mark=none, line width=1pt] table [x=id,y=N_static] {Figs/N_N2.txt};
+\addplot+ [mark=none] table [x=id,y=N_static] {Figs/N_N2.txt};
 
 \nextgroupplot[
   ylabel style={align=center}, ylabel=Statistical accuracy\\{[M€/y]},
   legend style={legend columns=2}, ymax=0.21]
 
-  \addplot+ [ybar interval, fill, mark=none, line width=1pt] table [x=id,y=indic_1] {Figs/N_N2.txt};
-  \addplot+ [mark=none, line width=1pt] table [x=id,y=indic_2] {Figs/N_N2.txt};
+  \addplot+ [ybar interval, fill, mark=none] table [x=id,y=indic_1] {Figs/N_N2.txt};
+  \addplot+ [mark=none] table [x=id,y=indic_2] {Figs/N_N2.txt};
 \addlegendentry{Variance}
 \addlegendentry{Coverage}
 \end{groupplot}
@@ -620,7 +618,7 @@ Figure~\ref{fig:indic_N1} (resp. Figure~\ref{fig:indic_N2}) shows the number of 
 \end{figure}
 
 
-It is interesting to see that when aiming to minimise the SE of the risk contribution of \emph{individual} contingencies, the best strategy is basically to use a crude MC approach (i.e. sampling contingencies proportionally to their frequency of occurrence) (except for a few contingencies with high variance). In a crude MC approach, the total risk can be estimated as
+It is interesting to see that when aiming to minimise the SE of the risk contribution of \emph{individual} contingencies, the best strategy is basically to use a crude MC approach (\ie sampling contingencies proportionally to their frequency of occurrence) (except for a few contingencies with high variance). In a crude MC approach, the total risk can be estimated as
 
 \begin{equation}
   R = \left(\sum_i f_i\right) \left(\frac{1}{N} \sum_s c_s\right)
@@ -673,7 +671,7 @@ It is interesting to see that when aiming to minimise the SE of the risk contrib
   \pgfplotsset{width=0.8\linewidth}
   \begin{axis}[
       height=5cm,
-      xlabel=Contingency id,
+      xlabel=Contingency ID,
       xmin=0.5, xmax=20.5,
       ymin=0,
       yticklabel style={/pgf/number format/fixed},
@@ -727,7 +725,7 @@ Also, it can be argued that using an indicator to predict which scenarios are se
 %         vertical sep=20pt
 %     },
 %     height=4cm,
-%     xlabel=Contingency id,
+%     xlabel=Contingency ID,
 %     xmin=1, xmax=10,
 %     ymin=0,
 %     tickpos=left,
@@ -735,18 +733,18 @@ Also, it can be argued that using an indicator to predict which scenarios are se
 %     xtick align=outside,
 % ]
 % \nextgroupplot[ylabel=\(S_i\) {[\%]}, ymax=50]
-% \addplot+ [mark=none, line width=1pt] table [x=id,y=share] {Figs/FoM.txt};
+% \addplot+ [mark=none] table [x=id,y=share] {Figs/FoM.txt};
 % \nextgroupplot[
 %     ylabel=\(\sigma_i\),
 %     legend cell align=left,
 %     legend style={at={(1,1)},anchor=north east}]
-% \addplot+ [mark=none, line width=1pt] table [x=id,y=std_dev] {Figs/FoM.txt};
-% \addplot+ [mark=none, line width=1pt] table [x=id,y=std_dev_no_indic] {Figs/FoM.txt};
+% \addplot+ [mark=none] table [x=id,y=std_dev] {Figs/FoM.txt};
+% \addplot+ [mark=none] table [x=id,y=std_dev_no_indic] {Figs/FoM.txt};
 % \nextgroupplot[
 %     ylabel=\(FoM_i\),
 %     legend to name={CommonLegend},legend style={legend columns=2}]
-% \addplot+ [mark=none, line width=1pt] table [x=id,y=FoM] {Figs/FoM.txt};
-% \addplot+ [mark=none, line width=1pt] table [x=id,y=FoM_no_indic] {Figs/FoM.txt};
+% \addplot+ [mark=none] table [x=id,y=FoM] {Figs/FoM.txt};
+% \addplot+ [mark=none] table [x=id,y=FoM_no_indic] {Figs/FoM.txt};
 % \addlegendentry{With indicator}
 % \addlegendentry{Without indicator}
 % \end{groupplot}
@@ -761,7 +759,7 @@ Also, it can be argued that using an indicator to predict which scenarios are se
 \subsection{Missing trips during cascades}
 \label{sec:PDSA_results_missing_trips}
 
-Some works (e.g.~\cite{Faghihi, DCATphase1}) consider that there might be ``missing trips'' during the evolution of the cascade. Indeed, each time a protection system operates during a cascade, there is also some probability that it fails to operate. This can be considered by splitting the simulation in two branches when one protection operates: one where the protection actually operates and one where it fails to; each associated with some probability.
+Some works (\eg~\cite{Faghihi, DCATphase1}) consider that there might be ``missing trips'' during the evolution of the cascade. Indeed, each time a protection system operates during a cascade, there is also some probability that it fails to operate. This can be considered by splitting the simulation in two branches when one protection operates: one where the protection actually operates and one where it fails to; each associated with some probability.
 
 Due to time constraints, this has not been considered in this thesis. However, an estimation of the risk associated with those missing trips can be done based on the results of the present analysis. Indeed, for each simulation performed, the associated sequence of tripping events is saved to allow for further analysis. The frequency of protection system operations (not accounting for fault clearing) can thus be estimated at 0.35 per year. This can be compared to the 17.9 contingencies per year of the RTS (11.7 for delayed-clearing N-1 contingencies and 6.2 for N-2 contingencies). This figure does not account for under-frequency load shedding (UFLS) relay trips because the failure of a single UFLS relay is unlikely to affect the evolution of a cascade. Generator protections are also not included in this figure as missing trips of generators are made very unlikely due to the high consequences for the generator if it is not disconnected when needed.
 
@@ -775,7 +773,7 @@ This section has discussed the risk associated with missing trips, but, as discu
 
 We now study how the addition of a screening process impacts the accuracy and computational burden of the PDSA. The main results are given in Table~\ref{tab:screening}. First, it is important to notice that even though the contingencies considered in this analysis are relatively severe (compared to the N-1 contingencies with normal clearing time the system has been designed to withstand), only 3\% of the sampled scenarios (4329 out of around 152,138) lead to consequences (around 2\% for delayed-clearing N-1 scenarios, and 4\% for N-2 scenarios). Therefore, without screening, 95\% of the computation time is wasted on secure scenarios (not 97\%, as an unsecure scenario takes on average more time to simulate than a secure one).
 
-With perfect screening, the computational burden of the PDSA can thus be reduced by a factor 20. The screening process used in this work does not reach this performance however. It has a low false negative (FN) rate, i.e. very few unsecure scenarios are missed, so it has a low impact on the PDSA accuracy (only 4\% of the total risk is missed). However, it has a high false positive (FP) rate, i.e. many secure scenarios are flagged as unsecure and therefore unnecessarily simulated. Screening thus only speeds up the PDSA by a factor 1.94, way less than the theoretical limit of 20.
+With perfect screening, the computational burden of the PDSA can thus be reduced by a factor 20. The screening process used in this work does not reach this performance however. It has a low false negative (FN) rate, \ie very few unsecure scenarios are missed, so it has a low impact on the PDSA accuracy (only 4\% of the total risk is missed). However, it has a high false positive (FP) rate, \ie many secure scenarios are flagged as unsecure and therefore unnecessarily simulated. Screening thus only speeds up the PDSA by a factor 1.94, way less than the theoretical limit of 20.
 
 \begin{table}
   \centering
@@ -795,7 +793,7 @@ With perfect screening, the computational burden of the PDSA can thus be reduced
   \end{tabular}
 \end{table}
 
-This is mainly because the EEA underestimate CCT in this case due to the large penetration of inverter-based generators. Indeed, due to their low capacity factors, inverter-based generators often have room to provide fast voltage support which helps with the angular stability of synchronous generators. Table~\ref{tab:CCT_margin} shows that when using a CCT margin of -20ms in the screening process, i.e. assuming that faults cleared in 200ms are secure if the EEA predicts a CCT larger than 180ms, a speed-up of 3.5 can be obtained but at the cost of missing 16.6\% of the total risk. Better stability indicators should be developed if higher speed-ups and/or lower impact on accuracy are desired.
+This is mainly because the EEA underestimate CCT in this case due to the large penetration of inverter-based generators. Indeed, due to their low capacity factors, inverter-based generators often have room to provide fast voltage support which helps with the angular stability of synchronous generators. Table~\ref{tab:CCT_margin} shows that when using a CCT margin of -20ms in the screening process, \ie assuming that faults cleared in 200ms are secure if the EEA predicts a CCT larger than 180ms, a speed-up of 3.5 can be obtained but at the cost of missing 16.6\% of the total risk. Better stability indicators should be developed if higher speed-ups and/or lower impact on accuracy are desired.
 
 \begin{table}
   \centering
@@ -922,7 +920,7 @@ Table~\ref{tab:critical_contingencies} shows a summary of the PDSA results for t
 
 However, Table~\ref{tab:critical_contingencies} does not explain why those contingencies are unsecure nor how to make them more secure. Table~\ref{tab:samples_A34} does a first step by showing a few samples (8 out of 1274) of the most critical contingency (fault on line A34 with delayed fault clearing). The table shows that the contingency can lead to different trip sequences depending on the operating conditions leading to different consequences. Actually, upon further analysis, all sequences are initiated due to the loss of synchronism of the nuclear power plant located in bus 121 (121\_NUCLEAR in Figure~\ref{fig:RTS-copy}).
 
-Indeed, Figure~\ref{fig:A34_voltage} shows the voltage evolution for two of these cases (hours 7634 and 8402). In both cases, voltage at some buses stay depressed after fault clearing due to the loss of synchronism of the nuclear generator. Also, following the fault, line A34 is disconnected and the wind farm at bus 121 (121\_WIND) only remain connected to the rest of the system through line A30. And due to the depressed voltages, the wind farm is not able to push its power through this single line (that connects bus 121 to bus 117). In some cases (e.g. Figure~\ref{fig:A34_voltage_7634}), this leads to trip of line A30 by distance protection. In other cases (e.g. Figure~\ref{fig:A34_voltage_8402}), the distance protection of line A30 is armed, but the nuclear generator is disconnected, allowing for voltages to recover before the distance protection sends a trip signal.
+Indeed, Figure~\ref{fig:A34_voltage} shows the voltage evolution for two of these cases (hours 7634 and 8402). In both cases, voltage at some buses stay depressed after fault clearing due to the loss of synchronism of the nuclear generator. Also, following the fault, line A34 is disconnected and the wind farm at bus 121 (121\_WIND) only remain connected to the rest of the system through line A30. And due to the depressed voltages, the wind farm is not able to push its power through this single line (that connects bus 121 to bus 117). In some cases (\eg Figure~\ref{fig:A34_voltage_7634}), this leads to trip of line A30 by distance protection. In other cases (\eg Figure~\ref{fig:A34_voltage_8402}), the distance protection of line A30 is armed, but the nuclear generator is disconnected, allowing for voltages to recover before the distance protection sends a trip signal.
 
 These different possible sequences lead to different consequences. Indeed, in the former, both a nuclear power plant (of 400~MW) and a large wind farm (750~MW installed capacity, compared to the total load that varies between 3 and 7.5~GW) are disconnected leading to 30 to 50\% of load shedding (depending on operating conditions) by UFLS relays. In the latter, only the nuclear power plant is disconnected, so at most 15\% of the load has to be shed.
 
@@ -1000,11 +998,11 @@ The two last cases in Table~\ref{tab:samples_A34} are also initiated by the loss
 
 The previous section performed a first step in the interpretation of the results of the present PDSA and in particular showed that 10 contingencies (out of 708) contribute to 44\% of the total risk. However, even when looking only at those 10 contingencies, hundreds of simulations still have to be performed to account for the variability of operating conditions, so it is not obvious to identify the main drivers of instability and how to best reduce the risk.
 
-% As discussed in section~\ref{sec:ML}, data-mining techniques can be used to estimate the security boundary, i.e. limit between secure and unsecure operating conditions, for given contingencies based on the results of the PDSA.
+% As discussed in section~\ref{sec:ML}, data-mining techniques can be used to estimate the security boundary, \ie limit between secure and unsecure operating conditions, for given contingencies based on the results of the PDSA.
 
-Machine learning techniques can be used to identify the security boundary, i.e. separation between secure and unsecure operating conditions, for each critical contingency based on the results of the simulations performed in the PDSA. This security boundary can then be used in planning to better understand the drivers of instability, and in operation, to dispatch the system to more secure conditions.
+Machine learning techniques can be used to identify the security boundary, \ie separation between secure and unsecure operating conditions, for each critical contingency based on the results of the simulations performed in the PDSA. This security boundary can then be used in planning to better understand the drivers of instability, and in operation, to dispatch the system to more secure conditions.
 
-Machine learning techniques, and in particular decision trees (DTs), have been used for many decades to predict the security of contingencies in online security assessment based on the results of offline simulations~\cite{DT_Wehenkel}. DTs are often used for classification, e.g. binary classification between secure and unsecure states. A tree starts from a top node that branches based on rules that depend on the features of the operating conditions (e.g. ``wind production at bus 122 higher than 300~MW?''). Each path can be split recursively until we arrive at a leaf node that make the final prediction (e.g. secure or unsecure state).
+Machine learning techniques, and in particular decision trees (DTs), have been used for many decades to predict the security of contingencies in online security assessment based on the results of offline simulations~\cite{DT_Wehenkel}. DTs are often used for classification, \eg binary classification between secure and unsecure states. A tree starts from a top node that branches based on rules that depend on the features of the operating conditions (\eg ``wind production at bus 122 higher than 300~MW?''). Each path can be split recursively until we arrive at a leaf node that make the final prediction (\eg secure or unsecure state).
 
 Another technique that gives easy-to-interpret results is the linear support vector machine (SVM) technique. SVMs split the feature space by a hyperplane with most of the secure operating points on one side of the hyperplane and most unsecure points on the other side. The drawbacks of SVMs are that they are hard to visualise in high dimensional (\(>3\)) feature spaces and that the feature weights have no clear interpretation when there are strong correlations between features. To avoid those drawbacks, this thesis proposes to use sequential feature selection to limit the dimension of the feature space. It consists in training an SVM for each feature individually, keeping the best one, adding a second feature, keeping the best one, etc. Tests performed in this thesis showed that two-dimensional SVMs can be as accurate as decision trees to predict the security of individual contingencies but provide a more intuitive distance to instability and can be more easily integrated in operating rules or in an SCOPF.
 
@@ -1014,7 +1012,7 @@ The SVMs used in this thesis have been trained with at least 1000 scenarios (mor
 
 Figure~\ref{fig:A34_SVM} demonstrates this for the contingency of line A34 with delayed clearing. The x- and y-axis of Figure~\ref{fig:A34_SVM} (wind production at bus 122 and total system load) are the two features that have been selected by the sequential feature selection process\footnote{The feature candidates include the active and reactive power output of all generators, the flows in lines, the total load, and the total power production of each generation type (total wind, total solar, etc.).}. The dashed line is the security boundary estimated by an SVM. This figure helps to understand the results of the PDSA as it suggests that the system tends to be less secure (for this contingency) when the wind farm at bus 122 is producing high amounts of power and when the total load is low. Such configuration leads to high power flows from the south of the network which makes it more likely for the nuclear power plant at bus 121 to lose synchronism as discussed in section~\ref{sec:PDSA_results_intuitive}.
 
-Figure~\ref{fig:A34_SVM} demonstrates a binary classification problem (secure vs. unsecure). Multi-class classification problems could also be of interest to predict the consequences of a contingency (e.g. 0\% load shedding, or 10\% or 100\%), although for this purpose, DTs would probably be more adequate than SVMs. However, this thesis only considers binary classification because it predicts the start of cascades (i.e. has a cascade started (and will it lead to some amount of load shedding) or not (no load shedding)?). It can be seen as more beneficial to identifying the root causes of the start of a cascade than of its propagation as it is easier to stop a cascade before it is initiated (while the situation is still relatively simple and the models well understood).
+Figure~\ref{fig:A34_SVM} demonstrates a binary classification problem (secure vs. unsecure). Multi-class classification problems could also be of interest to predict the consequences of a contingency (\eg 0\% load shedding, or 10\% or 100\%), although for this purpose, DTs would probably be more adequate than SVMs. However, this thesis only considers binary classification because it predicts the start of cascades (\ie has a cascade started (and will it lead to some amount of load shedding) or not (no load shedding)?). It can be seen as more beneficial to identifying the root causes of the start of a cascade than of its propagation as it is easier to stop a cascade before it is initiated (while the situation is still relatively simple and the models well understood).
 
 % This is because system inertia tends to be lower at low loads. The sudden loss of a significant amount of wind production is therefore more likely to lead to large frequency deviations and cascading outages.
 
@@ -1038,17 +1036,18 @@ Figure~\ref{fig:A34_SVM} demonstrates a binary classification problem (secure vs
 ]
 \addplot+[scatter, only marks,
   scatter/classes={0={mark=*,green, mark size=1pt},
-                   1={mark=x,red}
+                   1={mark=x,red, mark size=1pt},
+                   2={mark=*,green, mark size=1pt},  % Actually yellow
+                   3={mark=x,red, mark size=1pt}  % Actually orange
                   },
   scatter src=explicit symbolic] table [x=wind, y=load, meta=color] {Figs/A34.txt};
 \addplot+[black, dashed, no marks, domain=0:600]{(0.39547506181950903 * x + 0.29077603410661323) / 0.03742073838460856};
 %   0.39547506181950903 x P_122_WIND_1 + -0.03742073838460856 x Total_load + 0.29077603410661323 = 0
 \end{axis}
 \end{tikzpicture}
-\caption{Secure (green dots) and unsecure (red crosses) operating conditions for faults on line A34 (with delayed clearing) and SVM prediction (dashed line)}
+\caption{Secure (green dots) and unsecure (red crosses) operating conditions for faults on side 1 of line A34 with delayed clearing and SVM prediction (dashed line)}
 \label{fig:A34_SVM}
 \end{figure}
-
 
 Additional information can also be obtained from the feature selection process as shown in Table~\ref{tab:feature_selection}. Table~\ref{tab:feature_selection_a} shows the best features to be used for a unidimensional SVM in decreasing order of accuracy (computed from the training set). These features include the wind production at bus 122 (as discussed previously) and other features that are strongly correlated with the first one. There are indeed large flows in lines A30, A31 and A34 when the wind farm at bus 122 is exporting high amounts of power. And the wind production at bus 122 is strongly correlated with the total wind production. Table~\ref{tab:feature_selection_b} shows that once the first feature is locked, there is almost no benefits in including the other correlated features.
 
@@ -1099,7 +1098,7 @@ Power flow in line A30     & 0.0                      \\ \bottomrule
 \end{table}
 
 
-Thanks to their simplicity, security boundaries defined by linear SVMs can easily be integrated into operational rules or in SCOPFs. To study how effective this is at reducing the risk, security boundaries have been defined for the 10 most critical contingencies identified by the PDSA and added them in the operating rules, i.e. the system is not allowed to be operated in the SVM-predicted unsecure regions\footnote{SVMs could also be defined for groups of contingencies (defined manually or automatically) that are problematic in similar conditions. For example, here, the 1st, 2nd, and 8th most critical contingencies tend to be unsecure when the wind plant at bus 122 is producing a lot of power.}. A new database of operating conditions was then generated and the PDSA redone on this new database. Table~\ref{tab:enhancement} shows that the addition of SVM-based operating rules reduces the total risk by 46\% but at the cost of increased operating costs as more frequent redispatches are needed. In this case, the total cost (sum of operating costs and unreliability cost) is slightly increased by the use of SVM-based rules, so it might not be worth to use them except if the TSO has a high risk averseness. Another possibility would be to include the SVM-based rules as soft constraints instead of hard ones, i.e. balancing the expected cost of letting the system operate in an unsecure state for one hour vs. the cost of redispatch, so that the system is only redispatched if it is economically optimal (e.g. only curtail the wind farm at bus 122 if there is enough renewable generation available in the rest of the system). Alternatively, these SVM-based rules and the identification of critical contingencies could be used as a starting point in the design of system integrity protection schemes.
+Thanks to their simplicity, security boundaries defined by linear SVMs can easily be integrated into operational rules or in SCOPFs. To study how effective this is at reducing the risk, security boundaries have been defined for the 10 most critical contingencies identified by the PDSA and added them in the operating rules, \ie the system is not allowed to be operated in the SVM-predicted unsecure regions\footnote{SVMs could also be defined for groups of contingencies (defined manually or automatically) that are problematic in similar conditions. For example, here, the 1st, 2nd, and 8th most critical contingencies tend to be unsecure when the wind plant at bus 122 is producing a lot of power.}. A new database of operating conditions was then generated and the PDSA redone on this new database. Table~\ref{tab:enhancement} shows that the addition of SVM-based operating rules reduces the total risk by 46\% but at the cost of increased operating costs as more frequent redispatches are needed. In this case, the total cost (sum of operating costs and unreliability cost) is slightly increased by the use of SVM-based rules, so it might not be worth to use them except if the TSO has a high risk averseness. Another possibility would be to include the SVM-based rules as soft constraints instead of hard ones, \ie balancing the expected cost of letting the system operate in an unsecure state for one hour vs. the cost of redispatch, so that the system is only redispatched if it is economically optimal (\eg only curtail the wind farm at bus 122 if there is enough renewable generation available in the rest of the system). Alternatively, these SVM-based rules and the identification of critical contingencies could be used as a starting point in the design of system integrity protection schemes.
 
 \begin{table}
   \centering
@@ -1116,6 +1115,176 @@ Thanks to their simplicity, security boundaries defined by linear SVMs can easil
 
 % \TODO{(Foot)note: sampling protection threshold before simulation implies ``taboo'' region~\cite{Faghihi}.}
 
+\section{Added value of simulating cascading outages}
+\label{sec:cascade_value}
+
+The willingness of TSOs to move towards probabilistic security assessment methodologies is mainly driven by the increasing uncertainties (intermittent energy sources, market-driven cross-border exchanges) faced when operating power systems. As such, the need to consider more scenarios in security assessment is well acknowledged by TSOs and has been studied in large projects such as the GARPUR and iTesla projects. The added value of quantifying the consequences of contingencies (which requires simulating cascading outages) instead of simply considering scenarios that lead to violations of security limits as unacceptable (as in a deterministic assessment) is however less obvious, and is thus discussed in this section.
+
+For this, it is useful to classify scenarios (combinations of a contingency and initial state) using the following traffic-signal-based categories:
+
+\begin{itemize}
+  \item Green: scenario that does not cause any security violation\footnote{In this section, a scenario is said to cause security violations if it initiates a cascading outage, \ie leads to the disconnection of at least one transmission element or generator (excluding trips necessary to clear the initial fault). More classical definitions could of course be used instead.} nor load shedding.
+  \item Yellow: scenario with security violations but without any load shedding.
+  \item Orange: scenario with mild load shedding (here, arbitrarily defined as less than 20\% of the total load).
+  \item Red: scenario with severe load shedding (more than 20\% of the total load).
+\end{itemize}
+
+The added value of a ``fully probabilistic'' approach (\ie where one quantifies the consequences of scenarios by simulating cascading outages compared to a deterministic (or ``semi-probabilistic'' approach) where scenarios with security violations are alwayed deemed unacceptable) comes in good part from the yellow scenarios. Indeed, such scenarios pose no (or little) risk and would thus automatically be considered as acceptable in a probabilistic approach, while they are considered as unacceptable in a deterministic assessment. On the other hand, red scenarios are likely to be considered as unacceptable in both deterministic assessments (because they lead to security violations) and probabilistic assessments (because they have high consequences and are thus likely to have a high contribution to the risk regardless of their probability\footnote{Scenarios with very high consequences might actually be deemed unacceptable regardless of their risk contribution~\cite{UCTE_Probabilistic}.}). For those scenarios, there is little added value in using a (complex) probabilistic method as it gives the same conclusions as a deterministic one. Orange scenarios are in between, so the added value will vary on a case-by-case basis.
+
+Simulating cascading outages is thus expected to have a high added value when there is a significant share of yellow scenarios. Figure~\ref{fig:cascade_value} studies this for two of the most critical contingencies. For faults on line A34 with delayed clearing (Figure~\ref{fig:A34_cascade_value}), more than 50\% of the scenarios with security violations lead to severe load shedding. Moreover, Figure~\ref{fig:A34_cascade_value} shows that the yellow scenarios tend to be mixed with the red ones, so security boundaries computed based on a deterministic or probabilistic approach would be relatively similar. For this specific contingency, there is thus little added value of a probabilistic approach. This can be partly explained by the fact that this contingency occurs near a very large wind plant and nuclear power plant (550~MW and 400~MW compared to the minimum system load of 3~GW). Security violations in this region are thus very likely to have high consequences for the system.
+
+For faults on line A23 cleared by opening lines A23 and 28, which are further from these large power plants, the conclusion is quite different. Indeed, Figure~\ref{fig:A23_28_cascade_value} shows that more than 60\% of the scenarios with security violations do not lead to any load shedding (yellow scenarios). Moreover, for this contingency, the range of acceptable operating conditions is significantly larger with a probabilistic approach (green and yellow zones) compared to a deterministic one (green zone only). It can be noticed that for both contingencies, there is a relatively small share of operating conditions that lead to mild consequences (orange scenarios). This can again be explained by the relatively small size of the system which causes any significant issue to automatically affect a large share of the system. For larger systems, the added value of a probabilistic approach could thus be expected to be larger because a smaller share of security violations should lead to severe consequences.
+
+\begin{figure}
+\centering
+\subfloat[Fault on side 1 of line A34 with delayed clearing. 74\% of operating conditions fall in the green category, 6\% in the yellow, 5\% in the orange, and 15\% in the red.]{%
+\label{fig:A34_cascade_value}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel = {Wind production at bus 122 [MW]},
+    ylabel = {Total load [MW]},
+    tickpos=left,
+    % xtick={0,100,200,300,400,500},
+    xmin=-10,
+    xmax=570,
+    ymin=2700,
+    ymax=7800,
+    % ytick={3000,4000,5000,6000,7000},
+    width=0.8\linewidth,
+    height=0.6\linewidth,
+    legend style={at={(1,1)},anchor=north east},
+]
+  \addplot+[scatter, only marks,
+  scatter/classes={0={mark=*, green, mark size=1pt},
+                   2={mark=o, yellow, mark size=2pt},
+                   3={mark=+, orange, mark size=2pt},
+                   1={mark=x, red, mark size=2pt}
+                  },
+  scatter src=explicit symbolic] table [x=wind, y=load, meta=color] {Figs/A34.txt};
+
+  \addplot+[black, dashed, no marks, domain=0:600]{(0.39547506181950903 * x + 0.29077603410661323) / 0.03742073838460856};
+  %   0.39547506181950903 x P_122_WIND_1 + -0.03742073838460856 x Total_load + 0.29077603410661323 = 0
+
+  \legend{Green, Yellow, Orange, Red, SVM}
+\end{axis}
+\end{tikzpicture}
+} \\ \vspace*{0.5cm}
+\subfloat[Contingency of side 2 of line A23 cleared by opening lines A23 and A28. 57\% of operating conditions fall in the green category, 27\% in the yellow, 0\% in the orange, and 16\% in the red.]{%
+\label{fig:A23_28_cascade_value}
+\begin{tikzpicture}
+\begin{axis}[
+      xlabel = {Active power flow in line A19 [MW]},
+      ylabel = {Active power flow in line B8 [MW]},
+      tickpos=left,
+      % xtick={0,100,200,300,400,500},
+      xmin=-210,
+      xmax=25,
+      ymin=-55,
+      ymax=20,
+      % ytick={3000,4000,5000,6000,7000},
+      width=0.8\linewidth,
+      height=0.6\linewidth,
+      legend style={at={(1,0)},anchor=south east},
+  ]
+  \addplot+[scatter, only marks,
+  scatter/classes={0={mark=*, green, mark size=1pt},
+                   2={mark=o, yellow, mark size=2pt},
+                   3={mark=+, orange, mark size=2pt},
+                   1={mark=x, red, mark size=2pt}
+                  },
+  scatter src=explicit symbolic] table [x=A19, y=B8, meta=color] {Figs/A23_A28.txt};
+
+  \addplot+[black, dashed, no marks, domain=-250:100]{(3.3347196721780485 * x + 298.459904964481) / 5.458683223670958};
+  %   -3.3347196721780485 x P1_A19 + 5.458683223670958 x P1_B8 + -2.98459904964481 = 0
+
+  \legend{Green, Yellow, Orange, Red, SVM}
+\end{axis}
+\end{tikzpicture}
+}
+\caption{Classification of operating conditions in traffic-light-based categories. The SVMs predict cases with load shedding (\ie try to separate orange and red scenarios from yellow and green ones).}
+\label{fig:cascade_value}
+\end{figure}
+
+The above analysis has been performed for two of the most critical contingencies identified using a probabilistic approach. But actually, different contingencies would have been identified as critical if a deterministic approach was used. Indeed, Figure~\ref{fig:value_all_contingencies} shows many contingencies that often lead to security violations but have no or little contribution to the risk of load shedding (particularly, contingencies with ID between 23 and 26 in Figure~\ref{fig:value_N1}, and contingencies with ID between 60 and 80 and 115 and 135 in Figure~\ref{fig:value_N2}). The difference between the deterministic and probabilistic approaches is particularly noticeable for N-2 contingencies. Indeed, due to their lower frequency of occurrence, these contingencies can have mild consequences without having a significant contribution to the risk (\eg some contingencies with ID between 60 and 80 in Figure~\ref{fig:value_N2} systematically pose mild consequences but have a low risk contribution). So both yellow and orange scenarios tend to be acceptable for N-2 contingencies. N-1 contingencies with delayed clearing on the other hand have a higher frequency of occurrence, so they can have a significant risk contribution even if they only cause mild consequences (\eg the contingency with ID 4 in Figure~\ref{fig:value_N1} (4th most critical N-1 contingency) has mild consequences in 12\% of sampled operating conditions and never pose severe consequences, yet it has a high risk contribution). Nevertheless, even for N-1 contingencies with delayed clearing, there is still a large difference between the contingencies that would be deemed secure/acceptable with a probabilistic approach compared to a deterministic one.
+
+
+\begin{figure}
+\centering
+\subfloat[N-1 contingencies with delayed clearing]{%
+\label{fig:value_N1}
+\begin{tikzpicture}
+\pgfplotsset{width=\linewidth}
+\begin{groupplot}[
+  group style={
+    group name=my plots,
+    group size=1 by 2,
+    xlabels at=edge bottom,
+    xticklabels at=edge bottom,
+    vertical sep=20pt,
+  },
+  height=0.4\linewidth,
+  xlabel=Contingency ID,
+  xmin=1, xmax=26,
+  ymin=0,
+  yticklabel style={/pgf/number format/fixed},
+  tickpos=left,
+  ytick align=outside,
+  xtick align=outside,
+  legend style={at={(0,1)},anchor=north west},
+]
+
+\nextgroupplot[ylabel={Risk [M€/y]}, height=4cm]
+\addplot+ [mark=none] table [x expr=\coordindex+1, y=Cost] {Figs/Value_N1.txt};
+
+\nextgroupplot[ylabel={Share of operating conditions [\%]}]
+\addplot+ [mark=o, yellow] table [x expr=\coordindex+1, y=Yellow] {Figs/Value_N1.txt};
+\addplot+ [mark=+, orange] table [x expr=\coordindex+1, y=Orange] {Figs/Value_N1.txt};
+\addplot+ [mark=x, red   ] table [x expr=\coordindex+1, y=Red   ] {Figs/Value_N1.txt};
+\legend{Yellow, Orange, Red}
+
+\end{groupplot}
+\end{tikzpicture}
+} \\ \vspace*{0.5cm}
+\subfloat[N-2 contingencies]{%
+\label{fig:value_N2}
+\begin{tikzpicture}
+\pgfplotsset{width=\linewidth}
+\begin{groupplot}[
+  group style={
+    group name=my plots,
+    group size=1 by 2,
+    xlabels at=edge bottom,
+    xticklabels at=edge bottom,
+    vertical sep=20pt,
+  },
+  height=0.4\linewidth,
+  xlabel=Contingency ID,
+  xmin=1, xmax=147,
+  ymin=0,
+  yticklabel style={/pgf/number format/fixed},
+  tickpos=left,
+  ytick align=outside,
+  xtick align=outside,
+  legend style={at={(0,1)},anchor=north west},
+]
+
+\nextgroupplot[ylabel={Risk [M€/y]}, height=4cm]
+\addplot+ [mark=none] table [x expr=\coordindex+1, y=Cost] {Figs/Value_N2.txt};
+
+\nextgroupplot[ylabel={Share of operating conditions [\%]}]
+\addplot+ [mark=o, yellow] table [x expr=\coordindex+1, y=Yellow] {Figs/Value_N2.txt};
+\addplot+ [mark=+, orange] table [x expr=\coordindex+1, y=Orange] {Figs/Value_N2.txt};
+\addplot+ [mark=x, red   ] table [x expr=\coordindex+1, y=Red   ] {Figs/Value_N2.txt};
+\legend{Yellow, Orange, Red}
+
+\end{groupplot}
+\end{tikzpicture}
+}
+\caption{Share of yellow, orange, and red scenarios for contingencies for which at least 1\% of the sampled operating conditions lead to security violations, and risk associated with those contingencies. Contingencies are sorted in decreasing order of risk contribution.}
+\label{fig:value_all_contingencies}
+\end{figure}
+
+
 \section{Applicability to large grids}
 \label{sec:PDSA_scalability}
 
@@ -1131,10 +1300,10 @@ Based on table~\ref{tab:summary-N1N2}, it can be assumed that it takes around 80
 
 Based on the previous chapters, this chapter has proposed a methodology for probabilistic dynamic security of power systems. The methodology requires to first build a list of contingencies to consider and to estimate their frequency of occurrence (as discussed in chapter~\ref{ch:protections}). Then, a database of likely operating condition is built based on historical data and/or weather data. Finally, the probabilistic security assessment is performed by applying all considered contingencies to random system states sampled from the database, and performing time-domain simulations to estimate the consequences that would have those contingencies (accounting for cascading outages).
 
-The proposed methodology can estimate the risk (e.g. in terms of expected amount of MW of load shedding or M€ of societal losses per year) of individual contingencies, and thus can identify critical contingencies that contribute to large shares of the total risk. The proposed methodology has been applied to the 73-bus RTS-GMLC system and showed that 44\% of the security risk in this system is caused by only 10 contingencies out of the 708 considered. The contingencies considered were more severe than the ones considered in a traditional N-1 security assessment, but this shows that complementing the N-1 criterion by securing a limited number of more severe contingencies could significantly reduce the risk and potentially be cost-effective.
+The proposed methodology can estimate the risk (\eg in terms of expected amount of MW of load shedding or M€ of societal losses per year) of individual contingencies, and thus can identify critical contingencies that contribute to large shares of the total risk. The proposed methodology has been applied to the 73-bus RTS-GMLC system and showed that 44\% of the security risk in this system is caused by only 10 contingencies out of the 708 considered. The contingencies considered were more severe than the ones considered in a traditional N-1 security assessment, but this shows that complementing the N-1 criterion by securing a limited number of more severe contingencies could significantly reduce the risk and potentially be cost-effective.
 
 Moreover, the small number of critical contingencies ease the job of the analyst that can focus on a few contingencies. The security assessment performed in this chapter required 150,000 simulations, yet section~\ref{sec:PDSA_results_intuitive} showed that looking one contingency at a time, it is possible to have a ``manual'' and intuitive interpretation of the results. Indeed, even if there might still be hundreds to thousands of simulations performed for a given contingency (already less than 150,000), by looking at protection systems that operate in all simulations, it is generally possible to group those simulations in only a few different cascading sequences (at least when looking only at the start of cascades) and to identify the root causes of insecurity.
 
-To help with the interpretation of the results, machine learning techniques have also been proposed to have an ``automatic'' identification of the root causes of the insecurity of individual contingencies. Support vector machines have been used due to their simplicity and their ability to visually represent the security boundary between secure and unsecure operating states. Thanks to their simplicity, they can also be used as operational rules or as constraints in an optimal power flow. In this case, constraining the system to be operated in regions deemed as secure by SVMs built for the 10 most critical contingencies reduced the risk of cascading outages by 46\% but at the expense of higher operating costs. The advantage of a probabilistic approach is that is allows for a direct comparison of the operating costs and the unreliability costs (i.e. cost of cascading outages). The ``automatic'' interpretation of the results of probabilistic security assessments has only superficially been studied in this thesis and should be analysed in further work.
+To help with the interpretation of the results, machine learning techniques have also been proposed to have an ``automatic'' identification of the root causes of the insecurity of individual contingencies. Support vector machines have been used due to their simplicity and their ability to visually represent the security boundary between secure and unsecure operating states. Thanks to their simplicity, they can also be used as operational rules or as constraints in an optimal power flow. In this case, constraining the system to be operated in regions deemed as secure by SVMs built for the 10 most critical contingencies reduced the risk of cascading outages by 46\% but at the expense of higher operating costs. The advantage of a probabilistic approach is that is allows for a direct comparison of the operating costs and the unreliability costs (\ie cost of cascading outages). The ``automatic'' interpretation of the results of probabilistic security assessments has only superficially been studied in this thesis and should be analysed in further work.
 
 The computational burden of the proposed method is high but manageable: 2600 core-hours are required to perform the analysis on the RTS-GMLC. The computational cost of the method scales mostly with the number of contingencies. And it is estimated that for a French-sized system with a contingency list of 12,000 contingencies, 60,000 core-hours would be required to perform a probabilistic security assessment, with an estimated cost of 6000€. However, this cost can be significantly reduced with the use of screening techniques, limiting the number of time-domain simulations to perform. Also, if the analysis is repeated multiple times, it could be repeated only for the critical contingencies. Finally, this cost should be compared to the potential benefits to the security of the system.
