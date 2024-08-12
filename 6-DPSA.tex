@@ -521,10 +521,9 @@ A first PDSA has been performed without screening of scenarios to be used as a r
                                  & N-1 with delayed clearing  & N-2 \\ \midrule
 Risk (M€/y) & 5.52 & 7.71 \\
 Number of simulations            & 97,503 & 59,648 \\
-Computation time (core-h)        & 1661  & 1016 \\
-Average computation time per simulation (s) & 61.3 & 61.3 \\ \bottomrule
+Computation time (core-h)        & 1046  & 656 \\
+Average computation time per simulation (s) & 38.6 & 39.6 \\ \bottomrule
 \end{tabular}
-\TODO{Fix computation time (should be closer to 30s for N-1)}
 \end{table}
 
 
@@ -1298,7 +1297,7 @@ The above analysis has been performed for two of the most critical contingencies
 \label{sec:PDSA_scalability}
 
 
-In this thesis, a PDSA was performed on a medium-scale test grid considering 114 N-1 contingencies with delayed clearing and 594 N-2 contingencies which took a non-negligible amount of computation time. Without screening, it takes around 2500 core-hours. Such analysis can be performed in one week using a 16-core workstation, or a few hours in an HPC environment for an approximate cost of 250€ (assuming a renting cost of 0.1€ per core-hour).
+In this thesis, a PDSA was performed on a medium-scale test grid considering 114 N-1 contingencies with delayed clearing and 594 N-2 contingencies which took a non-negligible amount of computation time. Without screening, it takes around 1700 core-hours. Such analysis can be performed in 5 days using a 16-core workstation, or a few hours in an HPC environment for an approximate cost of 170€ (assuming a renting cost of 0.1€ per core-hour).
 
 The computation cost of the method scales primarily with the number of considered contingencies and the computation time per simulation as the stopping criterion (\ref{eq:stop}) has to be satisfied for each contingency. However, for a system of a given size, the computation time can also significantly vary depending on the value of the risk (more samples are required to assess the risk of a very safe system), the value of \(\epsilon\), and on the importance of uncertainties.
 
