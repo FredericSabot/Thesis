@@ -895,36 +895,45 @@ Table~\ref{tab:critical_contingencies} shows a summary of the PDSA results for t
 \centering
 \caption{Examples of samples for the most critical contingency (fault on line A34 with delayed clearing). Trips beyond the first three are not shown.}
 \label{tab:samples_A34}
-\begin{tabular}{@{}llllll@{}}
+\begin{tabular}{@{}lllllll@{}}
   \toprule
-  \begin{tabular}[c]{@{}l@{}}Hour\\ of year\end{tabular} & \begin{tabular}[c]{@{}l@{}}Load\\ shedding {[}\%{]}\end{tabular} & Trip 1 & Trip 2 & Trip 3 & Protection impact \\ \midrule
-  4103 & 51 & A30\_side2\_Distance\(^a\)  & 122\_WIND\(^b\) & 121\_NUCLEAR\_Angle\(^c\)  & Missing trips \\
-  7634 & 40 & 121\_NUCLEAR\_Angle   & A30\_side2\_Distance  & 122\_WIND             & No            \\
-  693  & 35 & 121\_NUCLEAR\_Angle   & A30\_side2\_Distance  & 122\_WIND             & No            \\
-  8402 & 10 & 121\_NUCLEAR\_Angle   & UFLS\(^d\)            & /                     & No            \\
-  4633 & 0  & /                     & /                     & /                     & No            \\
-  1388 & 0  & /                     & /                     & /                     & No            \\
-  1481 & 73 & CA-2\_side2\_Distance & CA-1\_side1\_Distance & 121\_NUCLEAR\_Angle & No            \\
-  7415 & 49 & CA-2\_side2\_Distance & CA-1\_side2\_Distance & A30\_side2\_Distance  & Missing trips \\  \bottomrule
+  \begin{tabular}[c]{@{}l@{}}Hour\\ of year\end{tabular} & \begin{tabular}[c]{@{}l@{}}Load\\ shedding {[}\%{]}\end{tabular} & Trip 1 & Trip 2 & Trip 3 & \begin{tabular}[c]{@{}l@{}}Uncertain\\ protection impact\end{tabular} & \begin{tabular}[c]{@{}l@{}}Share of scenarios\\ with same initial 2 trips\end{tabular} \\ \midrule
+  4633 & 0  & /                           & /                         & /                     & No            & 73.8 \\
+  4103 & 51 & A30\_side2\_Distance\(^a\)  & 121\_NUCLEAR\_Angle\(^b\) & 122\_WIND\(^c\)       & Missing trips & 2.2  \\
+  7634 & 40 & 121\_NUCLEAR\_Angle         & A30\_side2\_Distance      & 122\_WIND             & No            & 10.0 \\
+  291  & 0  & 121\_NUCLEAR\_Angle         & /                         & /                     & No            & 5.3  \\
+  8402 & 10 & 121\_NUCLEAR\_Angle         & UFLS\(^d\)                & /                     & No            & 3.9  \\
+  8686 & 42 & A30\_side2\_Distance        & CA-1\_side1\_Distance     & 122\_WIND             & Missing trips & 0.6  \\
+  1446 & 90 & CA-2\_side2\_Distance       & CA-1\_side2\_Distance     & A30\_side2\_Distance  & Missing trips & 0.8  \\ \bottomrule
   \multicolumn{6}{l}{\(^a\) Trip of line A30 by the distance protection on the second side of the line} \\
-  \multicolumn{6}{l}{\(^b\) Trip of the wind farm at bus 122} \\
-  \multicolumn{6}{l}{\(^c\) Trip of the nuclear power plant at bus 121 following loss of synchronism} \\
+  \multicolumn{6}{l}{\(^b\) Trip of the nuclear power plant at bus 121 following loss of synchronism} \\
+  \multicolumn{6}{l}{\(^c\) Trip of the wind farm at bus 122} \\
   \multicolumn{6}{l}{\(^d\) Under-frequency load shedding} \\
   \end{tabular}
 \end{table}
+
+% 73.8425925925926 ()
+% 10.030864197530864 ('121_NUCLEAR_1_InternalAngle', 'A30_side2_Distance')
+% 5.324074074074074 ('121_NUCLEAR_1_InternalAngle',)
+% 3.8580246913580245 ('121_NUCLEAR_1_InternalAngle', 'UFLS')
+% 2.2376543209876543 ('A30_side2_Distance', '121_NUCLEAR_1_InternalAngle')
+% 0.7716049382716049 ('CA-2_side2_Distance', 'CA-1_side2_Distance')
+% 0.6172839506172839 ('A30_side2_Distance', '122_WIND_1')
 
 \end{landscape}
 \clearpage% Flush page
 }
 
 
-However, Table~\ref{tab:critical_contingencies} does not explain why those contingencies are unsecure nor how to make them more secure. Table~\ref{tab:samples_A34} does a first step by showing a few samples (8 out of 1274) of the most critical contingency (fault on line A34 with delayed fault clearing). The table shows that the contingency can lead to different trip sequences depending on the operating conditions leading to different consequences. Actually, upon further analysis, all sequences are initiated due to the loss of synchronism of the nuclear power plant located in bus 121 (121\_NUCLEAR in Figure~\ref{fig:RTS-copy}).
+However, Table~\ref{tab:critical_contingencies} does not explain why those contingencies are unsecure nor how to make them more secure. Table~\ref{tab:samples_A34} does a first step by showing a few samples (7 out of 1274) of the most critical contingency (fault on line A34 with delayed fault clearing). The table shows that the contingency can lead to different trip sequences depending on the operating conditions leading to different consequences. Actually, upon further analysis, all sequences are initiated due to the loss of synchronism of the nuclear power plant located in bus 121 (121\_NUCLEAR in Figure~\ref{fig:RTS-copy}).
 
 Indeed, Figure~\ref{fig:A34_voltage} shows the voltage evolution for two of these cases (hours 7634 and 8402). In both cases, voltage at some buses stay depressed after fault clearing due to the loss of synchronism of the nuclear generator. Also, following the fault, line A34 is disconnected and the wind farm at bus 121 (121\_WIND) only remain connected to the rest of the system through line A30. And due to the depressed voltages, the wind farm is not able to push its power through this single line (that connects bus 121 to bus 117). In some cases (\eg Figure~\ref{fig:A34_voltage_7634}), this leads to trip of line A30 by distance protection. In other cases (\eg Figure~\ref{fig:A34_voltage_8402}), the distance protection of line A30 is armed, but the nuclear generator is disconnected, allowing for voltages to recover before the distance protection sends a trip signal.
 
 These different possible sequences lead to different consequences. Indeed, in the former, both a nuclear power plant (of 400~MW) and a large wind farm (750~MW installed capacity, compared to the total load that varies between 3 and 7.5~GW) are disconnected leading to 30 to 50\% of load shedding (depending on operating conditions) by UFLS relays. In the latter, only the nuclear power plant is disconnected, so at most 15\% of the load has to be shed.
 
 The two last cases in Table~\ref{tab:samples_A34} are also initiated by the loss of synchronism of the nuclear power plant at bus 121, however, they also lead to the disconnection of lines CA-1 and CA-2 that connect regions 1 and 3 together (by distance protection due to high flows from region 1 to region 3). These cases thus lead to more complex cascades with higher amounts of load shedding.
+
+It should be noted that, for the contingency of line A34 with delayed clearing, 1253 out of 1296 sampled scenarios lead to the same first two initial trips as the scenarios listed in Table~\ref{tab:samples_A34}. By grouping scenarios that have the same starting tripping sequence, it is thus possible to significantly reduce the number of scenarios to analyse.
 
 
 \begin{figure}
