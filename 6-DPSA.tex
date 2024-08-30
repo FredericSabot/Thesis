@@ -519,7 +519,7 @@ A first PDSA has been performed without screening of scenarios to be used as a r
 \begin{tabular}{@{}lll@{}}
 \toprule
                                  & N-1 with delayed clearing  & N-2 \\ \midrule
-Risk (M€/y) & 5.52 & 7.71 \\
+Risk (M€/y) & 8.6 & 12.4 \\
 Number of simulations            & 97,503 & 59,648 \\
 Computation time (core-h)        & 1046  & 656 \\
 Average computation time per simulation (s) & 38.6 & 39.6 \\ \bottomrule
@@ -565,10 +565,10 @@ Figure~\ref{fig:indic_N1} (resp. Figure~\ref{fig:indic_N2}) shows the number of 
 
 \nextgroupplot[
     ylabel style={align=center}, ylabel=Statistical accuracy\\{[M€/y]},
-    legend style={legend columns=2}, ymax=0.21]
+    legend style={legend columns=2}, ymax=0.34]
 
-\addplot+ [ybar interval, fill, mark=none] table [x=id,y=indic_1] {Figs/N_N1.txt};
-\addplot+ [mark=none] table [x=id,y=indic_2] {Figs/N_N1.txt};
+\addplot+ [ybar interval, fill, mark=none] table [x=id,y expr=\thisrow{indic_1}*1.609344] {Figs/N_N1.txt};  % TODO: remove mi to km conversion if computations are rerun
+\addplot+ [mark=none] table [x=id,y expr=\thisrow{indic_2}*1.609344] {Figs/N_N1.txt};
 \addlegendentry{Variance}
 \addlegendentry{Coverage}
 \end{groupplot}
@@ -604,10 +604,10 @@ Figure~\ref{fig:indic_N1} (resp. Figure~\ref{fig:indic_N2}) shows the number of 
 
 \nextgroupplot[
   ylabel style={align=center}, ylabel=Statistical accuracy\\{[M€/y]},
-  legend style={legend columns=2}, ymax=0.21]
+  legend style={legend columns=2}, ymax=0.34]
 
-  \addplot+ [ybar interval, fill, mark=none] table [x=id,y=indic_1] {Figs/N_N2.txt};
-  \addplot+ [mark=none] table [x=id,y=indic_2] {Figs/N_N2.txt};
+  \addplot+ [ybar interval, fill, mark=none] table [x=id,y expr=\thisrow{indic_1}*1.609344] {Figs/N_N2.txt};
+  \addplot+ [mark=none] table [x=id,y expr=\thisrow{indic_2}*1.609344] {Figs/N_N2.txt};
 \addlegendentry{Variance}
 \addlegendentry{Coverage}
 \end{groupplot}
@@ -639,7 +639,7 @@ It is interesting to see that when aiming to minimise the SE of the risk contrib
 \begin{axis}[
     xlabel={Number of samples},
     xmin=1000, xmax=150000,
-    ymin=0, ymax=5,
+    ymin=0, ymax=8,
     xmode=log,
     grid,
     log ticks with fixed point,
@@ -648,10 +648,10 @@ It is interesting to see that when aiming to minimise the SE of the risk contrib
     legend style={at={(1,1)},anchor=north east},
     ]
 
-    \addplot+ [mark=none, dashed] table [x=x,y=sigma] {Figs/total_risk_SE.txt};
-    \addplot+ [mark=none, dashdotted] table [x=x,y=coverage] {Figs/total_risk_SE.txt};
-    \addplot+ [mark=none] table [x=x,y=SE] {Figs/total_risk_SE.txt};
-    \addplot+ [mark=none, gray, dashed, domain=500:150000, samples=2] {0.05 * 13.226341374847571};
+    \addplot+ [mark=none, dashed] table [x=x,y expr=\thisrow{sigma}*1.609344] {Figs/total_risk_SE.txt};
+    \addplot+ [mark=none, dashdotted] table [x=x,y expr=\thisrow{coverage}*1.609344] {Figs/total_risk_SE.txt};
+    \addplot+ [mark=none] table [x=x,y expr=\thisrow{SE}*1.609344] {Figs/total_risk_SE.txt};
+    \addplot+ [mark=none, gray, dashed, domain=500:150000, samples=2] {0.05 * 13.226341374847571 * 1.609344};
 
     \addlegendentry{Variance}
     \addlegendentry{Coverage}
@@ -678,8 +678,8 @@ It is interesting to see that when aiming to minimise the SE of the risk contrib
       xtick={1,2,...,20},
   ]
 
-  \addplot+ [ybar, ybar legend, fill, mark=none, bar width=5pt] table [x=id,y=cost] {Figs/critical_SE.txt};
-  \addplot+ [mark=none, domain=0:21] {0.01 * 13.226341374847571};
+  \addplot+ [ybar, ybar legend, fill, mark=none, bar width=5pt] table [x=id,y expr=\thisrow{cost}*1.609344] {Figs/critical_SE.txt};
+  \addplot+ [mark=none, domain=0:21] {0.01 * 13.226341374847571 * 1.609344};
 
   \addlegendentry{Risk}
   \addlegendentry{\(SE_i\)}
@@ -762,7 +762,7 @@ Some works (\eg~\cite{Faghihi, DCATphase1}) consider that there might be ``missi
 
 Due to time constraints, this has not been considered in this thesis. However, an estimation of the risk associated with those missing trips can be done based on the results of the present analysis. Indeed, for each simulation performed, the associated sequence of tripping events is saved to allow for further analysis. The frequency of protection system operations (not accounting for fault clearing) can thus be estimated at 0.35 per year. This can be compared to the 17.9 contingencies per year of the RTS (11.7 for delayed-clearing N-1 contingencies and 6.2 for N-2 contingencies). This figure does not account for under-frequency load shedding (UFLS) relay trips because the failure of a single UFLS relay is unlikely to affect the evolution of a cascade. Generator protections are also not included in this figure as missing trips of generators are made very unlikely due to the high consequences for the generator if it is not disconnected when needed.
 
-Based on this figure, assuming a probability of protection failure to operate of 0.01, and assuming that any protection system failure to operate during a cascade leads to a full blackout leads to a risk of 1.76~M€/y. This risk is thus negligible compared to the 17.9~M€/y risk computed without considering the possible failure of protection to operate during cascades. Moreover, this 1.76~M€/y figure is very conservative as it assumes all protection failures to operate lead to a full blackout. Actually, since most protection systems aim to protect individual elements and not the grid itself, a failure to operate during a cascade will not necessarily have a negative impact on the cascade propagation. The failure of system integrity protection schemes could be considered. However, they are often designed to have a very high level of reliability, so it would make more sense in a possibilistic approach rather than a probabilistic one.
+Based on this figure, assuming a probability of protection failure to operate of 0.01, and assuming that any protection system failure to operate during a cascade leads to a full blackout leads to a risk of 2.83~M€/y. This risk is thus negligible compared to the 28.8~M€/y risk computed without considering the possible failure of protection to operate during cascades. Moreover, this 2.83~M€/y figure is very conservative as it assumes all protection failures to operate lead to a full blackout. Actually, since most protection systems aim to protect individual elements and not the grid itself, a failure to operate during a cascade will not necessarily have a negative impact on the cascade propagation. The failure of system integrity protection schemes could be considered. However, they are often designed to have a very high level of reliability, so it would make more sense in a possibilistic approach rather than a probabilistic one.
 
 This section has discussed the risk associated with missing trips, but, as discussed previously, unwanted trips (both directly following fault clearing and during the cascade propagation) should be studied in further work.
 
@@ -863,17 +863,17 @@ Table~\ref{tab:critical_contingencies} shows a summary of the PDSA results for t
       \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}Share of unsecure\\ operating points {[}\%{]}\end{tabular}} &
       \multicolumn{2}{c}{Load shed {[}\%{]}} \\ \cmidrule(r){1-2} \cmidrule(l){6-7}
     Fault  & Adj. line &        &         &      & Mean\(^a\) & Max  \\ \midrule
-    A34    & /         & 1.38  & 0.12   & 20.3 & 28.0 & 100  \\
-    A25-1  & A25-2     & 1.16  & 0.017  & 18.9 & 69.7 & 100  \\
-    CA-1   & /         & 1.03  & 0.17   & 11.6 & 21.4 & 100  \\
-    A23    & A28       & 0.45 & 0.0068  & 18.3 & 81.9 & 100  \\
-    CB-1   & /         & 0.42 & 0.18    & 8.5  & 15.4 & 36.5 \\
-    C22    & /         & 0.37 & 0.15    & 12.2 & 10.8 & 25   \\
-    A34    & A25       & 0.35 & 0.012   & 38.0 & 30.3 & 100  \\
-    AB3    & /         & 0.35 & 0.13    & 7.1  & 15.5 & 100  \\
-    A25    & /         & 0.34 & 0.17    & 6.8  & 14.5 & 91.3 \\
-    A34    & CA-1      & 0.32 & 0.012   & 32.7 & 33.4 & 94.5 \\
-    Others & /         & 7.68   & 17.0  & /    & /    & 100  \\ \bottomrule
+    A34    & /         & 2.22  & 0.12   & 20.3 & 28.0 & 100  \\
+    A25-1  & A25-2     & 1.87  & 0.017  & 18.9 & 69.7 & 100  \\
+    CA-1   & /         & 1.66  & 0.17   & 11.6 & 21.4 & 100  \\
+    A23    & A28       & 0.72 & 0.0068  & 18.3 & 81.9 & 100  \\
+    CB-1   & /         & 0.68 & 0.18    & 8.5  & 15.4 & 36.5 \\
+    C22    & /         & 0.60 & 0.15    & 12.2 & 10.8 & 25   \\
+    A34    & A25       & 0.56 & 0.012   & 38.0 & 30.3 & 100  \\
+    AB3    & /         & 0.56 & 0.13    & 7.1  & 15.5 & 100  \\
+    A25    & /         & 0.55 & 0.17    & 6.8  & 14.5 & 91.3 \\
+    A34    & CA-1      & 0.51 & 0.012   & 32.7 & 33.4 & 94.5 \\
+    Others & /         & 12.4 & 17.0    & /    & /    & 100  \\ \bottomrule
     \multicolumn{7}{l}{\(^a\) Mean load shedding accounts for unsecure operating points only} \\
     \end{tabular}
   \label{tab:critical_contingencies}
@@ -1106,7 +1106,7 @@ Power flow in line A30     & 0.0                      \\ \bottomrule
 \end{table}
 
 
-Thanks to their simplicity, security boundaries defined by linear SVMs can easily be integrated into operational rules or in SCOPFs. To study how effective this is at reducing the risk, security boundaries have been defined for the 10 most critical contingencies identified by the PDSA and added them in the operating rules, \ie the system is not allowed to be operated in the SVM-predicted unsecure regions\footnote{SVMs could also be defined for groups of contingencies (defined manually or automatically) that are problematic in similar conditions. For example, here, the 1st, 2nd, and 8th most critical contingencies tend to be unsecure when the wind plant at bus 122 is producing a lot of power.}. A new database of operating conditions was then generated and the PDSA redone on this new database. Table~\ref{tab:enhancement} shows that the addition of SVM-based operating rules reduces the total risk by 46\% but at the cost of increased operating costs as more frequent redispatches are needed. In this case, the total cost (sum of operating costs and unreliability cost) is slightly increased by the use of SVM-based rules, so it might not be worth to use them except if the TSO has a high risk averseness. Another possibility would be to include the SVM-based rules as soft constraints instead of hard ones, \ie balancing the expected cost of letting the system operate in an unsecure state for one hour vs. the cost of redispatch, so that the system is only redispatched if it is economically optimal (\eg only curtail the wind farm at bus 122 if there is enough renewable generation available in the rest of the system). Alternatively, these SVM-based rules and the identification of critical contingencies could be used as a starting point in the design of system integrity protection schemes.
+Thanks to their simplicity, security boundaries defined by linear SVMs can easily be integrated into operational rules or in SCOPFs. To study how effective this is at reducing the risk, security boundaries have been defined for the 10 most critical contingencies identified by the PDSA and added them in the operating rules, \ie the system is not allowed to be operated in the SVM-predicted unsecure regions\footnote{SVMs could also be defined for groups of contingencies (defined manually or automatically) that are problematic in similar conditions. For example, here, the 1st, 2nd, and 8th most critical contingencies tend to be unsecure when the wind plant at bus 122 is producing a lot of power.}. A new database of operating conditions was then generated and the PDSA redone on this new database. Table~\ref{tab:enhancement} shows that the addition of SVM-based operating rules reduces the total risk by 46\% but at the cost of increased operating costs as more frequent redispatches are needed. In this case, the total cost (sum of operating costs and unreliability cost) is slightly increased by the use of SVM-based rules, so it might not be worth to use them except if the TSO is risk averse. Another possibility would be to include the SVM-based rules as soft constraints instead of hard ones, \ie balancing the expected cost of letting the system operate in an unsecure state for one hour vs. the cost of redispatch, so that the system is only redispatched if it is economically optimal (\eg only curtail the wind farm at bus 122 if there is enough renewable generation available in the rest of the system). Alternatively, these SVM-based rules and the identification of critical contingencies could be used as a starting point in the design of system integrity protection schemes.
 
 \begin{table}
   \centering
@@ -1114,10 +1114,10 @@ Thanks to their simplicity, security boundaries defined by linear SVMs can easil
   \label{tab:enhancement}
   \begin{tabular}{@{}lll@{}}
   \toprule
-  Cost (M€/y) & Base case & SVM-secured case \\ \midrule
-  Operating costs     & 434 & 449 \\
-  Unreliability costs & 13.2  & 7.10 \\
-  Total              & 447 & 456  \\ \bottomrule
+  Cost (M€/y)         & Base case & SVM-secured case \\ \midrule
+  Operating costs     & 434       & 449 \\
+  Unreliability costs & 21.2      & 11.4 \\
+  Total               & 455       & 460  \\ \bottomrule
   \end{tabular}
 \end{table}
 
@@ -1137,7 +1137,7 @@ For this, it is useful to classify scenarios (combinations of a contingency and 
   \item Red: scenario with severe load shedding (more than 20\% of the total load).
 \end{itemize}
 
-The added value of a ``fully probabilistic'' approach (\ie where one quantifies the consequences of scenarios by simulating cascading outages compared to a deterministic (or ``semi-probabilistic'' approach) where scenarios with security violations are alwayed deemed unacceptable) comes in good part from the yellow scenarios. Indeed, such scenarios pose no (or little) risk and would thus automatically be considered as acceptable in a probabilistic approach, while they are considered as unacceptable in a deterministic assessment. On the other hand, red scenarios are likely to be considered as unacceptable in both deterministic assessments (because they lead to security violations) and probabilistic assessments (because they have high consequences and are thus likely to have a high contribution to the risk regardless of their probability\footnote{Scenarios with very high consequences might actually be deemed unacceptable regardless of their risk contribution~\cite{UCTE_Probabilistic}.}). For those scenarios, there is little added value in using a (complex) probabilistic method as it gives the same conclusions as a deterministic one. Orange scenarios are in between, so the added value will vary on a case-by-case basis.
+The added value of a ``fully probabilistic'' approach (\ie where one quantifies the consequences of scenarios by simulating cascading outages compared to a deterministic (or ``semi-probabilistic'' approach) where scenarios with security violations are always deemed unacceptable) comes in good part from the yellow scenarios. Indeed, such scenarios pose no (or little) risk and would thus automatically be considered as acceptable in a probabilistic approach, while they are considered as unacceptable in a deterministic assessment. On the other hand, red scenarios are likely to be considered as unacceptable in both deterministic assessments (because they lead to security violations) and probabilistic assessments (because they have high consequences and are thus likely to have a high contribution to the risk regardless of their probability\footnote{Scenarios with very high consequences might actually be deemed unacceptable regardless of their risk contribution~\cite{UCTE_Probabilistic}.}). For those scenarios, there is little added value in using a (complex) probabilistic method as it gives the same conclusions as a deterministic one. Orange scenarios are in between, so the added value will vary on a case-by-case basis.
 
 Simulating cascading outages is thus expected to have a high added value when there is a significant share of yellow scenarios. Figure~\ref{fig:cascade_value} studies this for two of the most critical contingencies. For faults on line A34 with delayed clearing (Figure~\ref{fig:A34_cascade_value}), more than 50\% of the scenarios with security violations lead to severe load shedding. Moreover, Figure~\ref{fig:A34_cascade_value} shows that the yellow scenarios tend to be mixed with the red ones, so security boundaries computed based on a deterministic or probabilistic approach would be relatively similar. For this specific contingency, there is thus little added value of a probabilistic approach. This can be partly explained by the fact that this contingency occurs near a very large wind plant and nuclear power plant (550~MW and 400~MW compared to the minimum system load of 3~GW). Security violations in this region are thus very likely to have high consequences for the system.
 
@@ -1242,7 +1242,7 @@ The above analysis has been performed for two of the most critical contingencies
 ]
 
 \nextgroupplot[ylabel={Risk [M€/y]}, height=4cm]
-\addplot+ [mark=none] table [x expr=\coordindex+1, y=Cost] {Figs/Value_N1.txt};
+\addplot+ [mark=none] table [x expr=\coordindex+1, y expr=\thisrow{Cost}*1.609344] {Figs/Value_N1.txt};
 
 \nextgroupplot[ylabel={Share of operating conditions [\%]}]
 \addplot+ [mark=o, yellow] table [x expr=\coordindex+1, y=Yellow] {Figs/Value_N1.txt};
@@ -1277,7 +1277,7 @@ The above analysis has been performed for two of the most critical contingencies
 ]
 
 \nextgroupplot[ylabel={Risk [M€/y]}, height=4cm]
-\addplot+ [mark=none] table [x expr=\coordindex+1, y=Cost] {Figs/Value_N2.txt};
+\addplot+ [mark=none] table [x expr=\coordindex+1, y expr=\thisrow{Cost}*1.609344] {Figs/Value_N2.txt};
 
 \nextgroupplot[ylabel={Share of operating conditions [\%]}]
 \addplot+ [mark=o, yellow] table [x expr=\coordindex+1, y=Yellow] {Figs/Value_N2.txt};
