@@ -1,4 +1,4 @@
-Contingency	Rank	Frequency	Cost	Green	Yellow	Orange	Red	With consequences	With issues
+Contingency	Rank	Frequency	Cost	Green	Yellow	Orange	Red	With_consequences	With_issues
 A34_end1_DELAYED	1	0.1175	1.389	73.84	5.79	5.63	14.74	20.37	26.16
 CA-1_end2_DELAYED	2	0.1675	1.007	73.67	14.86	7.81	3.66	11.47	26.33
 CB-1_end2_DELAYED	4	0.18	0.435	88.58	2.95	6.96	1.51	8.47	11.42

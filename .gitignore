@@ -22,5 +22,6 @@ tikz/*
 *.maf
 *.mtc*
 *.auxlock
+tmp/*
 
 main.pdf

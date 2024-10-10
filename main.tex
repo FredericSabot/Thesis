@@ -1,4 +1,4 @@
-\documentclass[a4paper, dvipsnames, twoside]{report}
+\documentclass[a4paper, dvipsnames, twoside, 11pt]{report}
 \usepackage{caption}
 \usepackage{subcaption}
 \captionsetup[sub]{font=normal}
@@ -102,6 +102,11 @@
 \newcommand{\TODO}[1]{\todo[inline]{TODO: #1}}
 
 \includeonly{Cover, 0-Abstract, 1-Introduction, 2-Security, 3-Protections, 5-Distribution, 6-DPSA, 7-Conclusion, 4-SPS, B-Cosim}
+
+% Note: can create diff with
+% latexdiff-git --flatten main.tex -r HEAD^1
+% and compiles to pdf with
+% latexmk --enable-write18 --lualatex -output-directory=tmp main-diffHEAD^1.tex
 
 \begin{document}
 \dominitoc
