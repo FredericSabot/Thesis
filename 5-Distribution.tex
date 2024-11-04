@@ -4,13 +4,13 @@
 
 It has long been acknowledged that distribution grids can significantly impact the stability of transmission systems. This is especially true for voltage stability that strongly depends on the behaviour of loads following disturbances~\cite{CutsemBook, kundur}. However, most utilities still use relatively simple load models (\eg compared to generator models) due to the difficulty to gather data on the loads connected to distribution grids~\cite{IndustryLoadModel}.
 
-This difficulty is caused by the fundamentally different nature of transmission and distribution grids. Indeed, a typical transmission grid connects dozens to hundreds of generators for which individual detailed models can be built (\eg during the grid connection request and commissioning phases). Moreover, transmission system operators (TSOs) are also continuously made aware of the state of all generators (connection status, power output, etc.). Distribution grids however supply millions of customers each with their own appliances and behaviour. Therefore, only aggregated models can realistically be derived. The most commonly used load model is the ZIP load (aggregation of a constant impedance, a constant current, and a constant power load) and its derivates whose parameters are usually defined based on surveys and from transmission-level measurements of distribution grid behaviour following disturbances~\cite{IndustryLoadModel}.
+This difficulty is caused by the fundamentally different nature of transmission and distribution grids. Indeed, a typical transmission grid connects dozens to hundreds of generators for which individual detailed models can be built (\eg during the grid connection request and commissioning phases). Moreover, transmission system operators (TSOs) are also continuously made aware of the state of all generators (connection status, power output, etc.). Distribution grids however supply millions of customers each with their own appliances and behaviour. Therefore, only aggregated models can realistically be derived. The most commonly used load model is the ZIP load (aggregation of a constant impedance, a constant current, and a constant power load) and its derivates whose parameters are usually defined based on surveys and from transmission-level measurements of distribution grid behaviour following disturbances~\cite{IndustryLoadModel}. On top of this, TSOs now represent distributed energy resources (DERs) with aggregate models representative of each generation category (solar, wind) and each connection standard (legacy installations with limited fault ride-through requirements vs.\ modern ones with stricter requirements, small vs.\ large installations).
 
 %, and distribution system operators (DSOs) generally suffer from a lack of observability of their network.
 
 % and their variable nature\footnote{Both the total amount of load and shares of different types of loads (heaters, motors, lamps, etc.) vary with the time of day and the season.}.
 
-With the massive installation of distributed energy resources (DERs), distribution grids are playing a more and more active role in the stability and security of transmission systems. Currently, they tend to have a negative impact on system stability as they displace synchronous generation, thereby reducing system inertia and because they tend to disconnect themselves during system disturbances. For example, the frequency collapse of Italy in 2003 was partly caused by the unexpected disconnection of 3400~MW of DERs while the frequency was still above 49~Hz~\cite[p115]{Italy2003}. Similarly, DER disconnections also had a significant contribution in the 2019 UK power outage~\cite{2019UKBlackout}. In this case, 150~MW of DER was tripped as a direct consequence of the initial fault (lightning strike caused disconnection of DERs by vector-shift protection). Quickly after, between 350 and 430~MW of DERs were disconnected due to a high rate of change of frequency (RoCoF). At this point, a total of 1500~MW of generation was lost (around 500~MW of which were DERs), exceeding the primary reserve of 1000~MW which ultimately led frequency to drop to 48.8~Hz when under-frequency load shedding (UFLS) was activated. During the event, around 750~MW additional disconnection of DERs occurred due to frequency dropping below 49~Hz (protection of legacy DERs), UFLS activation (tripping entire feeders including DERs), and unknown causes. % On the other hand, there are perspectives regarding the provision of ancillary services by distributed generators.
+With the massive installation of DERs, distribution grids are playing a more and more active role in the stability and security of transmission systems. DERs can to have a negative impact on system stability as they displace synchronous generation, thereby reducing system inertia and because they tend to disconnect themselves during system disturbances\footnote{This is because, DSOs initially asked for DERs to have very limited fault ride-through capabilities to avoid DERs from feeding faults in the distribution systems. Modern standards require more strict ride-through requirements to avoid large scale disconnection of DERs following a single transmission fault.}. For example, the frequency collapse of Italy in 2003 was partly caused by the unexpected disconnection of 3400~MW of DERs while the frequency was still above 49~Hz~\cite[p115]{Italy2003}. Similarly, DER disconnections also had a significant contribution in the 2019 UK power outage~\cite{2019UKBlackout}. In this case, 150~MW of DER was tripped as a direct consequence of the initial fault (lightning strike caused disconnection of DERs by vector-shift protection). Quickly after, between 350 and 430~MW of DERs were disconnected due to a high rate of change of frequency (RoCoF). At this point, a total of 1500~MW of generation was lost (around 500~MW of which were DERs), exceeding the primary reserve of 1000~MW which ultimately led frequency to drop to 48.8~Hz when under-frequency load shedding (UFLS) was activated. During the event, around 750~MW additional disconnection of DERs occurred due to frequency dropping below 49~Hz (protection of legacy DERs), UFLS activation (tripping entire feeders including DERs), and unknown causes. % On the other hand, there are perspectives regarding the provision of ancillary services by distributed generators.
 
 As discussed in the previous chapters, performing a probabilistic security assessment requires to simulate the grid during severe disturbances and cascading outages. It is thus necessary to adequately model the behaviour of distribution grids during such disturbances and in particular the disconnection of DERs. Simple ZIP models are not able to do this, and more complex models are thus needed. To get better models, section~\ref{sec:distrib_review} reviews the load modelling literature and identifies an adequate modelling methodology. This methodology is then slightly modified in section~\ref{sec:distrib_methodology} and applied to two test cases.
 
@@ -571,7 +571,7 @@ Table~\ref{tab:CCT} compares the 90\% confidence intervals of those CCTs compute
 35 & [214, 244]    & [220, 234]    & [224, 230] & [210, 222] & 100 & 100 \\
 37 & [244, 264]    & [242, 260]    & [250, 254] & [244, 244] & 94  & 100 \\
 38 & [180, 210]    & [184, 194]    & [184, 190] & [180, 180] & 100 & 100 \\
-39 & [634, stable] & [648, stable] & stable & stable & 100 & 100 \\ \bottomrule
+39 & [634, >700] & [648, >700] & >700 & >700 & 100 & 100 \\ \bottomrule
 \end{tabular} \\ \vspace{0.1cm}
 \footnotesize{\(^a\) (resp. \(^b\)) Percentage of dependent (resp. independent) T\&D samples that lead to a CCT that is within the 5-95 range computed using the equivalent.}
 \end{table}
@@ -691,26 +691,26 @@ It is actually quite simple to correct the intervals obtained with the equivalen
 \begin{axis}[
     xlabel={Time [s]},
     xmin=0, xmax=30,
-    ylabel= {Frequency [pu]},
+    ylabel= {Frequency [Hz]},
     legend cell align=left,
     legend style={at={(1,0)},anchor=south east},
     table/col sep=comma,
     ]
 
     \foreach \n in {0,...,49}{
-        \addplot+ [mark=none, color=black, dotted, opacity=0.5, line width=0.6pt] table [x=t,y=omega] {Figs/ISGT_frequency_plot/omega_\n.csv};
+        \addplot+ [mark=none, color=black, dotted, opacity=0.5, line width=0.6pt] table [x=t,y expr=\thisrow{omega}*50] {Figs/ISGT_frequency_plot/omega_\n.csv};
     }
-    \addplot+ [mark=none, line width=1pt, blue] table [x=time,y=OMEGA_REF_omegaRef_grp_0_value] {Figs/ISGT_frequency_plot/5_equiv.csv};
-    \addplot+ [mark=none, line width=1pt, red] table [x=time,y=OMEGA_REF_omegaRef_grp_0_value] {Figs/ISGT_frequency_plot/95_equiv.csv};
+    \addplot+ [mark=none, line width=1pt, blue] table [x=time, y expr=\thisrow{OMEGA_REF_omegaRef_grp_0_value}*50] {Figs/ISGT_frequency_plot/5_equiv.csv};
+    \addplot+ [mark=none, line width=1pt, red] table [x=time, y expr=\thisrow{OMEGA_REF_omegaRef_grp_0_value}*50] {Figs/ISGT_frequency_plot/95_equiv.csv};
 
     % UFLS 95 (trip, not activation)
-    \node at (axis cs:11.21750,0.979421) [circle, fill, inner sep=1.5pt] {};
+    \node at (axis cs:11.21750,0.979421 * 50) [circle, fill, inner sep=1.5pt] {};
 
     % UFLS 5
-    \node at (axis cs:9.918750,0.977498) [circle, fill, inner sep=1.5pt] {};
-    \node at (axis cs:9.998750,0.976133) [circle, fill, inner sep=1.5pt] {};
-    \node at (axis cs:10.008750,0.974791) [circle, fill, inner sep=1.5pt] {};
-    \node at (axis cs:9.598750,0.976133) [anchor=east, align=left] {UFLS trips};
+    \node at (axis cs:9.918750,0.977498 * 50) [circle, fill, inner sep=1.5pt] {};
+    \node at (axis cs:9.998750,0.976133 * 50) [circle, fill, inner sep=1.5pt] {};
+    \node at (axis cs:10.008750,0.974791 * 50) [circle, fill, inner sep=1.5pt] {};
+    \node at (axis cs:9.598750,0.976133 * 50) [anchor=east, align=left] {UFLS trips};
 
     \legend{,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, Dependent T\&D samples,5-equivalent, 95-equivalent}
 
@@ -861,7 +861,7 @@ For new DERs that fall in the scope of G99 and have a capacity higher than 1MW, 
 
 Finally, DERs considered to be large generators must comply with the grid codes even if installed before 2019. The threshold is at 10MW in the north of Scotland, 30MW in the south, and 50MW in the rest of GB~\cite{GBConnectionConditions}. The grid code (CC.6.3.15) asks for similar LVRT requirement as in G99.
 
-Based on the above standards and requirements, DERs can be lumped into two categories. The DERs installed after 2019 with a capacity higher than 1~MW and the large generators (capacity higher than 10 to 50~MW depending on the region) are lumped as ``G99 DER'', with strict LVRT requirements and dynamic voltage support. And the remaining DERs are lumped as ``legacy DER'' without LVRT requirements no dynamic voltage support. The share of ``G99 DER'' and ``legacy DER'' is estimated by comparing the installed capacities in 2019 (from the 2019 FES data) to the ones in the study year (from the 2022 FES data). And by estimating the share of large generators from the embedded capacity register of the DSOs\footnote{A number of plants with a rating just below the large generator threshold has been considered as large generators in this work.}. All distributed large generators in Scotland are wind farms, they account for 73\% of distributed wind in the north of Scotland, 43\% in the south, and 29\% in the northeast of England~\cite{capacity_register_northern_powergrid, capacity_register_ssen, capacity_register_sp}.
+Based on the above standards and requirements, DERs can be lumped into two categories. The DERs installed after 2019 with a capacity higher than 1~MW and the large generators (capacity higher than 10 to 50~MW depending on the region) are lumped as ``G99 DER'', with strict LVRT requirements and dynamic voltage support. And the remaining DERs are lumped as ``legacy DER'' with very limited LVRT requirements and no dynamic voltage support. The share of ``G99 DER'' and ``legacy DER'' is estimated by comparing the installed capacities in 2019 (from the 2019 FES data) to the ones in the study year (from the 2022 FES data). And by estimating the share of large generators from the embedded capacity register of the DSOs\footnote{A number of plants with a rating just below the large generator threshold has been considered as large generators in this work.}. All distributed large generators in Scotland are wind farms, they account for 73\% of distributed wind in the north of Scotland, 43\% in the south, and 29\% in the northeast of England~\cite{capacity_register_northern_powergrid, capacity_register_ssen, capacity_register_sp}.
 
 All DERs are modelled using the WECC der\_a model. The tripping characteristic has however been modified to match UK standards, \ie legacy DERs trip for voltages below 0.8pu, and G99 DERs satisfy the LVRT requirements shown in Figure~\ref{fig:G99_LVRT}.
 
@@ -895,7 +895,7 @@ Now that data regarding the full distribution system model have been acquired, i
 
 The figure illustrates a typical behaviour for a case with a large share of G99-compliant DERs. G99 DERs do provide significant reactive support after fault clearing (from 1.1 to 1.2s on the figure), but they reduce their active power production during this time due to current limitations. There is thus a large increase in net active power consumed by the ADN after fault clearing. Also, legacy DERs trip due to the fault leading to a net increase of the steady-state active power demand.
 
-The distribution grids behave slightly differently depending on the assumed network topology. In particular, the large rural and semi-urban networks experience a smaller active power demand peak after fault clearing. This is because those networks have a large equivalent impedance (due to longer lines and cables). Therefore, when DERs are providing voltage support, the distribution voltage becomes higher (in pu) than the transmission voltage. Those higher voltages alleviate the current limitations of DERs which allows them to provide more active power. In this case, the uncertain motor share does not seem to have a strong impact.
+The distribution grids behave slightly differently depending on the assumed network topology. In particular, the large rural and semi-urban networks experience a smaller active power demand peak after fault clearing. This is because those networks have a large equivalent impedance (due to longer lines and cables). DERs can thus maintain higher voltages with a smaller injection of reactive power, and can thus use a larger share of their current capability to inject active power. In this case, the uncertain motor share does not seem to have a strong impact.
 
 From Figure~\ref{fig:CIGRE_equiv}, the 5th and 95th percentiles of the distribution behaviour can then be computed and be used to train two dynamic equivalents. The dynamic equivalent used in this test case consists of a single 33kV load bus with three motors (representing motor types A, B, and C), two DERs (one for legacy DERs and one for G99 DERs), and a static load. It is connected to the transmission system through an equivalent line and an equivalent transformer. The DER models used in the equivalent are identical to the ones used in the full model, but they allow for partial tripping of the unit. The partial tripping model from~\cite{ChaspierreThesis} has been reused.
 
