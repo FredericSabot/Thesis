@@ -59,7 +59,7 @@ The most common protection schemes are listed below. Other schemes of course exi
         \item Fault ride-through: generators should be able to stay connected when temporary faults occur in their vicinity (\eg lightning strike on a nearby line). Ride-through requirements are defined using curves as in Figure~\ref{fig:LVRT_G99}. As long as the generator voltage stays above the curve following a disturbance, the generator must stay connected. If voltage falls below the curve (\eg for Figure~\ref{fig:LVRT_G99}, if the voltage is lower than 0.7pu more than 140ms after the occurrence of the fault), the generator is allowed to disconnect.
         \begin{figure}
             \centering
-            \includegraphics[width = 0.8\textwidth]{Figs/LVRT.png}
+            \includegraphics[width = 0.6\textwidth]{Figs/LVRT.png}
             \caption{Fault ride-through profile for large synchronous generators connected to distribution grids in the UK~\cite{G99}}
             \label{fig:LVRT_G99}
         \end{figure}
@@ -101,15 +101,15 @@ Figure~\ref{fig:fault_clearing} demonstrates this with an example. In this examp
 \begin{figure}
     \centering
     \subfloat[Clearing of the fault F by the primary protection (R\textsubscript{1} or its duplicate R\textsubscript{2}), typical clearing time: 100ms]{%
-        \includegraphics[width=0.85\linewidth]{Figs/Clearing_normal.pdf}
+        \includegraphics[width=0.7\linewidth]{Figs/Clearing_normal.pdf}
         \label{subfig:clearing_normal}
-    } \\ \vskip 1 \baselineskip
+    } \\ \vskip 0.5 \baselineskip
     \subfloat[Use of local backup protection following failure to open of breaker B\textsubscript{1}, typical clearing time: 200ms]{%
-        \includegraphics[width=0.85\linewidth]{Figs/Clearing_breaker.pdf}
+        \includegraphics[width=0.7\linewidth]{Figs/Clearing_breaker.pdf}
         \label{subfig:clearing_breaker}
-    } \\ \vskip 1 \baselineskip
+    } \\ \vskip 0.5 \baselineskip
     \subfloat[Fault clearing by remote backup, typical clearing time: 500ms-2s]{%
-    \includegraphics[width=0.85\linewidth]{Figs/Clearing_Z3.pdf}
+    \includegraphics[width=0.7\linewidth]{Figs/Clearing_Z3.pdf}
     \label{subfig:clearing_Z3}
     }
     \caption{Duplicate primary, local backup, and remote backup protection, based on~\cite{HorowitzBook}. Black breakers are closed, white breakers are open.}
@@ -151,7 +151,7 @@ At the other end of the reliability spectrum lies the two-bus, two-breaker subst
         \end{minipage}
         \label{subfig:substation_double}
     } \\ \vskip 2 \baselineskip
-    \subfloat[Two-bus, single-breaker substation: lines that are connected to the same bus as the faulted line are lost]{%
+    \subfloat[Two-bus, single-breaker substation: lines that are connected to the same bus as the faulted line are lost (here, it is assumed that lines 1 and 3 are initially connected to bus 1, and lines 2 and 4 to bus 2)]{%
         \begin{minipage}{0.45\linewidth}
             \centering
         \includegraphics[height=0.2\textheight]{Figs/BFP_two_bus_one_breaker.pdf}
@@ -295,7 +295,7 @@ One example of such fast cascade occurred on 8 January 2021 and led to the separ
 
 \begin{figure}
     \centering
-    \includegraphics[width = 0.9\textwidth]{Figs/SystemSplit2021.pdf}
+    \includegraphics[width = 0.7\textwidth]{Figs/SystemSplit2021.pdf}
     \caption{Resulting two synchronous areas after the 8 January 2021 European system split~\cite{ENTSOESplitJan2021}}
     \label{fig:split2021}
 \end{figure}
@@ -307,13 +307,11 @@ One example of such fast cascade occurred on 8 January 2021 and led to the separ
     \label{fig:split2021_timeline}
 \end{figure}
 
-\begin{landscape}% Landscape page
-\centering
 \begin{table}
 \centering
 \caption{Timeline of events that led to the 8 January 2021 European system split~\cite{ENTSOESplitJan2021}. Approximately 15 110~kV lines were tripped but are not listed.}
 \label{tab:split_timeline}
-\begin{adjustbox}{max width=\linewidth}
+\begin{adjustbox}{max width=\textwidth}
 \begin{tabular}{@{}lllllll@{}}
 \toprule
 No & Country & delta [s] & Substation 1 & Substation 2   & Voltage [kV] & Reason                                                 \\ \midrule
@@ -336,7 +334,6 @@ No & Country & delta [s] & Substation 1 & Substation 2   & Voltage [kV] & Reason
 \end{tabular}
 \end{adjustbox}
 \end{table}
-\end{landscape}
 
 The trips that led to the system separation are listed in Table~\ref{tab:split_timeline} and shown in Figure~\ref{fig:split2021_timeline}. As can be seen from the table, events 4 to 12 occur in less than a second showing the possibility of different tripping orders. Also, it demonstrates the importance of distance protection in the development of cascading outages. Finally, it can be noted that some TSOs use power swing blocking for distance protection and some do not.
 
@@ -444,7 +441,7 @@ The test case used in this example is the IEEE 39-bus test system~\cite{IEEE39} 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\textwidth]{Figs/IEEE39.png}
+    \includegraphics[width=0.7\textwidth]{Figs/IEEE39.png}
     \caption{IEEE 39 bus system~\cite{IEEE39figure}}
     \label{fig:IEEE39}
 \end{figure}
@@ -589,6 +586,7 @@ From the same simulation, a fast sequence can be estimated if models of fast pro
 \begin{figure}
 \centering
 \begin{tikzpicture}
+\pgfplotsset{width=0.8\linewidth}
 \begin{axis}[
     group style={
         group name=my plots,
@@ -609,7 +607,6 @@ From the same simulation, a fast sequence can be estimated if models of fast pro
     ytick align=outside,
     xtick align=outside,
     table/col sep=comma,
-    width=0.9\linewidth
 ]
 % \nextgroupplot
 \addplot+ [mark=none, dashed, dash pattern=on 6pt off 6pt] table [x=R,y=X] {Figs/IEEE_split_slow.csv};
@@ -671,7 +668,7 @@ Because of the different system evolution, some events that occurred in the slow
 \begin{figure}
 \centering
 \subfloat[Slow sequence]{%
-\begin{tikzpicture}[xscale=7]
+\begin{tikzpicture}[xscale=9]
 \def\lt{0.3} % tick length
 % help functions
 \def\yearArrowLabel(##1,##2,##3,##4){
@@ -705,7 +702,7 @@ Because of the different system evolution, some events that occurred in the slow
 } \\ \vskip 0.5 \baselineskip
 
 \subfloat[Estimated fast sequence]{%
-\begin{tikzpicture}[xscale=7]
+\begin{tikzpicture}[xscale=9]
 \def\lt{0.3} % tick length
 \def\yearArrowLabel(##1,##2,##3,##4){
     \def\xy{{##1}}
@@ -740,7 +737,7 @@ Because of the different system evolution, some events that occurred in the slow
 } \\ \vskip 0.5 \baselineskip
 
 \subfloat[Actual fast sequence]{%
-\begin{tikzpicture}[xscale=7]
+\begin{tikzpicture}[xscale=9]
 \def\lt{0.3} % tick length
 \def\yearArrowLabel(##1,##2,##3,##4){
     \def\xy{{##1}}
@@ -779,7 +776,6 @@ Because of the different system evolution, some events that occurred in the slow
 \centering
 \caption{Timing of events following the N-2 contingency of lines 5-6 and 6-7 in the slow and fast sequences}
 \label{tab:IEEE39_split}
-\begin{adjustbox}{max width=\linewidth}
 \begin{tabular}{@{}llllll@{}}
 \toprule
 No &
@@ -801,12 +797,7 @@ No &
     \begin{tabular}[c]{@{}l@{}}All generators\\ but G1\end{tabular} &
     \begin{tabular}[c]{@{}l@{}}Under-voltage and\\ under-/over-frequency\end{tabular} \\ \bottomrule
 \end{tabular}
-\end{adjustbox}
 \end{table}
-
-
-\begin{landscape}% Landscape page
-\centering
 
 \begin{figure}
     \centering
@@ -821,9 +812,6 @@ No &
     \caption{Comparison of the consequences of the N-2 contingency of lines 5-6 and 6-7 in the slow and fast sequences (1-s restorative load case)}
     \label{fig:IEEE_split}
 \end{figure}
-
-\end{landscape}
-\clearpage% Flush page
 }
 
 % 6.15694 | 1-_2-1_AC_side2_DistanceSlow | Distance protection trip zone 2

@@ -50,13 +50,13 @@ This approach was considered appropriate for old systems dominated by dispatchab
         area style,
         xmin=0, xmax=167,
         xtick={12,36,60,84,108,132,156},
-        xticklabels={Mon, Tue, Wed, Thu, Fri, Sat, Sun},
+        xticklabels={Monday, Tuesday, Wednedsay, Thursday, Friday, Saturday, Sunday},
         ymin=-1.5, ymax=12,
         tickpos=left,
         % ytick align=outside,
         % xtick align=outside,
-        width=\linewidth,
-        height=0.4\linewidth,
+        width=0.9\linewidth,
+        height=0.3\linewidth,
     ]
     \nextgroupplot
     \addplot table [x=hour,y=nuclear] {Figs/dispatch_2016.txt};
@@ -75,7 +75,7 @@ This approach was considered appropriate for old systems dominated by dispatchab
     \addplot table [x=hour,y=solar] {Figs/dispatch_2024.txt};
     % \addplot table [x=hour,y=load] {Figs/dispatch_2024.txt};
 
-    \legend{Nuclear, Solid fuels, Hydro, Gas, Wind, Solar}
+    \legend{Nuclear, Coal and other solid fuels, Hydro, Gas, Wind, Solar}
 
     \end{groupplot}
 

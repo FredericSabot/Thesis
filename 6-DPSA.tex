@@ -52,7 +52,6 @@ Now that all building blocks are available, a PDSA methodology can be developed.
     node distance=5mm and 25mm, % Global setup of box spacing
     every join/.style={norm},   % Default linetype for connecting boxes
     font=\small,
-    scale=0.95,
     ]
 % -------------------------------------------------
 % A few box styles
@@ -249,12 +248,7 @@ Indeed, Table~\ref{tab:clustering} shows that when clustering operating points f
 
 \begin{equation}
 % \begin{split}
-d^{\infty}_{jk} = \max{
-\begin{bmatrix}
-  \max_g{\left(\abs{P_{g, j} - P_{g, k}}, \abs{Q_{g, j} - Q_{g, k}}\right)}\\
-  \max_b{\left(\abs{P_{b, j} - P_{b, k}}, \abs{Q_{b, j} - Q_{b, k}}\right)}
-\end{bmatrix}
-}
+d^{\infty}_{jk} = \max{\left[\max_g{\left(\abs{P_{g, j} - P_{g, k}}, \abs{Q_{g, j} - Q_{g, k}}\right)}, \max_b{\left(\abs{P_{b, j} - P_{b, k}}, \abs{Q_{b, j} - Q_{b, k}}\right)}\right]}
 % \end{split}
 \end{equation}
 
@@ -446,8 +440,8 @@ For this work, two interconnections have been added to limit curtailment of the 
     tickpos=left,
     % ytick align=outside,
     % xtick align=outside,
-    width=0.45\linewidth,
-    height=0.45\linewidth,
+    width=0.4\linewidth,
+    height=0.4\linewidth,
 ]
 \nextgroupplot
 \addplot table [x=hour,y=nuclear] {Figs/dispatch_january.txt}
@@ -524,7 +518,6 @@ A first PDSA has been performed without screening of scenarios to be used as a r
 \centering
 \caption{Contribution to total risk and computation time of delayed clearing N-1 contingencies and N-2 contingencies (without screening)}
 \label{tab:summary-N1N2}
-\begin{adjustbox}{max width=\linewidth}
 \begin{tabular}{@{}lll@{}}
 \toprule
                                  & N-1 with delayed clearing  & N-2 \\ \midrule
@@ -533,7 +526,6 @@ Number of simulations            & 97,503 & 59,648 \\
 Computation time (core-h)        & 248  & 157 \\
 Average computation time per simulation (s) & 9.1 & 9.5 \\ \bottomrule
 \end{tabular}
-\end{adjustbox}
 \end{table}
 
 
@@ -551,6 +543,7 @@ Figure~\ref{fig:indic_N1} (resp. Figure~\ref{fig:indic_N2}) shows the number of 
 \begin{figure}
 \centering
 \begin{tikzpicture}
+\pgfplotsset{width=0.8\linewidth}
 \begin{groupplot}[
     group style={
         group name=my plots,
@@ -568,7 +561,6 @@ Figure~\ref{fig:indic_N1} (resp. Figure~\ref{fig:indic_N2}) shows the number of 
     tickpos=left,
     ytick align=outside,
     xtick align=outside,
-    width=0.9\linewidth,
 ]
 \nextgroupplot[ylabel=\(N_i\), height=4cm]
 \addplot+ [mark=none] table [x=id,y=N_static] {Figs/N_N1.txt};
@@ -590,6 +582,7 @@ Figure~\ref{fig:indic_N1} (resp. Figure~\ref{fig:indic_N2}) shows the number of 
 % \begin{figure}
 \centering
 \begin{tikzpicture}
+\pgfplotsset{width=0.8\linewidth}
 \begin{groupplot}[
     group style={
         group name=my plots,
@@ -607,7 +600,6 @@ Figure~\ref{fig:indic_N1} (resp. Figure~\ref{fig:indic_N2}) shows the number of 
     tickpos=left,
     ytick align=outside,
     xtick align=outside,
-    width=0.9\linewidth,
 ]
 \nextgroupplot[ylabel=\(N_i\), height=4cm]
 \addplot+ [mark=none] table [x=id,y=N_static] {Figs/N_N2.txt};
@@ -677,9 +669,9 @@ It is interesting to see that when aiming to minimise the SE of the risk contrib
 \begin{figure}
   \centering
   \begin{tikzpicture}
+  \pgfplotsset{width=0.8\linewidth}
   \begin{axis}[
       height=5cm,
-      width=\linewidth,
       xlabel=Contingency ID,
       xmin=0.5, xmax=20.5,
       ymin=0,
@@ -788,7 +780,6 @@ With perfect screening, the computational burden of the PDSA can thus be reduced
   \centering
   \caption{Performance of the screening process and impact on the PDSA accuracy and computation time}
   \label{tab:screening}
-  \begin{adjustbox}{max width=\linewidth}
   \begin{tabular}{@{}lllllll@{}}
     \toprule
     \multirow{2}{*}{Contingencies} &
@@ -801,7 +792,6 @@ With perfect screening, the computational burden of the PDSA can thus be reduced
     N-2 & 81 & 1847 & 22,300 & 25,200 & 6.4 & 1.81 \\
     All & 85 & 3400 & 62,400 & 77,800 & 4.0 & 1.94 \\ \bottomrule
   \end{tabular}
-  \end{adjustbox}
 \end{table}
 
 This is mainly because the EEA underestimate CCT in this case due to the large penetration of inverter-based generators. Indeed, due to their low capacity factors, inverter-based generators often have room to provide fast voltage support which helps with the angular stability of synchronous generators. Table~\ref{tab:CCT_margin} shows that when using a CCT margin of -20ms in the screening process, \ie assuming that faults cleared in 200ms are secure if the EEA predicts a CCT larger than 180ms, a speed-up of 3.5 can be obtained but at the cost of missing 16.6\% of the total risk. Better stability indicators should be developed if higher speed-ups and/or lower impact on accuracy are desired.
@@ -862,12 +852,11 @@ Table~\ref{tab:critical_contingencies} shows a summary of the PDSA results for t
 \begin{figure}
 \centering
 \begin{minipage}{\linewidth}
-\begin{minipage}[c]{0.55\linewidth}
+\begin{minipage}[c]{0.58\linewidth}
   \strut\vspace*{-\baselineskip}\newline % Minipage vertical allignement black magic
   % \centering
   \captionof{table}{Results of the PDSA for the 10 most critical contingencies. Line locations are given in Figure~\ref{fig:RTS-copy}.}
   \vspace*{0.5\baselineskip}
-  \begin{adjustbox}{max width=\linewidth}
   \begin{tabular}{@{}lllllll@{}}
     \toprule
     \multicolumn{2}{c}{Contingency} &
@@ -889,14 +878,13 @@ Table~\ref{tab:critical_contingencies} shows a summary of the PDSA results for t
     Others & /         & 12.4 & 17.0    & /    & /    & 100  \\ \bottomrule
     \multicolumn{7}{l}{\(^a\) Mean load shedding accounts for unsecure operating points only} \\
     \end{tabular}
-    \end{adjustbox}
   \label{tab:critical_contingencies}
 \end{minipage}
 \hfill
 \begin{minipage}[c]{0.42\linewidth}
   \strut\vspace*{-\baselineskip}\newline % Minipage vertical allignement black magic
   \centering
-  \includegraphics[width=\linewidth]{Figs/RTS.png}
+  \includegraphics[width=0.8\linewidth]{Figs/RTS.png}
   \captionof{figure}{Network layout of the RTS-GMLC copied from Figure~\ref{fig:RTS} for convenience}
   \label{fig:RTS-copy}
 \end{minipage}
@@ -908,7 +896,6 @@ Table~\ref{tab:critical_contingencies} shows a summary of the PDSA results for t
 \centering
 \caption{Examples of samples for the most critical contingency (fault on line A34 with delayed clearing). Trips beyond the first three are not shown.}
 \label{tab:samples_A34}
-\begin{adjustbox}{max width=\linewidth}
 \begin{tabular}{@{}lllllll@{}}
   \toprule
   \begin{tabular}[c]{@{}l@{}}Hour\\ of year\end{tabular} & \begin{tabular}[c]{@{}l@{}}Load\\ shedding {[}\%{]}\end{tabular} & Trip 1 & Trip 2 & Trip 3 & \begin{tabular}[c]{@{}l@{}}Uncertain\\ protection impact\end{tabular} & \begin{tabular}[c]{@{}l@{}}Share of scenarios\\ with same initial 2 trips\end{tabular} \\ \midrule
@@ -924,7 +911,6 @@ Table~\ref{tab:critical_contingencies} shows a summary of the PDSA results for t
   \multicolumn{6}{l}{\(^c\) Trip of the wind farm at bus 122} \\
   \multicolumn{6}{l}{\(^d\) Under-frequency load shedding} \\
   \end{tabular}
-  \end{adjustbox}
 \end{table}
 
 % 73.8425925925926 ()
@@ -956,6 +942,7 @@ It should be noted that, for the contingency of line A34 with delayed clearing, 
 \subfloat[Hour 7634 of the year (November 14, 3AM). For this case, the system load is 2.95~GW, 1.70~GW of which is supplied by wind energy (550~MW of which is produced at bus 122).]{%
 \label{fig:A34_voltage_7634}
 \begin{tikzpicture}
+\pgfplotsset{width=0.47\linewidth}
 \begin{axis}[
     xmin=4.5, xmax=7,
     ymin=0, ymax=1.2,
@@ -965,8 +952,6 @@ It should be noted that, for the contingency of line A34 with delayed clearing, 
     xlabel={Time [s]},
     legend cell align=left,
     legend style={at={(1,0)},anchor=south east},
-    width=0.8\linewidth,
-    height=0.6\linewidth,
 ]
 \addplot+ [mark=none] table [x=time,y=NETWORK_B-117_Upu_value] {Figs/A34_end1_DELAYED_7634.csv};
 \addplot+ [mark=none] table [x=time,y=NETWORK_B-121_Upu_value] {Figs/A34_end1_DELAYED_7634.csv};
@@ -984,10 +969,11 @@ It should be noted that, for the contingency of line A34 with delayed clearing, 
 
 \end{axis}
 \end{tikzpicture}
-} \\ \vskip 1 \baselineskip
+} \hfill
 \subfloat[Hour 8402 of the year (December 16, 3AM). For this case, the system load is 3.34~GW, 1.74~GW of which is supplied by wind energy (493~MW of which is produced at bus 122).]{%
 \label{fig:A34_voltage_8402}
 \begin{tikzpicture}
+\pgfplotsset{width=0.47\linewidth}
 \begin{axis}[
     xmin=4.5, xmax=7,
     ymin=0, ymax=1.2,
@@ -997,8 +983,6 @@ It should be noted that, for the contingency of line A34 with delayed clearing, 
     xlabel={Time [s]},
     legend cell align=left,
     legend style={at={(1,0)},anchor=south east},
-    width=0.8\linewidth,
-    height=0.6\linewidth,
 ]
 \addplot+ [mark=none] table [x=time,y=NETWORK_B-117_Upu_value] {Figs/A34_end1_DELAYED_8402.csv};
 \addplot+ [mark=none] table [x=time,y=NETWORK_B-121_Upu_value] {Figs/A34_end1_DELAYED_8402.csv};
@@ -1091,27 +1075,24 @@ However, Table~\ref{tab:feature_selection_b} highlights other features that slig
 \centering
 \caption{Training accuracy of an SVM with up to two features to predict the security of operating conditions for the contingency of line A34 with delayed clearing}
 \label{tab:feature_selection}
-\begin{subtable}[t]{0.47\textwidth}
+\begin{subtable}[t]{0.475\textwidth}
 \centering
-\begin{adjustbox}{max width=\linewidth}
 \begin{tabular}{@{}ll@{}}
 \toprule
 \multirow{2}{*}{First feature} & \multirow{2}{*}{Accuracy (\%)} \\
 & \\ \midrule
-Wind at bus 122            & 88.0          \\
+Wind production at bus 122 & 88.0          \\
 Power flow in line A30     & 86.5          \\
 Power flow in line A34     & 85.8          \\
 Power flow in line A31     & 82.6          \\
 Total wind production      & 81.4          \\ \bottomrule
 \end{tabular}
-\end{adjustbox}
 \caption{Accuracy with a single feature}
 \label{tab:feature_selection_a}
 \end{subtable}
 \hspace{\fill}
-\begin{subtable}[t]{0.47\textwidth}
+\begin{subtable}[t]{0.475\textwidth}
 \centering
-\begin{adjustbox}{max width=\linewidth}
 \begin{tabular}{@{}ll@{}}
 \toprule
 Second feature & \begin{tabular}[c]{@{}l@{}}Additional\\ accuracy (\%)\end{tabular} \\ \midrule
@@ -1121,8 +1102,7 @@ Power flow in line C8      & 2.0                      \\
 Total wind production      & 0.2                      \\
 Power flow in line A30     & 0.0                      \\ \bottomrule
 \end{tabular}
-\end{adjustbox}
-\caption{Additional accuracy brought by the use of a second feature}
+\caption{Additional accuracy brought by the use of a second feature if the first selected feature is the active power of 122\_WIND}
 \label{tab:feature_selection_b}
 \end{subtable}
 \end{table}
@@ -1180,8 +1160,8 @@ For faults on line A23 cleared by opening lines A23 and 28, which are further fr
     ymin=2700,
     ymax=7800,
     % ytick={3000,4000,5000,6000,7000},
-    width=0.9\linewidth,
-    height=0.55\linewidth,
+    width=0.8\linewidth,
+    height=0.6\linewidth,
     legend style={at={(1,1)},anchor=north east},
 ]
   \addplot+[scatter, only marks,
@@ -1212,8 +1192,8 @@ For faults on line A23 cleared by opening lines A23 and 28, which are further fr
       ymin=-55,
       ymax=20,
       % ytick={3000,4000,5000,6000,7000},
-      width=0.9\linewidth,
-      height=0.55\linewidth,
+      width=0.8\linewidth,
+      height=0.6\linewidth,
       legend style={at={(1,0)},anchor=south east},
   ]
   \addplot+[scatter, only marks,
@@ -1281,7 +1261,7 @@ The above analysis has been performed for two of the most critical contingencies
 \subfloat[N-1 contingencies with delayed clearing]{%
 \label{fig:value_N1}
 \begin{tikzpicture}
-\pgfplotsset{width=0.95\linewidth}
+\pgfplotsset{width=\linewidth}
 \begin{groupplot}[
   group style={
     group name=my plots,
@@ -1290,7 +1270,7 @@ The above analysis has been performed for two of the most critical contingencies
     xticklabels at=edge bottom,
     vertical sep=20pt,
   },
-  height=0.35\linewidth,
+  height=0.4\linewidth,
   xlabel=Contingency ID,
   xmin=1, xmax=26,
   ymin=0,
@@ -1304,7 +1284,7 @@ The above analysis has been performed for two of the most critical contingencies
 \nextgroupplot[ylabel={Risk [M€/y]}, height=4cm]
 \addplot+ [mark=none] table [x expr=\coordindex+1, y expr=\thisrow{Cost}*1.609344] {Figs/Value_N1.txt};
 
-\nextgroupplot[align=center, ylabel={Share of operating\\conditions [\%]}]
+\nextgroupplot[ylabel={Share of operating conditions [\%]}]
 \addplot+ [mark=o, yellow] table [x expr=\coordindex+1, y=Yellow] {Figs/Value_N1.txt};
 \addplot+ [mark=+, orange] table [x expr=\coordindex+1, y=Orange] {Figs/Value_N1.txt};
 \addplot+ [mark=x, red   ] table [x expr=\coordindex+1, y=Red   ] {Figs/Value_N1.txt};
@@ -1316,7 +1296,7 @@ The above analysis has been performed for two of the most critical contingencies
 \subfloat[N-2 contingencies]{%
 \label{fig:value_N2}
 \begin{tikzpicture}
-\pgfplotsset{width=0.95\linewidth}
+\pgfplotsset{width=\linewidth}
 \begin{groupplot}[
   group style={
     group name=my plots,
@@ -1325,7 +1305,7 @@ The above analysis has been performed for two of the most critical contingencies
     xticklabels at=edge bottom,
     vertical sep=20pt,
   },
-  height=0.35\linewidth,
+  height=0.4\linewidth,
   xlabel=Contingency ID,
   xmin=1, xmax=147,
   ymin=0,
@@ -1339,7 +1319,7 @@ The above analysis has been performed for two of the most critical contingencies
 \nextgroupplot[ylabel={Risk [M€/y]}, height=4cm]
 \addplot+ [mark=none] table [x expr=\coordindex+1, y expr=\thisrow{Cost}*1.609344] {Figs/Value_N2.txt};
 
-\nextgroupplot[align=center, ylabel={Share of operating\\conditions [\%]}]
+\nextgroupplot[ylabel={Share of operating conditions [\%]}]
 \addplot+ [mark=o, yellow] table [x expr=\coordindex+1, y=Yellow] {Figs/Value_N2.txt};
 \addplot+ [mark=+, orange] table [x expr=\coordindex+1, y=Orange] {Figs/Value_N2.txt};
 \addplot+ [mark=x, red   ] table [x expr=\coordindex+1, y=Red   ] {Figs/Value_N2.txt};

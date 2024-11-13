@@ -1,4 +1,4 @@
-\documentclass[dvipsnames, twoside, 10pt]{report}
+\documentclass[a4paper, dvipsnames, twoside, 11pt]{report}
 \usepackage{caption}
 \usepackage{subcaption}
 \captionsetup[sub]{font=normal}
@@ -7,18 +7,8 @@
 \setcounter{tocdepth}{4}
 \setcounter{minitocdepth}{4}
 % \usepackage[utf8]{inputenc}  % Not needed with lualtex
-% \usepackage[nomarginpar, headheight=10mm, left=25mm, right=15mm, paperwidth=16cm, paperheight=24cm]{geometry} % For cover page and fancyhdr
-\usepackage{geometry}
-  \geometry{
-    paperwidth=160mm,
-    paperheight=240mm,
-  %  width=125mm, %ads
-  %  height=185mm, %ads
-    left=25mm, % Equal margins on both sides: (paperwidth - width) / 2
-    right=15mm,
-    bottom=25mm,
-    headheight=10mm,
-  }
+\usepackage[nomarginpar, headheight=10mm,
+  margin=2.5cm]{geometry} % For cover page and fancyhdr
 \usepackage{eso-pic}
 % \usepackage{fullpage} % does not work well with fancyhdr
 \usepackage{amsmath}

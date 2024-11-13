@@ -54,7 +54,7 @@ In the 90s to 2010s, more complex load models were developed as some TSOs realis
 
 \begin{figure}
     \centering
-    \includegraphics[width=\linewidth]{Figs/MotorLoad.png}
+    \includegraphics[width=0.6\linewidth]{Figs/MotorLoad.png}
     \caption{Constant impedance load in parallel with an induction motor~\cite{CIGREloadModels}}
     \label{fig:motorLoad}
 \end{figure}
@@ -63,7 +63,7 @@ More complex load models have also been developed such as the WECC composite loa
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.7\linewidth]{Figs/WECC-composite-load-model.png}
+    \includegraphics[width=0.5\linewidth]{Figs/WECC-composite-load-model.png}
     \caption{WECC composite load model~\cite{NERCloadModelTF}}
     \label{fig:WECC-CLM}
 \end{figure}
@@ -74,7 +74,7 @@ A large share of DERs consists of solar and wind generation, \ie inverter-based 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\linewidth]{Figs/IBG.pdf}
+    \includegraphics[width=0.6\linewidth]{Figs/IBG.pdf}
     \caption{Generic model of inverter-based generation, based on~\cite{Vorwerk}}
     \label{fig:IBG}
 \end{figure}
@@ -278,7 +278,6 @@ The training disturbances used in this work are impedant short-circuits of diffe
 \centering
 \caption{Training disturbances}
 \label{tab:disturbances}
-\begin{adjustbox}{max width=0.45\linewidth}
 \begin{tabular}{@{}ccc@{}}
 \toprule
 ID & Voltage dip (pu) & Duration (ms) \\ \midrule
@@ -290,10 +289,8 @@ ID & Voltage dip (pu) & Duration (ms) \\ \midrule
 6  & 0.4               & 200           \\
 7  & 0.5               & 100           \\ \bottomrule
 \end{tabular}
-\end{adjustbox}
 % \hfill
-\hspace{0.5cm}
-\begin{adjustbox}{max width=0.45\linewidth}
+\hspace{1cm}
 \begin{tabular}{@{}ccc@{}}
 \toprule
 ID & Voltage dip (pu) & Duration (ms) \\ \midrule
@@ -305,7 +302,6 @@ ID & Voltage dip (pu) & Duration (ms) \\ \midrule
 13 & 0.9               & 500           \\
 14 & 0.9               & 1000          \\ \bottomrule
 \end{tabular}
-\end{adjustbox}
 \end{table}
 
 
@@ -333,9 +329,9 @@ The distribution system considered in this test case is based on the CIGRE mediu
 \begin{figure}
 \centering
 \subfloat[CIGRE MV network with solar and wind generation~\cite{CIGREMV}]{%
-    \includegraphics[width=0.8\linewidth]{Figs/cigre_network_mv.png}
+    \includegraphics[width=0.6\linewidth]{Figs/cigre_network_mv.png}
     \label{fig:CIGRE_MV}
-    } \\ \vskip 1 \baselineskip
+    } \hfill
 \subfloat[Dynamic equivalent]{%
     \begin{tikzpicture}[scale = 0.8, transform shape]
 
@@ -458,6 +454,7 @@ Figure~\ref{fig:fault39} shows that the equivalents trained this way allow to be
 \begin{figure}
 \centering
 \begin{tikzpicture}
+\pgfplotsset{width=0.75\linewidth}
 \begin{axis}[
     xlabel={Time [s]},
     xmin=0, xmax=10,
@@ -465,8 +462,6 @@ Figure~\ref{fig:fault39} shows that the equivalents trained this way allow to be
     legend cell align=left,
     legend style={at={(0,0)},anchor=south west,
         cells={align=left}}, % Needed to have line breakers in legend
-    width = 0.95\linewidth,
-    height = 1.2\linewidth,
     ]
 
     \addplot+ [mark=none] table [x=time_5,y=V1_5] {Figs/39_100ms_Bounds.txt};
@@ -476,8 +471,8 @@ Figure~\ref{fig:fault39} shows that the equivalents trained this way allow to be
     \foreach \n in {0,...,49}{
         \addplot+ [mark=none, color=black, dotted, opacity=0.3] table [x=time,y=V1_\n] {Figs/39_100ms_Random.txt};
     }
-    \addlegendentry{5-equivalent  \\ (machine training)}
-    \addlegendentry{95-equivalent \\ (machine training)}
+    \addlegendentry{5-equivalent  \\ (small machine training)}
+    \addlegendentry{95-equivalent \\ (small machine training)}
     \addlegendentry{5-equivalent  \\ (infinite-bus training)}
     \addlegendentry{95-equivalent \\ (infinite-bus training)}
     \addlegendentry{MC samples \\ (full T\&D model)}
@@ -486,11 +481,12 @@ Figure~\ref{fig:fault39} shows that the equivalents trained this way allow to be
 \end{tikzpicture}
 \caption{Voltage evolution at bus 4 for a 100ms fault at bus 39 simulated with full distribution models (dotted lines), with reduced models trained with an infinite-bus system (dashed lines), and with reduced models trained with a small synchronous machine (full lines)}
 \label{fig:fault39}
-\end{figure}
-% \vspace{0.8cm}
-\begin{figure}
+% \end{figure}
+\vspace{0.8cm}
+% \begin{figure}
 \centering
 \begin{tikzpicture}
+\pgfplotsset{width=0.75\linewidth}
 \begin{axis}[
     xlabel={Time [s]},
     xmin=0, xmax=10, ymin = 0.8,
@@ -498,8 +494,6 @@ Figure~\ref{fig:fault39} shows that the equivalents trained this way allow to be
     legend cell align=left,
     legend style={at={(0,0)},anchor=south west,
         cells={align=left}}, % Needed to have line breakers in legend
-    width = 0.95\linewidth,
-    height = 1.2\linewidth,
     ]
 
     \addplot+ [mark=none] table [x=time_5,y=V4_5] {Figs/29_100ms_Bounds.txt};
@@ -509,8 +503,8 @@ Figure~\ref{fig:fault39} shows that the equivalents trained this way allow to be
     \foreach \n in {0,...,49}{
         \addplot+ [mark=none, color=black, dotted, opacity=0.3] table [x=time,y=V4_\n] {Figs/29_100ms_Random.txt};
     }
-    \addlegendentry{5-equivalent  \\ (machine training)}
-    \addlegendentry{95-equivalent \\ (machine training)}
+    \addlegendentry{5-equivalent  \\ (small machine training)}
+    \addlegendentry{95-equivalent \\ (small machine training)}
     \addlegendentry{5-equivalent  \\ (infinite-bus training)}
     \addlegendentry{95-equivalent \\ (infinite-bus training)}
     \addlegendentry{MC samples \\ (full T\&D model)}
@@ -645,8 +639,8 @@ In this section, a similar comparison is performed between results obtained usin
 Table~\ref{tab:SA} shows the intervals on the consequences (assessed in terms of percentage of load shedding) for the 10 worst (according to their average consequences in the ``independent T\&D'' case) considered contingencies. Like in the CCT comparison, the intervals obtained with the equivalents match well those obtained in the ``dependent T\&D'' case. There are however significant differences for the first contingency. This is because, for this contingency, the 5- and 95-equivalents lead to opposite frequency behaviours as shown in Figure~\ref{fig:isgt_frequency}. Up to \(t=8s\), the frequency behaviour of the T\&D simulations stays between the ones of the two equivalents. However, at \(t=8s\), frequency reaches 1.05pu with the 5-equivalent, leading to the disconnection of many generators and a frequency drop that is halted by the activation of 3 UFLS steps (final consequences: 41\% load shedding). On the other hand, with the 95-equivalent, more DERs trip, directly leading to a frequency drop which is halted by a single UFLS step activation (final consequences: 34\% load shedding). There are thus  T\&D samples for which the frequency behaviour is between those two extremes and thus stabilises without the need for generator disconnections or UFLS step activations (minimum final consequences: 27\% load shedding). It should be noted that such large uncertainty in the frequency evolution only occurs because (i) the IEEE 39-bus network has a relatively low inertia (especially since this modified version has two less synchronous machines), and (ii) for the problematic contingencies, the generator 1, that represents an interconnection to a neighbouring system and thus contributes to most of the system inertia, is lost following a system split. Such large uncertainties in the frequency evolution are thus unlikely to be observed in larger systems except if a cascading outage leads to the formation of small islands.
 
 
-% \afterpage{%
-% \clearpage% Flush earlier floats (otherwise order might not be correct)
+\afterpage{%
+\clearpage% Flush earlier floats (otherwise order might not be correct)
 % \thispagestyle{empty}% empty page style (?)
 \begin{landscape}% Landscape page
 \centering
@@ -678,8 +672,8 @@ Table~\ref{tab:SA} shows the intervals on the consequences (assessed in terms of
 \footnotesize{\(^a\) (resp. \(^b\)) Percentage of dependent (resp. independent) T\&D samples that lead to an amount of load shedding that is within the 5-95 range computed using the equivalent. \\$^c$ When the simulation with the 5-equivalent leads to an overfrequency collapse, but the 95-equivalent leads to under-frequency load shedding.}
 \end{table}
 \end{landscape}
-% \clearpage% Flush page
-% }
+\clearpage% Flush page
+}
 
 It is actually quite simple to correct the intervals obtained with the equivalents to account for the above issue. In case the 5- and 95-equivalents lead to opposite frequency collapses, the lower bound of the interval can be redefined as the minimum of the load shedding (between the 5- and 95-equivalents) before any frequency-related event (\eg UFLS) occurs; and the upper bound as the maximum load shedding after frequency-related events occur\footnote{Alternatively, the consequences of a scenario where frequency reaches 1.05pu could be set to 100\% as it is not very clear what will occur in this case.}. As shown in Table~\ref{tab:SA}, this corrected interval matches very well the ``dependent T\&D'' one, and fully includes the ``independent T\&D'' one. The remaining difference between the intervals computed with full and reduced distribution models is mainly due to the activation of one additional or one less step of UFLS (5\% load shedding). This could be mitigated by better training the frequency-related parameters of the equivalent (\eg more training disturbances, disturbances caused a load generation imbalance instead of imposed frequency ramp).
 
@@ -693,6 +687,7 @@ It is actually quite simple to correct the intervals obtained with the equivalen
 \begin{figure}
 \centering
 \begin{tikzpicture}
+\pgfplotsset{width=0.9\linewidth}
 \begin{axis}[
     xlabel={Time [s]},
     xmin=0, xmax=30,
@@ -700,7 +695,6 @@ It is actually quite simple to correct the intervals obtained with the equivalen
     legend cell align=left,
     legend style={at={(1,0)},anchor=south east},
     table/col sep=comma,
-    width=0.95\linewidth,
     ]
 
     \foreach \n in {0,...,49}{
@@ -764,13 +758,8 @@ Samuel Gordon also developed a 2032 version of the model based on results of the
 
 \begin{figure}
     \centering
-    \subfloat[2022 version]{%
-        \includegraphics[width=0.75\linewidth]{Figs/Scotland2022.pdf}
-    } \\ \vskip 0.9 \baselineskip
-    \subfloat[2030 version]{%
-        \includegraphics[width=0.75\linewidth]{Figs/Scotland2030.pdf}
-    }
-    \caption{Representative model of the Scotland power grid~\cite{Sam_thesis}}
+    \includegraphics[width=\linewidth]{Figs/Scotland_model.pdf}
+    \caption{Representative model of the Scotland power grid at the horizon 2022 (left) and 2032 (right)~\cite{Sam_thesis}}
     \label{fig:scotland_model}
 \end{figure}
 
@@ -782,7 +771,6 @@ To study these transient stability issues, this case study focuses on system dis
 \centering
 \caption{Definition of the analysed dispatches. Boundary flows in parentheses are the flows obtained before accounting for dynamic limits.}
 \label{tab:scotland_dispatch}
-\begin{adjustbox}{max width=\linewidth}
 \begin{tabular}{@{}lllllll@{}}
 \toprule
 Period &
@@ -797,7 +785,6 @@ Winter 2032    & 0.8 & 0.9 & 0    & 4.02        & 2.35 & 9.41 \\
 Summer PM 2022 & 0.7 & 0.7 & 0.68 & 2.28 (3.31) & 2.13 & 1.54 \\
 Summer PM 2032 & 0.3 & 0.7 & 0.68 & 4.5         & 3.03 & 9.14 \\ \bottomrule
 \end{tabular}
-\end{adjustbox}
 \end{table}
 
 The system is dispatched using an optimal power flow (OPF) considering static N-1 limits in a preventive approach. Also, as the transient stability related transfer limits through the boundaries B4 and B6 are known to be close to thermal limits, double overhead line faults have been simulated (using a netted load model\footnote{The DER production is taken as the product of the wind and solar capacity factors with the installed wind and solar DER capacities. The latter are estimated in section~\ref{sec:CIGRE_distrib_capacity}.}) for each AC circuit passing through the B4 and B6 to verify the stability of the generated dispatches. In case of instability, the OPF has been rerun with a constraint on the maximal power flow through the problematic boundary, and the maximum limit has been reduced iteratively until reaching a secure dispatch.
@@ -817,7 +804,6 @@ The installed capacities of DERs for 2022 and 2032 have been taken from the regi
 \centering
 \caption{DER penetration for all load buses of the system for the 2032 scenario}
 \label{tab:der_penetration}
-\begin{adjustbox}{max width=\linewidth}
 \begin{tabular}{@{}llll@{}}
 \toprule
 Substation      & Peak gross load [MW] & Solar penetration (\%) & Wind penetration (\%) \\ \midrule
@@ -838,7 +824,6 @@ Beauly          & 471                  & 24                    & 24             
 Kintore         & 392                  & 41                    & 43                   \\
 NGET            & 53100                & 61                    & 9                    \\ \bottomrule
 \end{tabular}
-\end{adjustbox}
 \end{table}
 
 The Scotland-wide DER penetrations for solar and wind in the 2032 scenario are respectively 37\% and 36\% of the peak load. This differs significantly from the 61\% and 9\% penetration for the rest of GB. Also, two substations (Peterhead and Blackhillock), located in the North of Scotland have higher than 100\% penetration of distributed wind.
@@ -869,7 +854,7 @@ For new DERs that fall in the scope of G99 and have a capacity higher than 1MW, 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\linewidth]{Figs/G99_LVRT.png}
+    \includegraphics[width=0.7\linewidth]{Figs/G99_LVRT.png}
     \caption{LVRT requirements for inverter-based DER with a capacity between 1MW and 50MW~\cite{G99}. Inverters must stay connected for voltage dips that stay above the black line. They are allowed to stay connected or to disconnect below the black line.}
     \label{fig:G99_LVRT}
 \end{figure}
@@ -924,7 +909,6 @@ In all four considered dispatches, the most critical corridor (from a stability 
 \centering
 \caption{Critical clearing times (in ms) for double overhead line faults on the west B4 corridor near Denny.}
 \label{tab:CIGRE_CCT}
-\begin{adjustbox}{max width=\linewidth}
 \begin{tabular}{@{}lllllll@{}}
 \toprule
 \multirow{2}{*}{Scenario} & \multirow{2}{*}{Simple model} & 5-equivalent & \multicolumn{4}{c}{95-equivalent}                     \\ \cmidrule(lr){3-3} \cmidrule(lr){4-7}
@@ -934,24 +918,14 @@ Winter   2032             & 120                             & 70      & 50      
 Summer   PM 2022          & 160                             & 120     & 100     & 110       & 110        & 150      \\
 Summer   PM 2032          & 180                             & 150     & 130     & 130       & 150        & 160      \\ \bottomrule
 \end{tabular}
-\end{adjustbox}
 \end{table}
 
 The table compares the CCTs obtained with a simple load model and with the 5- and 95-equivalents. For the 95-equivalent (which gives more conservative results than the 5-equivalent), variations are also included to explain how the distribution grids impact system stability. In the ``no motors'' variation, the motor share of the load is represented by a constant impedance load. The CCTs computed in this variation are close to the base case showing that motors do not strongly impact transient stability. Motors are infamous for causing fault-induced delayed voltage recovery; however, the network has plenty of sources of dynamic reactive support (because the installed generation capacity (especially wind) is significantly larger than the demand), so voltages are quite stiff. Figure~\ref{fig:CIGRE_sensitivities} indeed shows that the voltage evolution is not very different in the ``default'' and ``no motor'' cases. The advantage of using ``physical'' dynamic equivalents instead of black-box models (\eg artificial neural networks in ~\cite{Vorwerk}) is that such sensitivity analysis can easily be performed.
 
 \begin{figure}
     \centering
-    \subfloat[Active power consumption of the equivalent elements (default case)]{%
-        \includegraphics[width=0.47\linewidth]{Figs/CIGRE_sensitivities_P.pdf}
-    } \hfill
-    \subfloat[Reactive power consumption of the equivalent elements (default case)]{%
-        \includegraphics[width=0.47\linewidth]{Figs/CIGRE_sensitivities_Q.pdf}
-    } \\ \vskip 0.5 \baselineskip
-    \centering
-    \subfloat[Voltage at the Denny load bus (all cases)]{%
-        \includegraphics[width=0.47\linewidth]{Figs/CIGRE_sensitivities_V.pdf}
-    }
-    \caption{Behaviour of the elements of the 95-equivalent of Denny in the winter 2032 scenario for a fault cleared in 150ms (critical clearing time for default case)}
+    \includegraphics[width=\linewidth]{Figs/CIGRE_sensitivities.pdf}
+    \caption{Behaviour of the elements of the 95-equivalent of Denny in the default case of the winter 2032 scenario for a fault cleared in critical clearing time (left and centre), and voltage at the Denny load bus in all cases (right)}
     \label{fig:CIGRE_sensitivities}
 \end{figure}
 

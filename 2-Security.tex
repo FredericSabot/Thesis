@@ -23,7 +23,7 @@ Power system reliability is based on two concepts: adequacy and security. A powe
 
 Figure~\ref{fig:security_vs_adequacy} shows a very simple power system that consists of one bus with two generators connected via 2 lines to a second bus with one generator and one load. This system is N-1 adequate because it can lose any single element (generator or line) and still have enough generation and transmission capacity to satisfy the 300~MW load. For example, if one of the two line is lost, the other line can still transfer 200~MW from the bus on the left to the bus on the right, which, together with the 100~MW available on the right bus, can fully satisfy the 300~MW load.
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \includegraphics[width=\linewidth]{Figs/Security_vs_adequacy.png}
     \caption{Comparison of security and adequacy~\cite{adequacy_vs_security}. The system is adequate for all N-1 conditions but not operated in an N-1 secure way.}
@@ -254,7 +254,7 @@ Methods based on a static grid model typically follow a common scheme illustrate
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{Figs/QSS_flowchart.pdf}
+    \includegraphics[width=0.4\linewidth]{Figs/QSS_flowchart.pdf}
     \caption{Typical flowchart of static cascading outage methodologies~\cite{Benchmarking2018}}
     \label{fig:QSS_flowchart}
 \end{figure}
@@ -263,7 +263,7 @@ As the computation cost of a power flow is relatively low (of the order of 1s fo
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\linewidth]{Figs/USBlackout2003.pdf}
+    \includegraphics[width=0.7\linewidth]{Figs/USBlackout2003.pdf}
     \caption{Rate of line and generator trips during the cascade that led to the 2003 US blackout~\cite{StabilityDefinitionRevised}}
     \label{fig:BlackoutUS2003}
 \end{figure}
@@ -303,7 +303,7 @@ Due to the different modelling assumptions used by different static cascading si
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\linewidth]{Figs/QSS_ccdf.pdf}
+    \includegraphics[width=0.6\linewidth]{Figs/QSS_ccdf.pdf}
     \caption{Comparison of the blackout size probabilities predicted by different QSS methodologies~\cite{Benchmarking2018}}
     \label{fig:QSS_ccdf}
 \end{figure}
@@ -334,7 +334,7 @@ Ref.~\cite{Haarla, GridPSA} proposed a methodology based on event trees. An exam
 
 \begin{figure}
     \centering
-    \includegraphics[width=\linewidth]{Figs/EventTree.png}
+    \includegraphics[width=0.8\linewidth]{Figs/EventTree.png}
     \caption{A simplified example of event tree for a line short-circuit~\cite{GridPSA}}
     \label{fig:eventTree}
 \end{figure}
@@ -382,7 +382,7 @@ This model is based on historical blackouts and on the observation that the time
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\linewidth]{Figs/RestorationTime.png}
+    \includegraphics[width=0.6\linewidth]{Figs/RestorationTime.png}
     \caption{Restoration time of historical blackouts depending on their size~\cite{TwoLevelPSA}}
     \label{fig:restoration_time}
 \end{figure}
