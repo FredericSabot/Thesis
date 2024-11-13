@@ -114,20 +114,19 @@
 
 \include{Cover}
 
+\fancypagestyle{plain}{
+% \pagestyle{fancy}
+  \fancyhead{} % clear all header fields
+  % %... then configure it.
+  \fancyhead[LO,RE]{\textsc{\nouppercase{\leftmark}}}
+  \fancyhead[LE,RO]{\thepage}
+  \fancyfoot{} % clear all footer fields
+}
+\pagestyle{plain}
+
 \include{0-Abstract}
 \include{0-Acknowledgements}
 \tableofcontents
-
-
-% % \setlength{\headheight}{30mm}
-% % \addtolength{\topmargin}{-30mm}
-\pagestyle{fancy}
-% %... then configure it.
-\fancyhead{} % clear all header fields
-\fancyhead[LO,RE]{\textsc{\nouppercase{\leftmark}}}
-\fancyhead[LE,RO]{\thepage}
-\fancyfoot{} % clear all footer fields
-
 
 \include{1-Introduction}
 \include{2-Security}
